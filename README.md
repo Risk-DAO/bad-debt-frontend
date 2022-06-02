@@ -13,7 +13,7 @@ folow these steps
 - register your component in the index.js file at that same directory
 - run the project to see it render in the Dashboard
   
-for any questios feel free to reach out at our [risk dao](Discord) 
+for any questios feel free to reach out at our [risk dao](https://discord.com/invite/NYyeDQDDvM)]
 
 ## creat react app
 
