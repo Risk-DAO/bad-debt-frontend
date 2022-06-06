@@ -27,6 +27,10 @@ class MainStore {
     });
   }
 
+  setBlackMode = (mode) => {
+    this.blackMode = mode
+  }
+
   init = async () => {
 
     const {data: badDebt} = await axios.get(this.apiUrl + '/bad-debt')
