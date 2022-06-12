@@ -6,7 +6,10 @@ function capitalizeFirstLetter(string) {
 }
 
 const nameMaps = {
-  "rari-capital": "Rari (Tetranode pool)"
+  "rari-capital": "Rari (Tetranode pool)",
+  "rikki": "Rikkei Finance",
+  "apeswap": "ApeSwap",
+  "inverse": "Inverse Finance"
 }
 
 class PlatformName extends Component {
