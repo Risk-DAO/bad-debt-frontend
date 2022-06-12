@@ -9,7 +9,7 @@ class PlatformIcon extends Component {
   render () {
     const platform = this.props.name.toLowerCase()
     return (
-      <img style={{borderRadius: '50%'}} src={`/images/platforms/${platform}.webp`}/>
+      <img style={{borderRadius: '50%', width: '24px', height: '24px'}} src={`/images/platforms/${platform}.webp`}/>
     )
   }
 }
