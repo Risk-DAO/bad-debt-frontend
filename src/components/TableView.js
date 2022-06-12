@@ -8,6 +8,15 @@ import WhaleFriendly from "./WhaleFriendly";
 import BadDebtUsers from "./BadDebtUsers";
 import mainStore from "../stores/main.store";
 
+const checkPlatformIcon = platform => {
+  try{
+    const icon = require(`../../public/images/platforms/${platform}.webp`)
+    return icon
+  } catch (e) {
+    return null;
+  }
+}
+
 class TableView extends Component {
 
   constructor(props) {
@@ -17,7 +26,7 @@ class TableView extends Component {
   render() {
     const data = this.props.data
     const head = ['Name', 'Blockchains', 'TVL', 'Bad Debt (USD)', 'Last Update', 'Details']
-    const body = data
+    const body = data.filter(({platform})=> checkPlatformIcon(platform))
     return (
       <div>
         <table role="grid">
