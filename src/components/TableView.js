@@ -8,6 +8,10 @@ import WhaleFriendly from "./WhaleFriendly";
 import BadDebtUsers from "./BadDebtUsers";
 import mainStore from "../stores/main.store";
 
+const containerStyle = {
+  overflowY: 'auto'
+}
+
 class TableView extends Component {
 
   constructor(props) {
@@ -19,7 +23,7 @@ class TableView extends Component {
     const head = ['Name', 'Blockchains', 'TVL', 'Bad Debt (USD)', 'Last Update', 'Details']
     const body = data
     return (
-      <div>
+      <div style={containerStyle}>
         <table role="grid">
         <thead>
           <tr>
