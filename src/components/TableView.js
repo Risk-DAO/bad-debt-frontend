@@ -17,6 +17,10 @@ const checkPlatformIcon = platform => {
   }
 }
 
+const containerStyle = {
+  overflowY: 'auto'
+}
+
 class TableView extends Component {
 
   constructor(props) {
@@ -28,7 +32,7 @@ class TableView extends Component {
     const head = ['Name', 'Blockchains', 'TVL', 'Bad Debt (USD)', 'Last Update', 'Details']
     const body = data.filter(({platform})=> checkPlatformIcon(platform))
     return (
-      <div>
+      <div style={containerStyle}>
         <table role="grid">
         <thead>
           <tr>
