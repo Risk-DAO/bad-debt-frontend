@@ -10,7 +10,9 @@ class WhaleFriendly extends Component {
 
   render () {
     let wfn
-    if(!this.props.num){
+    if(this.props.num === 0) {
+      wfn = '0'
+    } else if(!this.props.num){
       wfn = 'N/A'
     }else if(this.props.num  <= tenth) {
       wfn = Number(this.props.num.toFixed(2))
