@@ -9,7 +9,7 @@ const nameMaps = {
   "rari-capital": "Rari (Tetranode pool)",
   "rikki": "Rikkei Finance",
   "apeswap": "ApeSwap",
-  "inverse": "Inverse Finance"
+  "inverse": "Inverse Finance",
 }
 
 class PlatformName extends Component {
@@ -22,7 +22,7 @@ class PlatformName extends Component {
     const displayName = nameMaps[this.props.name]
     const txt = !displayName ? this.props.name.split("-").map(capitalizeFirstLetter).join(" ") : displayName
     return (
-      <span>{txt}</span>
+      <span style={{marginLeft: '5px'}}>{txt}</span>
     )
   }
 }

@@ -14,6 +14,7 @@
     "moment": "^2.29.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4",
     "web3-utils": "^1.7.3"
@@ -22,7 +23,7 @@
     "start": "react-app-rewired start",
     "start-coming-soon": "REACT_APP_COMING_SOON=true react-app-rewired start",
     "build-server": "BUILD_PATH='../public' react-app-rewired build",
-    "build": "react-app-rewired build",
+    "build": "react-app-rewired build && ./generate-static.sh",
     "build-coming-soon": "REACT_APP_COMING_SOON=true react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject"
