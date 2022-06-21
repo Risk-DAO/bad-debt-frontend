@@ -20,7 +20,7 @@ class CompoundFroksBadDebt extends Component {
         </div>}
         {!mainStore.loading &&  <article>
           <header>
-            <h2 style={{margin: 0, textAlign: 'center'}}>Compound Compatible Platform Bad Debt</h2>
+            <h2 style={{margin: 0, textAlign: 'center'}}>Lending Markets Bad Debt</h2>
           </header>
           <TableView data={mainStore.tableData}/>
           <footer style={{display: 'flex', justifyContent: 'space-around'}}>

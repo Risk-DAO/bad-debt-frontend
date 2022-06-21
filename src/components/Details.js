@@ -14,7 +14,7 @@ class Details extends Component {
     const name = chain + '_' + platform
     if(markets){
       return (
-        <a href={`/markets?platform=${platform}`}>{Object.values(markets).length} lending markets</a>
+        <a href={`/markets?platform=${platform}`}>Full dashboard for {Object.values(markets).length} markets</a>
       )
     }
     return (
