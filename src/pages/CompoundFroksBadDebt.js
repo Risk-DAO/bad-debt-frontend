@@ -3,7 +3,7 @@
 import React, { Component } from "react";
 import {observer} from "mobx-react"
 import mainStore from "../stores/main.store"
-import TableView from "./TableView";
+import TableView from "../components/TableView";
 
 class CompoundFroksBadDebt extends Component {
 

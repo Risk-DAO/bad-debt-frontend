@@ -10,8 +10,8 @@ class ChainIcon extends Component {
   render () {
     const chains = this.props.chain.split(",").map(c => c.toLowerCase()).filter(c => c)
     return (
-      <div>
-        {chains.map(chain => <img key={chain} style={{borderRadius: '50%'}} src={`/images/chains/${chain}.webp`}/>)}
+      <div style={{display: "inline-block"}}>
+        {chains.map((chain, i) => <img key={i} style={{borderRadius: '50%'}} src={`/images/chains/${chain}.webp`}/>)}
       </div>
     )
   }

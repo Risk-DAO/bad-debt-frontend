@@ -5,12 +5,12 @@ import Platform from "./Platform";
 import PlatformDetails from "./PlatformDetails";
 import LastUpdate from "./LastUpdate";
 import WhaleFriendly from "./WhaleFriendly";
-import BadDebtUsers from "./BadDebtUsers";
+import Details from "./Details";
 import mainStore from "../stores/main.store";
 
 const checkPlatformIcon = platform => {
   try{
-    const icon = require(`../../public/images/platforms/${platform}.webp`)
+    const icon = require(`../../public/images/platforms/${platform.toLowerCase()}.webp`)
     return icon
   } catch (e) {
     return null;
@@ -58,7 +58,7 @@ class TableView extends Component {
                 return (<td key={v}><LastUpdate timestamp={v}/></td>)
               }               
               if (k === 'users'){
-                return (<td key={v}><BadDebtUsers data={row}/></td>)
+                return (<td key={v}><Details data={row}/></td>)
               }            
             })}
           </tr>

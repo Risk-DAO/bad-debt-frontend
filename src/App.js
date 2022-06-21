@@ -1,22 +1,34 @@
 import '@picocss/pico'
 import {observer} from "mobx-react"
-import CompoundFroksBadDebt from "./components/CompoundFroksBadDebt"
-import ComingSoon from "./components/ComingSoon"
+import CompoundFroksBadDebt from "./pages/CompoundFroksBadDebt"
+import Markets from "./pages/Markets"
 import Hero from './components/Hero'
 import Footer from './components/Footer'
 import './themeSwitcher'
 import './App.css'
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React from "react";
+
+function renderPage (props, PageComponent) {
+  return (
+    <PageComponent {...props}/> 
+  )
+}
 
 function App() {
   return (
-    <div className="App">
-      <Hero/>
-      <div className="container page">
-        {!process.env.REACT_APP_COMING_SOON && <CompoundFroksBadDebt/>}
-        {process.env.REACT_APP_COMING_SOON && <ComingSoon/>}
+    <Router>
+      <div className="App">
+        <Hero/>
+        <div className="container page">
+            <Routes>
+              <Route exact path="/"  element={<CompoundFroksBadDebt/>}/>
+              <Route exact path="/markets"  element={<Markets/>}/>
+            </Routes>
+        </div>
+        <Footer/>
       </div>
-      <Footer/>
-    </div>
+    </Router>
   );
 }
 
