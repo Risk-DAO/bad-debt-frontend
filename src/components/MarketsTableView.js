@@ -51,7 +51,7 @@ class MarketsTableView extends Component {
     const totalInsolvent = body.reduce((a, b)=> a + Number(b.users.length), 0)
     const totalChains = [...new Set(body.map(({chain})=>chain))]
     const totalMarkets = [...new Set(body.map(({market})=>market))]
-    debugger
+
     return (
       <div style={containerStyle}>
         <table role="grid">
