@@ -29,14 +29,44 @@ class TableView extends Component {
 
   render() {
     const data = this.props.data
-    const head = ['Name', 'Blockchains', 'TVL', 'Bad Debt (USD)', 'Last Update', 'Details']
+    const headTitleMap = {
+      platform: 'Name', 
+      chain: 'Blockchain', 
+      tvl: 'TVL', 
+      total: 'Bad Debt', 
+      ratio: 'Bad Debt Ratio', 
+      updated: 'Last Update', 
+      users: 'Details'
+    }
     const body = data.filter(({platform})=> checkPlatformIcon(platform))
+    const head = Object.keys(body[0])
+    const sortable = {
+      tvl: true, 
+      total: true, 
+      ratio: true, 
+      updated: true, 
+    }
     return (
       <div style={containerStyle}>
         <table role="grid">
         <thead>
           <tr>
-            {head.map(v=> <td key={v}>{v}</td> )}
+            {head.map(v=> {
+              if(sortable[v]){
+                return (
+                  <td className="clickable" key={v} onClick={()=>mainStore.sortBy(v)}>
+                    <b>{headTitleMap[v]}</b>
+                  </td> 
+                )
+              } else {
+                return (
+                  <td key={v}>
+                    <b>{headTitleMap[v]}</b>
+                  </td> 
+                )
+              }
+            }
+          )}
           </tr>
         </thead>
         <tbody>
@@ -53,6 +83,9 @@ class TableView extends Component {
               }                   
               if (k === 'total'){
                 return (<td key={v}>$<WhaleFriendly num={v}/></td>)
+              }                 
+              if (k === 'ratio'){
+                return (<td key={v}>{v.toFixed(2)}%</td>)
               }                  
               if (k === 'updated'){
                 return (<td key={v}><LastUpdate timestamp={v}/></td>)

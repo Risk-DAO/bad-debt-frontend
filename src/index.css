@@ -15,3 +15,7 @@ code {
 .page{
   min-height: 80vh;
 }
+
+.clickable{
+  cursor: pointer;
+}

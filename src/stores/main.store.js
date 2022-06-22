@@ -53,18 +53,21 @@ class MainStore {
         chain,
         tvl,
         total: totalDebt,
+        ratio: (totalDebt/tvl),
         updated,
         users,
       }
     })
-
-    const results = rows.concat(subJobSummeries).sort((a, b) => {
-      return Number(b.tvl) - Number(a.tvl)
-     })
     
     runInAction(() => {
-      this.tableData = results
+      this.tableData = rows.concat(subJobSummeries)
       this.loading = false
+    })
+  }
+
+  sortBy(sortAttribute){
+    this.tableData = this.tableData.slice().sort((a, b) => {
+      return Number(b[sortAttribute]) - Number(a[sortAttribute])
     })
   }
 
@@ -86,12 +89,13 @@ class MainStore {
     tvl = Math.abs(parseFloat(fromWei(tvl, decimalName)))
     let updated = Object.values(markets).map(({updated})=> updated).sort((a, b)=> Number(a) - Number(b))[0]
     let users = [].concat(...Object.values(markets).map(({users}) => users))
-    
+    debugger
     return {
       platform,
       chain,
       tvl,
       total: totalDebt,
+      ratio: (totalDebt/tvl),
       updated,
       users,
       markets
