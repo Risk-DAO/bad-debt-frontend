@@ -89,7 +89,7 @@ class MainStore {
     tvl = Math.abs(parseFloat(fromWei(tvl, decimalName)))
     let updated = Object.values(markets).map(({updated})=> updated).sort((a, b)=> Number(a) - Number(b))[0]
     let users = [].concat(...Object.values(markets).map(({users}) => users))
-    debugger
+
     return {
       platform,
       chain,
