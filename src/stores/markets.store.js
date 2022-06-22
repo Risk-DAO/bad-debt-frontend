@@ -57,6 +57,12 @@ class MarketsStore {
     }
     this.tableRowDetails = name
   }
+
+  sortBy(sortAttribute){
+    this.tableData = this.tableData.slice().sort((a, b) => {
+      return Number(b[sortAttribute]) - Number(a[sortAttribute])
+    })
+  }
 }
 
 export default new MarketsStore()

@@ -29,20 +29,53 @@ class MarketsTableView extends Component {
 
   render() {
     const data = this.props.data
-    const head = ['Market', 'Blockchain', 'TVL', 'Bad Debt (USD)', 'Last Update', 'Details']
+    const headTitleMap = {
+      market: 'Market', 
+      chain: 'Blockchain', 
+      tvl: 'TVL', 
+      total: 'Bad Debt', 
+      ratio: 'Bad Debt Ratio', 
+      updated: 'Last Update', 
+      users: 'Details'
+    }
     const body = data.filter(({platform})=> checkPlatformIcon(platform))
+    const head = Object.keys(body[0])
+    const sortable = {
+      tvl: true, 
+      total: true, 
+      ratio: true, 
+      updated: true, 
+    }
     const totalTvl = body.reduce((a, b)=> a + Number(b.tvl), 0)
     const totalBadDebt = body.reduce((a, b)=> a + Number(b.total), 0)
     const totalInsolvent = body.reduce((a, b)=> a + Number(b.users.length), 0)
     const totalChains = [...new Set(body.map(({chain})=>chain))]
     const totalMarkets = [...new Set(body.map(({market})=>market))]
-    
+
     return (
       <div style={containerStyle}>
         <table role="grid">
         <thead>
-          <tr>
-            {head.map(v=> <td key={v}><b>{v}</b></td> )}
+        <tr>
+            {head.map(v=> {
+              if(!headTitleMap[v]){
+                return null
+              }
+              if(sortable[v]){
+                return (
+                  <td className="clickable" key={v} onClick={()=>marketsStore.sortBy(v)}>
+                    <b>{headTitleMap[v]}</b>
+                  </td> 
+                )
+              } else {
+                return (
+                  <td key={v}>
+                    <b>{headTitleMap[v]}</b>
+                  </td> 
+                )
+              }
+            }
+          )}
           </tr>
         </thead>
         <tbody>
