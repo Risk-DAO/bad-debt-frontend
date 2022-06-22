@@ -53,7 +53,7 @@ class MainStore {
         chain,
         tvl,
         total: totalDebt,
-        ratio: (totalDebt/tvl),
+        ratio: 100 * (totalDebt/tvl),
         updated,
         users,
       }
@@ -63,6 +63,8 @@ class MainStore {
       this.tableData = rows.concat(subJobSummeries)
       this.loading = false
     })
+    
+    this.sortBy("tvl")
   }
 
   sortBy(sortAttribute){
@@ -95,7 +97,7 @@ class MainStore {
       chain,
       tvl,
       total: totalDebt,
-      ratio: (totalDebt/tvl),
+      ratio: 100 * (totalDebt/tvl),
       updated,
       users,
       markets
