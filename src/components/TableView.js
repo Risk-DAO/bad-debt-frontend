@@ -73,25 +73,25 @@ class TableView extends Component {
           {body.map(row=> <Fragment key={row.platform}><tr>
             {Object.entries(row).map(([k, v])=> {
               if (k === 'platform'){
-                return (<td key={v}><Platform name={v}/></td>)
+                return (<td key={k+v}><Platform name={v}/></td>)
               }
               if (k === 'chain'){
-                return (<td key={v}><ChainIcon chain={v}/></td>)
+                return (<td key={k+v}><ChainIcon chain={v}/></td>)
               }
               if (k === 'tvl'){
-                return (<td key={v}>$<WhaleFriendly num={v}/></td>)
+                return (<td key={k+v}>$<WhaleFriendly num={v}/></td>)
               }                   
               if (k === 'total'){
-                return (<td key={v}>$<WhaleFriendly num={v}/></td>)
+                return (<td key={k+v}>$<WhaleFriendly num={v}/></td>)
               }                 
               if (k === 'ratio'){
-                return (<td key={v}>{v.toFixed(2)}%</td>)
+                return (<td key={k+v}>{v.toFixed(2)}%</td>)
               }                  
               if (k === 'updated'){
-                return (<td key={v}><LastUpdate timestamp={v}/></td>)
+                return (<td key={k+v}><LastUpdate timestamp={v}/></td>)
               }               
               if (k === 'users'){
-                return (<td key={v}><Details data={row}/></td>)
+                return (<td key={k+v}><Details data={row}/></td>)
               }            
             })}
           </tr>
