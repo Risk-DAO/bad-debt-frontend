@@ -5,7 +5,7 @@ import Platform from "./Platform";
 import PlatformDetails from "./PlatformDetails";
 import LastUpdate from "./LastUpdate";
 import WhaleFriendly from "./WhaleFriendly";
-import Details from "./Details";
+import DetailsForMarkets from "./DetailsForMarkets";
 import marketsStore from "../stores/markets.store";
 
 const checkPlatformIcon = platform => {
@@ -52,6 +52,8 @@ class MarketsTableView extends Component {
     const totalChains = [...new Set(body.map(({chain})=>chain))]
     const totalMarkets = [...new Set(body.map(({market})=>market))]
 
+
+    const totalRatio = (totalBadDebt / totalTvl) * 100
     return (
       <div style={containerStyle}>
         <table role="grid">
@@ -86,6 +88,8 @@ class MarketsTableView extends Component {
           </td>
           <td>$<WhaleFriendly num={totalTvl}/></td>
           <td>$<WhaleFriendly num={totalBadDebt}/></td>
+          
+          <td>{totalRatio.toFixed(2)}%</td>
           <td> </td>
           <td>{totalInsolvent} insolvent accounts</td>
         </tr>
@@ -102,12 +106,15 @@ class MarketsTableView extends Component {
               }                   
               if (k === 'total'){
                 return (<td key={v+i}>$<WhaleFriendly num={v}/></td>)
-              }                  
+              }         
+              if (k === 'ratio'){
+                return (<td key={v}>{v.toFixed(2)}%</td>)
+              }            
               if (k === 'updated'){
                 return (<td key={v+i}><LastUpdate timestamp={v}/></td>)
               }               
               if (k === 'users'){
-                return (<td key={v+i}><Details data={row}/></td>)
+                return (<td key={v+i}><DetailsForMarkets data={row}/></td>)
               }            
             })}
           </tr>
