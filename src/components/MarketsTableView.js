@@ -68,7 +68,7 @@ class MarketsTableView extends Component {
                   <td className="clickable" key={v} onClick={()=>marketsStore.sortBy(v)}>
                     <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                       <b>{headTitleMap[v]}</b>
-                      <img style={{maxWidth: '15px'}} src={'/images/sort.svg'}/>
+                      <img style={{maxWidth: '24px'}} src={'/images/sort.svg'}/>
                     </div>
                   </td> 
                 )
