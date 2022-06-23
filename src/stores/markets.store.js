@@ -33,6 +33,7 @@ class MarketsStore {
         chain,
         tvl: fromWei(tvl),
         total: totalDebt,
+        ratio: (totalDebt/Number(fromWei(tvl))) * 100,
         updated,
         users,
       }

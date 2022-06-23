@@ -3,10 +3,10 @@ import {observer} from "mobx-react"
 import PlatformName from './PlatformName'
 import PlatformIcon from './PlatformIcon'
 import mainStore from "../stores/main.store";
-const platformDetails = require('../platform-details.json')
+import platformDetails from "../lending-platfroms-details/index"
 
 const detailsStyle = {
-  minWidth: '160px',
+  minWidth: '180px',
   padding: 0,
   margin: 0,
   border: 'none'
