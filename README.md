@@ -1,9 +1,19 @@
 # Risk DAO
 ### Bad Debt Dashboard
 
+## Adding a lending platform
+to add a lending platform
+you will need to add a parser here 
+https://github.com/Risk-DAO/bad-debt-leaderboard/tree/main/backgroundJobs
+and submit a pull request
+
+after the parser is deployed and the API returns the data 
+
+you will need to add the icon of you lending platfrom in webp format to 
+public/images/platform
 
 ## Lending Platforms Explainers
-if you wish to add information about your lending platform
+to add information about your lending platform
 explaining about debt and risk releated things
 please do
 
