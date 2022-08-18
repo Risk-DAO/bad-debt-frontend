@@ -25,5 +25,6 @@ yarn-error.log*
 
 # CF worker site
 #===========================
+_wrangler.toml
 wrangler.toml
-/worker-site
+/workers-site
