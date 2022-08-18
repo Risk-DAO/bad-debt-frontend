@@ -13,6 +13,7 @@ const checkPlatformIcon = platform => {
     const icon = require(`../../public/images/platforms/${platform.toLowerCase()}.webp`)
     return icon
   } catch (e) {
+    console.warn(platform.toLowerCase() + ".webp icon was not found")
     return null;
   }
 }
