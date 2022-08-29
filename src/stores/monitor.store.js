@@ -64,6 +64,7 @@ function getKyberUrl(chain, tokenIn, tokenOut, amountIn, deadline) {
 
 
 async function getSellPrice(chain, mainnetMidPrice) {
+  try{
     const deadline = (Math.floor(Date.now() / 1000) + 1000).toString()
     const urlSell = getKyberUrl(chain, chains[chain].ETH, chains[chain].USD, toWei("1"), deadline)
     const sellResult = await axios.get(urlSell, "", {headers: {"Accept-Version":"Latest"}})
@@ -94,6 +95,17 @@ async function getSellPrice(chain, mainnetMidPrice) {
     sellDeviation, 
     midDeviation 
   }
+} catch (e){
+  return { 
+    chain,
+    "buy": 0, 
+    "sell": 0, 
+    "mid": 0, 
+    buyDeviation: 0, 
+    sellDeviation: 0, 
+    midDeviation: 0 
+  }
+}
 }
 
 async function test() {
@@ -120,7 +132,12 @@ class MonitorStore {
     const ethereumMid = base.mid
     const promises = []
     for(const network of Object.keys(chains)) {
-      promises.push(getSellPrice(network, ethereumMid))
+      const p = getSellPrice(network, ethereumMid).catch(err => {
+        debugger
+        console.error(err)
+        return null
+      })
+      promises.push(p)
     }
     const results = await Promise.all(promises)
     runInAction(() => {

@@ -23,9 +23,9 @@ function App() {
         <Hero/>
         <div className="container page">
             <Routes>
-              <Route exact path="/"  element={<CompoundFroksBadDebt/>}/>
+              {/* <Route exact path="/"  element={<CompoundFroksBadDebt/>}/> */}
               <Route exact path="/markets"  element={<Markets/>}/>
-              <Route exact path="/monitor"  element={<EthMonitor/>}/>
+              <Route exact path="/"  element={<EthMonitor/>}/>
             </Routes>
         </div>
         <Footer/>
