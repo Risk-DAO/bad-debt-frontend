@@ -9,6 +9,7 @@ import Details from "./Details";
 import mainStore from "../stores/main.store";
 
 const checkPlatformIcon = platform => {
+  return true
   try{
     const icon = require(`../../public/images/platforms/${platform.toLowerCase()}.webp`)
     return icon
@@ -31,42 +32,31 @@ class TableView extends Component {
   render() {
     debugger
     const data = this.props.data
-    const headTitleMap = {
-      platform: 'Name', 
-      chain: 'Blockchain', 
-      tvl: 'TVL', 
-      total: 'Bad Debt', 
-      ratio: 'Bad Debt Ratio', 
-      updated: 'Last Update', 
-      users: 'Details'
-    }
-    const body = data.filter(({platform})=> checkPlatformIcon(platform))
+    const body = data
     const head = Object.keys(body[0])
-    const sortable = {
-      tvl: true, 
-      total: true, 
-      ratio: true, 
-      updated: true, 
-    }
+
     return (
       <div style={containerStyle}>
         <table role="grid">
         <thead>
           <tr>
             {head.map(v=> {
-              if(sortable[v]){
+              if(false){
                 return (
                   <td className="clickable" key={v} onClick={()=>mainStore.sortBy(v)}>
                     <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                      <b>{headTitleMap[v]}</b>
+                      <b>{v}</b>
                       <img style={{maxWidth: '24px'}} src={'/images/sort.svg'}/>
                     </div>
                   </td> 
                 )
               } else {
+                if(['chain', 'buy', 'sell', 'mid'].indexOf(v) === -1){
+                  return null
+                }
                 return (
                   <td key={v}>
-                    <b>{headTitleMap[v]}</b>
+                    <b>{v}</b>
                   </td> 
                 )
               }
@@ -74,30 +64,23 @@ class TableView extends Component {
           )}
           </tr>
         </thead>
+        {/* (6) ['buy', 'sell', 'mid', 'buyDeviation', 'sellDeviation', 'midDeviation'] */}
         <tbody>
           {body.map(row=> <Fragment key={row.platform}><tr>
             {Object.entries(row).map(([k, v])=> {
-              if (k === 'platform'){
-                return (<td key={k+v}><Platform name={v}/></td>)
-              }
               if (k === 'chain'){
-                return (<td key={k+v}><ChainIcon chain={v}/></td>)
+                return (<td key={k+v}><ChainIcon chain={v}/> {v} </td>)
               }
-              if (k === 'tvl'){
-                return (<td key={k+v}>$<WhaleFriendly num={v}/></td>)
-              }                   
-              if (k === 'total'){
-                return (<td key={k+v}>$<WhaleFriendly num={v}/></td>)
-              }                 
-              if (k === 'ratio'){
-                return (<td key={k+v}>{v.toFixed(2)}%</td>)
-              }                  
-              if (k === 'updated'){
-                return (<td key={k+v}><LastUpdate timestamp={v}/></td>)
+              if (k === 'buy'){
+                return (<td key={k+v}>${v.toFixed(2)} ({row['buyDeviation'].toFixed(2)}%)</td>)
               }               
-              if (k === 'users'){
-                return (<td key={k+v}><Details data={row}/></td>)
-              }            
+              if (k === 'sell'){
+                return (<td key={k+v}>${v.toFixed(2)} ({row['sellDeviation'].toFixed(2)}%)</td>)
+              }                    
+              if (k === 'mid'){
+                return (<td key={k+v}>${v.toFixed(2)} ({row['midDeviation'].toFixed(2)}%)</td>)
+              }         
+              return null     
             })}
           </tr>
           {row.platform === mainStore.tableRowDetails && <tr><td colSpan='7'><PlatformDetails name={row.platform}/></td></tr>}

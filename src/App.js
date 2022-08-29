@@ -2,6 +2,7 @@ import '@picocss/pico'
 import {observer} from "mobx-react"
 import CompoundFroksBadDebt from "./pages/CompoundFroksBadDebt"
 import Markets from "./pages/Markets"
+import EthMonitor from "./pages/EthMonitor"
 import Hero from './components/Hero'
 import Footer from './components/Footer'
 import './themeSwitcher'
@@ -24,6 +25,7 @@ function App() {
             <Routes>
               <Route exact path="/"  element={<CompoundFroksBadDebt/>}/>
               <Route exact path="/markets"  element={<Markets/>}/>
+              <Route exact path="/monitor"  element={<EthMonitor/>}/>
             </Routes>
         </div>
         <Footer/>
