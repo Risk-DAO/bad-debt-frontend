@@ -26,10 +26,11 @@ const chains = {
     "id": "250", "ETH": "0x74b23882a30290451A17c44f4F05243b6b58C76d",
     "USD": "0x04068DA6C83AFCFA0e13ba15A6696662335D5B75", "decimals": "6"
   },
+  /*
   "cronos": {
     "id": "25", "ETH": "0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     "USD": "0xc21223249CA28397B4B6541dfFaEcC539BfF0c59", "decimals": "6"
-  },
+  },*/
   "arbitrum": {
     "id": "42161", "ETH": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
     "USD": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8", "decimals": "6"
@@ -46,20 +47,10 @@ const chains = {
 
 
 function getKyberUrl(chain, tokenIn, tokenOut, amountIn, deadline) {
-    return  "https://aggregator-api.kyberswap.com/" + chain +"/route/encode?" +
-    "tokenIn=" + tokenIn + "&" +
-    "tokenOut=" + tokenOut + "&" +
-    "amountIn=" + amountIn + "&" +
-    "saveGas=0&" +
-    "gasInclude=0&" +
-    "gasPrice=70000000&" +
-    "slippageTolerance=50&" +
-    "deadline=" + deadline + "&" +
-    "to=0x0000000000000000000000000000000000000000&" +
-    "chargeFeeBy=&" +
-    "feeReceiver=&" +
-    "isInBps=&feeAmount=&" +
-    "clientData={'source':'kyberswap'}"    
+    return  "https://api.1inch.io/v4.0/" + chains[chain].id +"/quote?" +
+    "fromTokenAddress=" + tokenIn + "&" +
+    "toTokenAddress=" + tokenOut + "&" +
+    "amount=" + amountIn
 }
 
 
@@ -67,12 +58,12 @@ async function getSellPrice(chain, mainnetMidPrice) {
     const deadline = (Math.floor(Date.now() / 1000) + 1000).toString()
     const urlSell = getKyberUrl(chain, chains[chain].ETH, chains[chain].USD, toWei("1"), deadline)
     const sellResult = await axios.get(urlSell, "", {headers: {"Accept-Version":"Latest"}})
-    const returnUSDAmount = sellResult.data.outputAmount.toString()
+    const returnUSDAmount = sellResult.data.toTokenAmount.toString()
     const decimalFactor = toBN("10").pow(toBN((18 - Number(chains[chain].decimals)).toString()))
     const ethSellPrice = Number(fromWei(toBN(returnUSDAmount).mul(decimalFactor)))
     const buyUrl = getKyberUrl(chain, chains[chain].USD, chains[chain].ETH, returnUSDAmount, deadline)
     const buyResult = await axios.get(buyUrl, "", {"Accept-Version":"Latest"})
-    const returnETHAmount = buyResult.data.outputAmount.toString()
+    const returnETHAmount = buyResult.data.toTokenAmount.toString()
     const ethBuyPrice = Number(fromWei(toBN(returnUSDAmount).mul(decimalFactor))) / Number(fromWei(returnETHAmount))
 
 
