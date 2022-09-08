@@ -30,7 +30,7 @@ class EthMonitor extends Component {
                 Depending on the value of ETH1,
                 it could impact the correctness of the L2 ETH price oracle, <br/>
                 the DEX liquidity of $ETH, or both. Each affects the stability of lending markets.<br/>
-                <a href="https://twitter.com/Risk_DAO/status/1555930512325238784">Learn more</a>
+                <a target="_blank" href="https://twitter.com/Risk_DAO/status/1555930512325238784">Learn more</a>
                 </div>
               </div>
             </div>

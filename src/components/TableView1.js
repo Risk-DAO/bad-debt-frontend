@@ -56,7 +56,7 @@ class TableView extends Component {
                 }
                 return (
                   <td key={v}>
-                    <b>{v}</b>
+                    <b style={{textTransform: 'capitalize'}}>{v}</b>
                   </td> 
                 )
               }
@@ -69,16 +69,16 @@ class TableView extends Component {
           {body.map(row=> <Fragment key={row.platform}><tr>
             {Object.entries(row).map(([k, v])=> {
               if (k === 'chain'){
-                return (<td key={k+v}><ChainIcon chain={v}/> {v} </td>)
+                return (<td key={k+v}><ChainIcon chain={v}/> <b style={{textTransform: 'capitalize'}}>{v}</b> </td>)
               }
               if (k === 'buy'){
-                return (<td key={k+v}>${v.toFixed(2)} ({row['buyDeviation'].toFixed(2)}%)</td>)
+                return (<td key={k+v}>${v.toFixed(2)} ({(row['buyDeviation'] *-1).toFixed(2)}%)</td>)
               }               
               if (k === 'sell'){
-                return (<td key={k+v}>${v.toFixed(2)} ({row['sellDeviation'].toFixed(2)}%)</td>)
+                return (<td key={k+v}>${v.toFixed(2)} ({(row['sellDeviation'] *-1).toFixed(2)}%)</td>)
               }                    
               if (k === 'mid'){
-                return (<td key={k+v}>${v.toFixed(2)} ({row['midDeviation'].toFixed(2)}%)</td>)
+                return (<td key={k+v}>${v.toFixed(2)} ({(row['midDeviation'] *-1).toFixed(2)}%)</td>)
               }         
               return null     
             })}
