@@ -12,12 +12,13 @@ class MainStore {
   tableRowDetails = null
   loading = true
   isLocalHost = window.location.hostname === 'localhost'
-  apiUrl = 'https://api.riskdao.org'
   blackMode =  null
+  badDebtCache = {}
+  badDebtSubJobsCache = {}
 
   constructor () {
     makeAutoObservable(this)
-    this.init()
+    this.initializationPromise = this.init()
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       // dark mode
       this.blackMode = true
@@ -31,10 +32,42 @@ class MainStore {
     this.blackMode = mode
   }
 
+  getJsonFile = async fileName => {
+    const { data: file } = await axios.get(`https://raw.githubusercontent.com/Risk-DAO/simulation-results/main/bad-debt/latest/${encodeURIComponent(fileName)}`)
+    if(!file) return
+    if(fileName.indexOf('subjob') === -1){
+      this.badDebtCache[fileName.replace('.json', '')] = file
+    } else {
+      const key = fileName.replace('.json', '').replace('subjob', '')
+      const platform = key.split('_')[1]
+      const platformSubJobs = this.badDebtSubJobsCache[platform] = this.badDebtSubJobsCache[platform] || {}
+      platformSubJobs[key] = file
+    }
+  }
+
+  getFileNames = () => {
+    return axios.get('https://api.github.com/repos/Risk-DAO/simulation-results/git/trees/f63242689a16f32c4afdeaf5252f3bf47875f5a7')
+    .then(({data})=> {
+      return data.tree.map(({path}) => path)
+    })
+  }
+
+  badDebtFetcher = async () => {
+    try{
+      const fileNames = await this.getFileNames()
+      const filePromises = fileNames.map(this.getJsonFile)
+      await Promise.all(filePromises)
+      console.log('badDebtCache done')
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   init = async () => {
-    const {data: subJobs} = await axios.get(this.apiUrl + '/bad-debt-sub-jobs')
+    await this.badDebtFetcher()
+    const subJobs = this.badDebtSubJobsCache
     const subJobSummeries = Object.entries(subJobs).map(this.summrizeSubJobs)
-    const {data: badDebt} = await axios.get(this.apiUrl + '/bad-debt')
+    const badDebt = this.badDebtCache
     
     const rows = Object.entries(badDebt).map(([k, v])=> {
       const [chain, platform, market] = k.split('_')

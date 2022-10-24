@@ -1,6 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx"
 import axios from "axios"
 import web3Utils from "web3-utils"
+import mainStore from "./main.store"
 
 const {fromWei} = web3Utils
 
@@ -21,8 +22,11 @@ class MarketsStore {
 
   fetchData = async (platform) => {
     this.loading = true
-    const {data: badDebt} = await axios.get(this.apiUrl + `/bad-debt-sub-jobs?platfrom=${platform}`)
-    const rows = Object.entries(badDebt[platform]).map(([k, v])=> {
+    
+    await mainStore.initializationPromise
+    
+    const badDebt = mainStore.badDebtSubJobsCache[platform] || {}
+    const rows = Object.entries(badDebt).map(([k, v])=> {
       const [chain, platform, market] = k.split('_')
       const {total, updated, users, decimals, tvl} = v
       const decimalName = deciamlNameMap[Math.pow(10, decimals).toString()]
@@ -38,7 +42,6 @@ class MarketsStore {
         users,
       }
     })
-
     const results = rows.sort((a, b) => {
       return Number(b.tvl) - Number(a.tvl)
     })
