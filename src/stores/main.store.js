@@ -11,7 +11,6 @@ class MainStore {
   tableData = []
   tableRowDetails = null
   loading = true
-  isLocalHost = window.location.hostname === 'localhost'
   blackMode =  null
   badDebtCache = {}
   badDebtSubJobsCache = {}

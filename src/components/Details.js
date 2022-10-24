@@ -11,14 +11,14 @@ class Details extends Component {
 
   render () {
     const { chain, platform, users, markets } = this.props.data
-    const name = chain + '_' + platform
+    const name = chain + '_' + platform + '.json'
     if(markets){
       return (
         <a href={`/markets?platform=${platform}`}>Full dashboard for {Object.values(markets).length} markets</a>
       )
     }
     return (
-      <a target="_blank" href={`${mainStore.apiUrl}/bad-debt?platform=${name}`}>{users.length} insolvent accounts</a>
+      <a target="_blank" href={`https://raw.githubusercontent.com/Risk-DAO/simulation-results/main/bad-debt/latest/${encodeURIComponent(name)}`}>{users.length} insolvent accounts</a>
     )
   }
 }

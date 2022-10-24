@@ -12,8 +12,6 @@ class MarketsStore {
   tableData = []
   tableRowDetails = null
   loading = true
-  isLocalHost = window.location.hostname === 'localhost'
-  apiUrl = 'https://api.riskdao.org'
 
   constructor () {
     makeAutoObservable(this)
