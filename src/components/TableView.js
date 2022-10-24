@@ -58,7 +58,7 @@ class TableView extends Component {
                   <td className="clickable" key={v} onClick={()=>mainStore.sortBy(v)}>
                     <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                       <b>{headTitleMap[v]}</b>
-                      <img style={{maxWidth: '24px'}} src={'/images/sort.svg'}/>
+                      <img style={{maxWidth: '24px', filter: `invert(${mainStore.blackMode? 1 : 0})`}} src={'/images/sort.svg'}/>
                     </div>
                   </td> 
                 )
