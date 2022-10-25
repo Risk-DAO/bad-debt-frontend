@@ -11,7 +11,7 @@ class DetailsForMarkets extends Component {
 
   render () {
     const { chain, platform, users, market } = this.props.data
-    const name = chain + '_' + platform + '_' + market + '.json'
+    const name = 'subjob' + chain + '_' + platform + '_' + market + '.json'
     return (
       <a target="_blank" href={`https://raw.githubusercontent.com/Risk-DAO/simulation-results/main/bad-debt/latest/${encodeURIComponent(name)}`}>{users.length} insolvent accounts</a>
     )

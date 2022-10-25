@@ -1,5 +1,4 @@
-import { makeAutoObservable, runInAction } from "mobx"
-import axios from "axios"
+import { makeAutoObservable, runInAction, observe} from "mobx"
 import web3Utils from "web3-utils"
 import mainStore from "./main.store"
 
@@ -15,12 +14,18 @@ class MarketsStore {
 
   constructor () {
     makeAutoObservable(this)
+    this.init()
+    observe(mainStore, "initializationPromise", change => {
+      this.init()
+    })
+  }
+
+  init = () => {
     this.fetchData('MIM')
   }
 
   fetchData = async (platform) => {
     this.loading = true
-    
     await mainStore.initializationPromise
     
     const badDebt = mainStore.badDebtSubJobsCache[platform] || {}

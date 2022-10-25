@@ -6,6 +6,14 @@ const {fromWei, toBN} = web3Utils
 
 const deciamlNameMap = Object.assign({}, ...Object.entries(web3Utils.unitMap).map(([a,b]) => ({ [b]: a })))
 
+const getToday = ()=> {
+  const dateObj = new Date();
+  const month = dateObj.getUTCMonth() + 1; //months from 1-12
+  const day = dateObj.getUTCDate();
+  const year = dateObj.getUTCFullYear();
+  return `${year}-${month}-${day}`
+}
+
 class MainStore {
 
   tableData = []
@@ -14,6 +22,10 @@ class MainStore {
   blackMode =  null
   badDebtCache = {}
   badDebtSubJobsCache = {}
+  today = getToday()
+  oldestDay = '2022-10-24'
+  selectedDate = getToday()
+  initializationPromise = null
 
   constructor () {
     makeAutoObservable(this)
@@ -27,12 +39,26 @@ class MainStore {
     });
   }
 
+  get githubDirName () {
+    if(this.selectedDate === this.today){
+      return 'latest'
+    }
+    const [year, month, day] = this.selectedDate.split('-')
+    return `${day}.${month}.${year}`
+
+  }
+
+  setSelectedDate = (e) => {
+    this.selectedDate = e.target.value
+    this.initializationPromise = this.init()
+  }
+
   setBlackMode = (mode) => {
     this.blackMode = mode
   }
 
   getJsonFile = async fileName => {
-    const { data: file } = await axios.get(`https://raw.githubusercontent.com/Risk-DAO/simulation-results/main/bad-debt/latest/${encodeURIComponent(fileName)}`)
+    const { data: file } = await axios.get(`https://raw.githubusercontent.com/Risk-DAO/simulation-results/main/bad-debt/${this.githubDirName}/${encodeURIComponent(fileName)}`)
     if(!file) return
     if(fileName.indexOf('subjob') === -1){
       this.badDebtCache[fileName.replace('.json', '')] = file
@@ -44,11 +70,17 @@ class MainStore {
     }
   }
 
-  getFileNames = () => {
-    return axios.get('https://api.github.com/repos/Risk-DAO/simulation-results/git/trees/f63242689a16f32c4afdeaf5252f3bf47875f5a7')
-    .then(({data})=> {
-      return data.tree.map(({path}) => path)
-    })
+  getDirSha = async () => {
+    const {data} = await axios.get('https://api.github.com/repos/Risk-DAO/simulation-results/git/trees/7537ef37dcee7ac47530c1595424d7d1d4d1837d')
+    
+    const [{sha}] = data.tree.filter(({path}) => path === this.githubDirName)
+    return sha
+  }
+
+  getFileNames = async () => {
+    const sha = await this.getDirSha()
+    const {data} = await axios.get(`https://api.github.com/repos/Risk-DAO/simulation-results/git/trees/${sha}`)
+    return data.tree.map(({path}) => path)
   }
 
   badDebtFetcher = async () => {
@@ -63,6 +95,7 @@ class MainStore {
   }
 
   init = async () => {
+    runInAction(()=> this.loading = true)
     await this.badDebtFetcher()
     const subJobs = this.badDebtSubJobsCache
     const subJobSummeries = Object.entries(subJobs).map(this.summrizeSubJobs)
