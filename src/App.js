@@ -3,6 +3,7 @@ import {observer} from "mobx-react"
 import CompoundFroksBadDebt from "./pages/CompoundFroksBadDebt"
 import Markets from "./pages/Markets"
 import Hero from './components/Hero'
+import DaySelector from './components/DaySelector'
 import Footer from './components/Footer'
 import './themeSwitcher'
 import './App.css'
@@ -20,6 +21,7 @@ function App() {
     <Router>
       <div className="App">
         <Hero/>
+        <DaySelector/>
         <div className="container page">
             <Routes>
               <Route exact path="/"  element={<CompoundFroksBadDebt/>}/>

@@ -15,14 +15,14 @@ class CompoundFroksBadDebt extends Component {
     const theme = mainStore.blackMode ? 'dark' : 'light';
     return (
       <div>
-        {mainStore.loading && <div>
-          <article style={{minHeight: '80vh'}} aria-busy="true"></article>
-        </div>}
-        {!mainStore.loading &&  <article>
+         <article>
           <header>
             <h2 style={{margin: 0, textAlign: 'center'}}>Lending Markets Bad Debt</h2>
           </header>
-          <TableView data={mainStore.tableData}/>
+          {!mainStore.loading && <TableView data={mainStore.tableData}/>}
+          {mainStore.loading && <div>
+            <div style={{minHeight: '80vh'}} aria-busy="true"></div>
+          </div>}
           <footer style={{display: 'flex', justifyContent: 'space-around'}}>
             <a href="https://krystal.app" target="_blank">
               <img style={{ width:"254px", height:"54px" }} src={`/images/power-krystal-${theme}.svg`}/>
@@ -31,7 +31,7 @@ class CompoundFroksBadDebt extends Component {
               <img src={`/images/power-zapper-${theme}.svg`}/>
             </a>
           </footer>
-        </article>}
+        </article>
       </div>
     )
   }

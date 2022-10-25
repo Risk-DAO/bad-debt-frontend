@@ -16,18 +16,18 @@ class CompoundFroksBadDebt extends Component {
     console.log(marketsStore.loading)
     return (
       <div>
-        {marketsStore.loading && <div>
-          <article style={{minHeight: '80vh'}} aria-busy="true"></article>
-        </div>}
-        {!marketsStore.loading &&  <article>
+        <article>
           <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
             <PlatformIcon name={'MIM'}/> 
             <h2 style={{margin: '10px', textAlign: 'center'}}>MIM Bad Debt</h2>
           </header>
-          <MarketsTableView data={marketsStore.tableData}/>
+          {!marketsStore.loading &&  <MarketsTableView data={marketsStore.tableData}/>}
+          {marketsStore.loading && <div>
+            <div style={{minHeight: '80vh'}} aria-busy="true"></div>
+          </div>}
           <footer style={{display: 'flex', justifyContent: 'space-around'}}>
           </footer>
-        </article>}
+        </article>
       </div>
     )
   }
