@@ -16,6 +16,7 @@ const getToday = ()=> {
 
 class MainStore {
 
+  headDirectory = 'bad-debt-staging'
   tableData = []
   tableRowDetails = null
   loading = true
@@ -61,7 +62,7 @@ class MainStore {
   }
 
   getJsonFile = async fileName => {
-    const { data: file } = await axios.get(`https://raw.githubusercontent.com/Risk-DAO/simulation-results/main/bad-debt/${this.githubDirName}/${encodeURIComponent(fileName)}`)
+    const { data: file } = await axios.get(`https://raw.githubusercontent.com/Risk-DAO/simulation-results/main/${this.headDirectory}/${this.githubDirName}/${encodeURIComponent(fileName)}`)
     if(!file) return
     if(fileName.indexOf('subjob') === -1){
       this.badDebtCache[fileName.replace('.json', '')] = file
@@ -77,7 +78,7 @@ class MainStore {
     // clear the cache when changing day
     this.badDebtCache = {};
     this.badDebtSubJobsCache = {};
-    const dirToGet = 'bad-debt/' + this.githubDirName + '/';
+    const dirToGet = this.headDirectory + '/' + this.githubDirName + '/';
     console.log('dirToGet', dirToGet)
     const allDirs = await axios.get('https://api.github.com/repos/Risk-DAO/simulation-results/git/trees/main?recursive=1');
     // console.log('allDirs', allDirs);
@@ -107,15 +108,8 @@ class MainStore {
     const rows = Object.entries(badDebt).map(([k, v])=> {
       const [chain, platform, market] = k.split('_')
       let {total, updated, users, decimals, tvl} = v
-      if(Number(decimals) > 31){
-        const denominator = toBN('10').pow(toBN((Number(decimals) - 18).toString()))
-        total = toBN(total).div(denominator).toString()
-        tvl = toBN(tvl).div(denominator).toString()
-        decimals = 18
-      }
-      const decimalName = deciamlNameMap[Math.pow(10, decimals).toString()]
-      const totalDebt = Math.abs(parseFloat(fromWei(total, decimalName)))
-      tvl = Math.abs(parseFloat(fromWei(tvl, decimalName)))
+      const totalDebt = Math.abs(normalize(total, decimals))
+      tvl = Math.abs(normalize(tvl, decimals));
       return {
         platform,
         chain,
@@ -154,9 +148,9 @@ class MainStore {
     let tvl = (Object.values(markets).reduce((acc, market) => toBN(acc).add(toBN(market.tvl)), '0')).toString()
     let total = (Object.values(markets).reduce((acc, market) => toBN(acc).add(toBN(market.total)), '0')).toString()
     let {decimals} = Object.values(markets)[0]
-    const decimalName = deciamlNameMap[Math.pow(10, decimals).toString()]
-    const totalDebt = Math.abs(parseFloat(fromWei(total, decimalName)))
-    tvl = Math.abs(parseFloat(fromWei(tvl, decimalName)))
+    // const decimalName = deciamlNameMap[Math.pow(10, decimals).toString()]
+    const totalDebt = Math.abs(normalize(total, decimals));
+    tvl = Math.abs(normalize(tvl, decimals))
     let updated = Object.values(markets).map(({updated})=> updated).sort((a, b)=> Number(a) - Number(b))[0]
     let users = [].concat(...Object.values(markets).map(({users}) => users))
 
@@ -170,6 +164,17 @@ class MainStore {
       users,
       markets
     }
+  }
+}
+
+function normalize(amount, decimals) {
+  if(decimals === 18) {
+      return  Number(fromWei(amount))
+  }
+  else {
+      const factor = toBN("10").pow(toBN(18 - decimals))
+      const norm = toBN(amount.toString()).mul(factor)
+      return Number(fromWei(norm))
   }
 }
 

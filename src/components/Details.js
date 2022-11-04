@@ -18,7 +18,7 @@ class Details extends Component {
       )
     }
     return (
-      <a target="_blank" href={`https://raw.githubusercontent.com/Risk-DAO/simulation-results/main/bad-debt/${mainStore.githubDirName}/${encodeURIComponent(name)}`}>{users.length} insolvent accounts</a>
+      <a target="_blank" href={`https://raw.githubusercontent.com/Risk-DAO/simulation-results/main/${mainStore.headDirectory}/${mainStore.githubDirName}/${encodeURIComponent(name)}`}>{users.length} insolvent accounts</a>
     )
   }
 }
