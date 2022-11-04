@@ -11,7 +11,7 @@ const getToday = ()=> {
   const month = dateObj.getUTCMonth() + 1; //months from 1-12
   const day = dateObj.getUTCDate();
   const year = dateObj.getUTCFullYear();
-  return `${year}-${month}-${day}`
+  return `${year}-${month < 10 ? '0'+month : month}-${day < 10 ? '0' + day : day}`
 }
 
 class MainStore {
@@ -40,12 +40,15 @@ class MainStore {
   }
 
   get githubDirName () {
-    if(this.selectedDate === this.today){
+    const [year, month, day] = this.selectedDate.split('-')
+    
+    if(this.selectedDate === this.today) {
       return 'latest'
     }
-    const [year, month, day] = this.selectedDate.split('-')
-    return `${day}.${month}.${year}`
-
+    
+    // remove 0 from day and month as there is no starting 0 in the github directories
+    // example: 2022-11-04 => 4.11.2022
+    return `${day.replace(/^0/, '')}.${month.replace(/^0/, '')}.${year}`
   }
 
   setSelectedDate = (e) => {
@@ -70,17 +73,17 @@ class MainStore {
     }
   }
 
-  getDirSha = async () => {
-    const {data} = await axios.get('https://api.github.com/repos/Risk-DAO/simulation-results/git/trees/7537ef37dcee7ac47530c1595424d7d1d4d1837d')
-    
-    const [{sha}] = data.tree.filter(({path}) => path === this.githubDirName)
-    return sha
-  }
-
   getFileNames = async () => {
-    const sha = await this.getDirSha()
-    const {data} = await axios.get(`https://api.github.com/repos/Risk-DAO/simulation-results/git/trees/${sha}`)
-    return data.tree.map(({path}) => path)
+    // clear the cache when changing day
+    this.badDebtCache = {};
+    this.badDebtSubJobsCache = {};
+    const dirToGet = 'bad-debt/' + this.githubDirName + '/';
+    console.log('dirToGet', dirToGet)
+    const allDirs = await axios.get('https://api.github.com/repos/Risk-DAO/simulation-results/git/trees/main?recursive=1');
+    // console.log('allDirs', allDirs);
+    const selectedFiles = allDirs.data.tree.filter(_ => _.path.startsWith(dirToGet))
+    // console.log('selectedFiles', selectedFiles)
+    return selectedFiles.map(_ => _.path.split('/').slice(-1)[0]);
   }
 
   badDebtFetcher = async () => {
