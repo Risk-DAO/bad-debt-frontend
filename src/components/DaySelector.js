@@ -7,11 +7,10 @@ class DaySelector extends Component {
   render () {
     return (
       <div className="container" style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column', alignItems: 'center'}}>
-        <label for="date">
+        <label key="date">
           <input type="date" id="date" name="date" onChange={mainStore.setSelectedDate} value={mainStore.selectedDate} min={mainStore.oldestDay} max={mainStore.today}/>
         </label>
       </div>
-      
     )
   }
 }
