@@ -11,7 +11,8 @@ const getToday = ()=> {
   const month = dateObj.getUTCMonth() + 1; //months from 1-12
   const day = dateObj.getUTCDate();
   const year = dateObj.getUTCFullYear();
-  return `${year}-${month}-${day}`
+  const today = `${year}-${month > 9 ? month : '0' + month}-${day > 9 ? day : '0' + day}`
+  return today
 }
 
 class MainStore {
@@ -26,6 +27,7 @@ class MainStore {
   oldestDay = '2022-10-24'
   selectedDate = getToday()
   initializationPromise = null
+  badDebtSha = null
 
   constructor () {
     makeAutoObservable(this)
@@ -44,8 +46,8 @@ class MainStore {
       return 'latest'
     }
     const [year, month, day] = this.selectedDate.split('-')
-    return `${day}.${month}.${year}`
-
+    const dirName = `${parseInt(day)}.${parseInt(month)}.${year}`
+    return dirName
   }
 
   setSelectedDate = (e) => {
@@ -70,9 +72,18 @@ class MainStore {
     }
   }
 
+  getBadDebtSha = async () => {
+    if(this.badDebtSha) {
+      return this.badDebtSha
+    }
+    const {data} = await axios.get('https://api.github.com/repos/Risk-DAO/simulation-results/contents')
+    const [{sha}] = data.filter(({name}) => name === 'bad-debt')
+    this.badDebtSha = sha 
+    return sha
+  }
+
   getDirSha = async () => {
-    const {data} = await axios.get('https://api.github.com/repos/Risk-DAO/simulation-results/git/trees/7537ef37dcee7ac47530c1595424d7d1d4d1837d')
-    
+    const {data} = await axios.get(`https://api.github.com/repos/Risk-DAO/simulation-results/git/trees/${this.badDebtSha}`)
     const [{sha}] = data.tree.filter(({path}) => path === this.githubDirName)
     return sha
   }
@@ -94,8 +105,15 @@ class MainStore {
     }
   }
 
+  clearCache = () => {
+    this.badDebtCache = {}
+    this.badDebtSubJobsCache = {}
+  }
+
   init = async () => {
     runInAction(()=> this.loading = true)
+    await this.getBadDebtSha()
+    this.clearCache()
     await this.badDebtFetcher()
     const subJobs = this.badDebtSubJobsCache
     const subJobSummeries = Object.entries(subJobs).map(this.summrizeSubJobs)

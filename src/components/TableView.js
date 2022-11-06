@@ -7,6 +7,7 @@ import LastUpdate from "./LastUpdate";
 import WhaleFriendly from "./WhaleFriendly";
 import Details from "./Details";
 import mainStore from "../stores/main.store";
+import NoDataFound from "./NoDataFound";
 
 const checkPlatformIcon = platform => {
   try{
@@ -40,6 +41,9 @@ class TableView extends Component {
       users: 'Details'
     }
     const body = data.filter(({platform})=> checkPlatformIcon(platform))
+    if(body.length === 0) {
+      return <NoDataFound/>
+    }
     const head = Object.keys(body[0])
     const sortable = {
       tvl: true, 
