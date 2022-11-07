@@ -19,8 +19,7 @@ class CompoundFroksBadDebt extends Component {
           <header>
             <h2 style={{margin: 0, textAlign: 'center'}}>Lending Markets Bad Debt</h2>
           </header>
-          {!mainStore.loading && mainStore.tableData.length !== 0 && <TableView data={mainStore.tableData}/>}
-          {!mainStore.loading && mainStore.tableData.length === 0 && <div>No data available for this day, please select another date</div>}
+          {!mainStore.loading && <TableView data={mainStore.tableData}/>}
           {mainStore.loading && <div>
             <div style={{minHeight: '80vh'}} aria-busy="true"></div>
           </div>}
