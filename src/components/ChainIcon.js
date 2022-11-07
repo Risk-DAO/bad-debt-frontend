@@ -11,7 +11,7 @@ class ChainIcon extends Component {
     const chains = this.props.chain.split(",").map(c => c.toLowerCase()).filter(c => c)
     return (
       <div style={{display: "inline-block"}}>
-        {chains.map((chain, i) => <img key={i} style={{borderRadius: '50%'}} src={`/images/chains/${chain}.webp`}/>)}
+        {chains.map((chain, i) => <img key={i} title={chain} alt={chain} style={{borderRadius: '50%'}} src={`/images/chains/${chain}.webp`}/>)}
       </div>
     )
   }

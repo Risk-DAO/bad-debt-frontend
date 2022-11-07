@@ -4,8 +4,6 @@ import web3Utils from "web3-utils"
 
 const {fromWei, toBN} = web3Utils
 
-const deciamlNameMap = Object.assign({}, ...Object.entries(web3Utils.unitMap).map(([a,b]) => ({ [b]: a })))
-
 const getToday = ()=> {
   const dateObj = new Date();
   const month = dateObj.getUTCMonth() + 1; //months from 1-12
@@ -16,7 +14,7 @@ const getToday = ()=> {
 
 class MainStore {
 
-  headDirectory = 'bad-debt-staging'
+  headDirectory = 'bad-debt'
   tableData = []
   tableRowDetails = null
   loading = true
@@ -102,7 +100,7 @@ class MainStore {
     runInAction(()=> this.loading = true)
     await this.badDebtFetcher()
     const subJobs = this.badDebtSubJobsCache
-    const subJobSummeries = Object.entries(subJobs).map(this.summrizeSubJobs)
+    const subJobSummeries = Object.entries(subJobs).map(this.summarizeSubJobs)
     const badDebt = this.badDebtCache
     
     const rows = Object.entries(badDebt).map(([k, v])=> {
@@ -110,6 +108,7 @@ class MainStore {
       let {total, updated, users, decimals, tvl} = v
       const totalDebt = Math.abs(normalize(total, decimals))
       tvl = Math.abs(normalize(tvl, decimals));
+      console.log(chain, platform, totalDebt, tvl);
       return {
         platform,
         chain,
@@ -143,12 +142,11 @@ class MainStore {
     this.tableRowDetails = name
   }
 
-  summrizeSubJobs = ([platform, markets]) => {
+  summarizeSubJobs = ([platform, markets]) => {
     const chain = [...new Set(Object.keys(markets).map(market => market.split('_')[0]))].join(',')
     let tvl = (Object.values(markets).reduce((acc, market) => toBN(acc).add(toBN(market.tvl)), '0')).toString()
     let total = (Object.values(markets).reduce((acc, market) => toBN(acc).add(toBN(market.total)), '0')).toString()
     let {decimals} = Object.values(markets)[0]
-    // const decimalName = deciamlNameMap[Math.pow(10, decimals).toString()]
     const totalDebt = Math.abs(normalize(total, decimals));
     tvl = Math.abs(normalize(tvl, decimals))
     let updated = Object.values(markets).map(({updated})=> updated).sort((a, b)=> Number(a) - Number(b))[0]
@@ -171,7 +169,11 @@ function normalize(amount, decimals) {
   if(decimals === 18) {
       return  Number(fromWei(amount))
   }
-  else {
+  else if(decimals > 18) {
+    const factor = toBN("10").pow(toBN(decimals - 18))
+    const norm = toBN(amount.toString()).div(factor)
+    return Number(fromWei(norm))
+  } else {
       const factor = toBN("10").pow(toBN(18 - decimals))
       const norm = toBN(amount.toString()).mul(factor)
       return Number(fromWei(norm))
