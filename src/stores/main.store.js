@@ -41,8 +41,6 @@ class MainStore {
   }
 
   get githubDirName () {
-    const [year, month, day] = this.selectedDate.split('-')
-    
     if(this.selectedDate === this.today) {
       return 'latest'
     }
@@ -73,26 +71,7 @@ class MainStore {
     }
   }
 
-  getBadDebtSha = async () => {
-    if(this.badDebtSha) {
-      return this.badDebtSha
-    }
-    const {data} = await axios.get('https://api.github.com/repos/Risk-DAO/simulation-results/contents')
-    const [{sha}] = data.filter(({name}) => name === 'bad-debt')
-    this.badDebtSha = sha 
-    return sha
-  }
-
-  getDirSha = async () => {
-    const {data} = await axios.get(`https://api.github.com/repos/Risk-DAO/simulation-results/git/trees/${this.badDebtSha}`)
-    const [{sha}] = data.tree.filter(({path}) => path === this.githubDirName)
-    return sha
-  }
-
   getFileNames = async () => {
-    // clear the cache when changing day
-    this.badDebtCache = {};
-    this.badDebtSubJobsCache = {};
     const dirToGet = this.headDirectory + '/' + this.githubDirName + '/';
     console.log('dirToGet', dirToGet)
     const allDirs = await axios.get('https://api.github.com/repos/Risk-DAO/simulation-results/git/trees/main?recursive=1');
@@ -120,7 +99,6 @@ class MainStore {
 
   init = async () => {
     runInAction(()=> this.loading = true)
-    await this.getBadDebtSha()
     this.clearCache()
     await this.badDebtFetcher()
     const subJobs = this.badDebtSubJobsCache
