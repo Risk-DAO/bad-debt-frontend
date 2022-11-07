@@ -30,6 +30,11 @@ class MainStore {
 
   constructor () {
     makeAutoObservable(this)
+
+    if(process.env.NODE_ENV === 'development') {
+      this.headDirectory = 'bad-debt-staging'
+    }
+
     this.initializationPromise = this.init()
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       // dark mode
@@ -73,11 +78,8 @@ class MainStore {
 
   getFileNames = async () => {
     const dirToGet = this.headDirectory + '/' + this.githubDirName + '/';
-    console.log('dirToGet', dirToGet)
     const allDirs = await axios.get('https://api.github.com/repos/Risk-DAO/simulation-results/git/trees/main?recursive=1');
-    // console.log('allDirs', allDirs);
     const selectedFiles = allDirs.data.tree.filter(_ => _.path.startsWith(dirToGet))
-    // console.log('selectedFiles', selectedFiles)
     return selectedFiles.map(_ => _.path.split('/').slice(-1)[0]);
   }
 
@@ -110,7 +112,6 @@ class MainStore {
       let {total, updated, users, decimals, tvl} = v
       const totalDebt = Math.abs(normalize(total, decimals))
       tvl = Math.abs(normalize(tvl, decimals));
-      console.log(chain, platform, totalDebt, tvl);
       return {
         platform,
         chain,
