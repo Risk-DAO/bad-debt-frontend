@@ -63,15 +63,18 @@ class MainStore {
     this.blackMode = mode
   }
 
-  getJsonFile = async fileName => {
+  getJsonFile = async (fileName, combinedMarkets) => {
     const { data: file } = await axios.get(`https://raw.githubusercontent.com/Risk-DAO/simulation-results/main/${this.headDirectory}/${this.githubDirName}/${encodeURIComponent(fileName)}`)
     if(!file) return
-    if(fileName.indexOf('subjob') === -1){
+    const platform = fileName.replace('.json', '').split('_')[1]
+    if(fileName.indexOf('subjob') === -1 && !combinedMarkets.includes(platform)){
       this.badDebtCache[fileName.replace('.json', '')] = file
     } else {
       const key = fileName.replace('.json', '').replace('subjob', '')
-      const platform = key.split('_')[1]
-      const platformSubJobs = this.badDebtSubJobsCache[platform] = this.badDebtSubJobsCache[platform] || {}
+      if(!this.badDebtSubJobsCache[platform]) {
+        this.badDebtSubJobsCache[platform] = {};
+      }
+      const platformSubJobs = this.badDebtSubJobsCache[platform];
       platformSubJobs[key] = file
     }
   }
@@ -86,12 +89,35 @@ class MainStore {
   badDebtFetcher = async () => {
     try{
       const fileNames = await this.getFileNames()
-      const filePromises = fileNames.map(this.getJsonFile)
+      const multiResultPlatforms = this.getMultiResultPlatforms(fileNames);
+      console.log('multiResultPlatforms', multiResultPlatforms)
+      const filePromises = fileNames.map(_ => this.getJsonFile(_, multiResultPlatforms))
       await Promise.all(filePromises)
       console.log('badDebtCache done')
     } catch (err) {
       console.error(err)
     }
+  }
+
+  getMultiResultPlatforms = (fileNames) => {
+    const platformsCount = [];
+    fileNames.forEach(filename => {
+      const platform = filename.replace('.json', '').split('_')[1]
+      const indexOfPlatform = platformsCount.findIndex(_ => _.platform = platform);
+      if(indexOfPlatform >= 0) {
+        platformsCount[indexOfPlatform].counter++;
+        // console.log('new value for platform', platform, ':', platformsCount[indexOfPlatform].counter)
+      } else {
+        platformsCount.push({
+          platform: platform,
+          counter: 1,
+        })
+        // console.log('Adding new platform with counter 1 for platform', platform);
+      }      
+    });
+
+    // return all platform with more than 1 in the counter field
+    return platformsCount.filter(_ => _.counter > 1).map(_ => _.platform);
   }
 
   clearCache = () => {
