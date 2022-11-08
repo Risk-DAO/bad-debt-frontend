@@ -12,9 +12,16 @@ class Details extends Component {
   render () {
     const { chain, platform, users, markets } = this.props.data
     const name = chain + '_' + platform + '.json'
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const staging = urlParams.get('staging')
+    console.log('staging mode:',staging);
+
+    const keepStaging = staging && staging.toLowerCase() === 'true'
+    
     if(markets){
       return (
-        <a href={`/markets?platform=${platform}`}>Full dashboard for {Object.values(markets).length} markets</a>
+        <a href={`/markets?platform=${platform}${keepStaging ? '&staging=true' : ''}`}>Full dashboard for {Object.values(markets).length} markets</a>
       )
     }
     return (

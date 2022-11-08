@@ -6,7 +6,7 @@ import marketsStore from "../stores/markets.store"
 import MarketsTableView from "../components/MarketsTableView";
 import PlatformIcon from "../components/PlatformIcon";
 
-class CompoundFroksBadDebt extends Component {
+class Markets extends Component {
 
   constructor(props) {
     super(props);
@@ -14,14 +14,17 @@ class CompoundFroksBadDebt extends Component {
 
   render () {
     console.log(marketsStore.loading)
+    const urlParams = new URLSearchParams(window.location.search);
+    const platform = urlParams.get('platform')
+    console.log('markets for platform:',platform);
     return (
       <div>
         <article>
           <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-            <PlatformIcon name={'MIM'}/> 
-            <h2 style={{margin: '10px', textAlign: 'center'}}>MIM Bad Debt</h2>
+            <PlatformIcon name={platform}/> 
+            <h2 style={{margin: '10px', textAlign: 'center'}}>{platform.toUpperCase()} Bad Debt</h2>
           </header>
-          {!marketsStore.loading &&  <MarketsTableView data={marketsStore.tableData}/>}
+          {!marketsStore.loading &&  <MarketsTableView data={marketsStore.tableData[platform]}/>}
           {marketsStore.loading && <div>
             <div style={{minHeight: '80vh'}} aria-busy="true"></div>
           </div>}
@@ -33,4 +36,4 @@ class CompoundFroksBadDebt extends Component {
   }
 }
 
-export default observer(CompoundFroksBadDebt)
+export default observer(Markets)
