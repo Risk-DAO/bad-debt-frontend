@@ -23,8 +23,15 @@ class WhaleFriendly extends Component {
     } else {
       wfn = Number((this.props.num / 1000000000).toFixed(2)) + 'B'
     }
+
+    const formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0,
+    });
+
     return (
-      <span>
+      <span title={formatter.format(this.props.num)}>
         {wfn}
       </span>
     )
