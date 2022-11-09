@@ -15,7 +15,6 @@ class Details extends Component {
 
     const urlParams = new URLSearchParams(window.location.search);
     const staging = urlParams.get('staging')
-    console.log('staging mode:',staging);
 
     const keepStaging = staging && staging.toLowerCase() === 'true'
     
