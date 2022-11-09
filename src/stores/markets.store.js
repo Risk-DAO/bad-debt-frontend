@@ -3,7 +3,7 @@ import web3Utils from "web3-utils"
 import mainStore from "./main.store"
 
 const {fromWei} = web3Utils
-const {normalize} = require('../utils.js');
+const {normalize, capitalizeFirstLetter} = require('../utils.js');
 
 class MarketsStore {
 
@@ -38,7 +38,7 @@ class MarketsStore {
         const displayedMarket = market ? market : chain;
         return {
           platform,
-          market: displayedMarket,
+          market: capitalizeFirstLetter(displayedMarket),
           chain,
           tvl: normalizedTvl,
           total: totalDebt,

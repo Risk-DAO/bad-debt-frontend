@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import {observer} from "mobx-react"
+import { capitalizeFirstLetter } from "../utils";
 
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
+
 
 const nameMaps = {
   "rari-capital": "Rari (Tetranode pool)",

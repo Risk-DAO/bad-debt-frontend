@@ -5,6 +5,7 @@ import {observer} from "mobx-react"
 import marketsStore from "../stores/markets.store"
 import MarketsTableView from "../components/MarketsTableView";
 import PlatformIcon from "../components/PlatformIcon";
+import { capitalizeFirstLetter } from "../utils";
 
 class Markets extends Component {
 
@@ -22,7 +23,7 @@ class Markets extends Component {
         <article>
           <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
             <PlatformIcon name={platform}/> 
-            <h2 style={{margin: '10px', textAlign: 'center'}}>{platform.toUpperCase()} Bad Debt</h2>
+            <h2 style={{margin: '10px', textAlign: 'center'}}>{capitalizeFirstLetter(platform)} Bad Debt</h2>
           </header>
           {!marketsStore.loading &&  <MarketsTableView data={marketsStore.tableData[platform]}/>}
           {marketsStore.loading && <div>
