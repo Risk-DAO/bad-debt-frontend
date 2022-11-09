@@ -23,8 +23,14 @@ class MarketsStore {
     this.fetchData()
   }
 
+  
+  clearCache = () => {
+    this.tableData = {}
+  }
+
   fetchData = async () => {
     this.loading = true
+    this.clearCache();
     await mainStore.initializationPromise
     for(let i = 0; i < mainStore.multiResultPlatforms.length; i++) {
       const platform = mainStore.multiResultPlatforms[i];

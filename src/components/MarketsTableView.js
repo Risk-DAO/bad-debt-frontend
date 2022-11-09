@@ -8,6 +8,7 @@ import WhaleFriendly from "./WhaleFriendly";
 import DetailsForMarkets from "./DetailsForMarkets";
 import marketsStore from "../stores/markets.store";
 import mainStore from "../stores/main.store";
+import NoDataFound from "./NoDataFound";
 
 const checkPlatformIcon = platform => {
   try{
@@ -30,6 +31,9 @@ class MarketsTableView extends Component {
 
   render() {
     const data = this.props.data
+    if(!data) {
+      return <NoDataFound/>
+    }
     const headTitleMap = {
       market: 'Market', 
       chain: 'Blockchain', 
@@ -40,6 +44,7 @@ class MarketsTableView extends Component {
       users: 'Details'
     }
     const body = data.filter(({platform})=> checkPlatformIcon(platform))
+    
     const head = Object.keys(body[0])
     const sortable = {
       tvl: true, 
