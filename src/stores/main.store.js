@@ -16,6 +16,8 @@ const getToday = ()=> {
 
 class MainStore {
 
+  loadedFiles = [];
+  loadedFilesDate = Date.now();
   headDirectory = 'bad-debt'
   multiResultPlatforms = [];
   tableData = []
@@ -86,11 +88,31 @@ class MainStore {
     }
   }
 
+  // this method get all github files for the repository using the recursive API
+  // and then save all files into 'this.loadedFiles'
+  // it helps reduce the number of calls to github which can "rate limit" users
+  getCachedFiles = async () => {
+    // only load files from github if:
+    // - no files loaded
+    // - last load date is greater than 10 minutes ago
+    if(this.loadedFiles.length === 0 || (Date.now() - this.loadedFilesDate) > 10 * 60 * 1000) {
+      console.log('getFileNames: loading files from github');
+      const allDirs = await axios.get('https://api.github.com/repos/Risk-DAO/simulation-results/git/trees/main?recursive=1');
+      this.loadedFiles = allDirs.data.tree.map(_ => _.path);
+      this.loadedFilesDate = Date.now();  
+      console.log(`getFileNames: loaded ${this.loadedFiles.length} files from github`);
+    } else {
+      console.log(`getFileNames: getting files from cache`);
+    }
+
+    console.log(`getFileNames: returning ${this.loadedFiles.length} files`);
+    return this.loadedFiles;
+  }
+
   getFileNames = async () => {
     const dirToGet = this.headDirectory + '/' + this.githubDirName + '/';
-    const allDirs = await axios.get('https://api.github.com/repos/Risk-DAO/simulation-results/git/trees/main?recursive=1');
-    const selectedFiles = allDirs.data.tree.filter(_ => _.path.startsWith(dirToGet))
-    return selectedFiles.map(_ => _.path.split('/').slice(-1)[0]);
+    const selectedFiles = (await this.getCachedFiles()).filter(_ => _.startsWith(dirToGet))
+    return selectedFiles.map(_ => _.split('/').slice(-1)[0]);
   }
 
   badDebtFetcher = async () => {
