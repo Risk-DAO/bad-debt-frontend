@@ -3,8 +3,7 @@ import axios from "axios"
 import web3Utils from "web3-utils"
 
 const {fromWei, toBN} = web3Utils
-
-const deciamlNameMap = Object.assign({}, ...Object.entries(web3Utils.unitMap).map(([a,b]) => ({ [b]: a })))
+const {normalize} = require('../utils.js');
 
 const getToday = ()=> {
   const dateObj = new Date();
@@ -17,6 +16,10 @@ const getToday = ()=> {
 
 class MainStore {
 
+  loadedFiles = [];
+  loadedFilesDate = Date.now();
+  headDirectory = 'bad-debt'
+  multiResultPlatforms = [];
   tableData = []
   tableRowDetails = null
   loading = true
@@ -31,6 +34,15 @@ class MainStore {
 
   constructor () {
     makeAutoObservable(this)
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const staging = urlParams.get('staging')
+    console.log('staging mode:',staging);
+
+    if(staging && staging.toLowerCase() === 'true') {
+      this.headDirectory = 'bad-debt-staging'
+    }
+
     this.initializationPromise = this.init()
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       // dark mode
@@ -42,7 +54,7 @@ class MainStore {
   }
 
   get githubDirName () {
-    if(this.selectedDate === this.today){
+    if(this.selectedDate === this.today) {
       return 'latest'
     }
     const [year, month, day] = this.selectedDate.split('-')
@@ -59,50 +71,82 @@ class MainStore {
     this.blackMode = mode
   }
 
-  getJsonFile = async fileName => {
-    const { data: file } = await axios.get(`https://raw.githubusercontent.com/Risk-DAO/simulation-results/main/bad-debt/${this.githubDirName}/${encodeURIComponent(fileName)}`)
+  getJsonFile = async (fileName, combinedMarkets) => {
+    const { data: file } = await axios.get(`https://raw.githubusercontent.com/Risk-DAO/simulation-results/main/${this.headDirectory}/${this.githubDirName}/${encodeURIComponent(fileName)}`)
     if(!file) return
-    if(fileName.indexOf('subjob') === -1){
+    const platform = fileName.replace('.json', '').split('_')[1]
+    if(fileName.indexOf('subjob') === -1 && !combinedMarkets.includes(platform)){
       this.badDebtCache[fileName.replace('.json', '')] = file
     } else {
       const key = fileName.replace('.json', '').replace('subjob', '')
-      const platform = key.split('_')[1]
-      const platformSubJobs = this.badDebtSubJobsCache[platform] = this.badDebtSubJobsCache[platform] || {}
+      if(!this.badDebtSubJobsCache[platform]) {
+        this.badDebtSubJobsCache[platform] = {};
+      }
+      const platformSubJobs = this.badDebtSubJobsCache[platform];
+      file['sourceFile'] = fileName;
       platformSubJobs[key] = file
     }
   }
 
-  getBadDebtSha = async () => {
-    if(this.badDebtSha) {
-      return this.badDebtSha
+  // this method get all github files for the repository using the recursive API
+  // and then save all files into 'this.loadedFiles'
+  // it helps reduce the number of calls to github which can "rate limit" users
+  getCachedFiles = async () => {
+    // only load files from github if:
+    // - no files loaded
+    // - last load date is greater than 10 minutes ago
+    if(this.loadedFiles.length === 0 || (Date.now() - this.loadedFilesDate) > 10 * 60 * 1000) {
+      console.log('getFileNames: loading files from github');
+      const allDirs = await axios.get('https://api.github.com/repos/Risk-DAO/simulation-results/git/trees/main?recursive=1');
+      this.loadedFiles = allDirs.data.tree.map(_ => _.path);
+      this.loadedFilesDate = Date.now();  
+      console.log(`getFileNames: loaded ${this.loadedFiles.length} files from github`);
+    } else {
+      console.log(`getFileNames: getting files from cache`);
     }
-    const {data} = await axios.get('https://api.github.com/repos/Risk-DAO/simulation-results/contents')
-    const [{sha}] = data.filter(({name}) => name === 'bad-debt')
-    this.badDebtSha = sha 
-    return sha
-  }
 
-  getDirSha = async () => {
-    const {data} = await axios.get(`https://api.github.com/repos/Risk-DAO/simulation-results/git/trees/${this.badDebtSha}`)
-    const [{sha}] = data.tree.filter(({path}) => path === this.githubDirName)
-    return sha
+    console.log(`getFileNames: returning ${this.loadedFiles.length} files`);
+    return this.loadedFiles;
   }
 
   getFileNames = async () => {
-    const sha = await this.getDirSha()
-    const {data} = await axios.get(`https://api.github.com/repos/Risk-DAO/simulation-results/git/trees/${sha}`)
-    return data.tree.map(({path}) => path)
+    const dirToGet = this.headDirectory + '/' + this.githubDirName + '/';
+    const selectedFiles = (await this.getCachedFiles()).filter(_ => _.startsWith(dirToGet))
+    return selectedFiles.map(_ => _.split('/').slice(-1)[0]);
   }
 
   badDebtFetcher = async () => {
     try{
       const fileNames = await this.getFileNames()
-      const filePromises = fileNames.map(this.getJsonFile)
+      this.multiResultPlatforms = this.getMultiResultPlatforms(fileNames);
+      console.log('multiResultPlatforms', this.multiResultPlatforms)
+      const filePromises = fileNames.map(_ => this.getJsonFile(_, this.multiResultPlatforms))
       await Promise.all(filePromises)
       console.log('badDebtCache done')
     } catch (err) {
       console.error(err)
     }
+  }
+
+  getMultiResultPlatforms = (fileNames) => {
+    const platformsCount = [];
+    fileNames.forEach(filename => {
+      const platform = filename.replace('.json', '').split('_')[1]
+      const indexOfPlatform = platformsCount.findIndex(_ => _.platform === platform);
+      if(indexOfPlatform >= 0) {
+        platformsCount[indexOfPlatform].counter++;
+        // console.log('new value for platform', platform, ':', platformsCount[indexOfPlatform].counter)
+      } else {
+        platformsCount.push({
+          platform: platform,
+          counter: 1,
+        })
+        // console.log('Adding new platform with counter 1 for platform', platform);
+      }      
+    });
+
+    // return all platform with more than 1 in the counter field
+    return platformsCount.filter(_ => _.counter > 1).map(_ => _.platform);
   }
 
   clearCache = () => {
@@ -112,25 +156,17 @@ class MainStore {
 
   init = async () => {
     runInAction(()=> this.loading = true)
-    await this.getBadDebtSha()
     this.clearCache()
     await this.badDebtFetcher()
     const subJobs = this.badDebtSubJobsCache
-    const subJobSummeries = Object.entries(subJobs).map(this.summrizeSubJobs)
+    const subJobSummeries = Object.entries(subJobs).map(this.summarizeSubJobs)
     const badDebt = this.badDebtCache
     
     const rows = Object.entries(badDebt).map(([k, v])=> {
       const [chain, platform, market] = k.split('_')
       let {total, updated, users, decimals, tvl} = v
-      if(Number(decimals) > 31){
-        const denominator = toBN('10').pow(toBN((Number(decimals) - 18).toString()))
-        total = toBN(total).div(denominator).toString()
-        tvl = toBN(tvl).div(denominator).toString()
-        decimals = 18
-      }
-      const decimalName = deciamlNameMap[Math.pow(10, decimals).toString()]
-      const totalDebt = Math.abs(parseFloat(fromWei(total, decimalName)))
-      tvl = Math.abs(parseFloat(fromWei(tvl, decimalName)))
+      const totalDebt = Math.abs(normalize(total, decimals))
+      tvl = Math.abs(normalize(tvl, decimals));
       return {
         platform,
         chain,
@@ -164,23 +200,19 @@ class MainStore {
     this.tableRowDetails = name
   }
 
-  summrizeSubJobs = ([platform, markets]) => {
+  summarizeSubJobs = ([platform, markets]) => {
     const chain = [...new Set(Object.keys(markets).map(market => market.split('_')[0]))].join(',')
-    let tvl = (Object.values(markets).reduce((acc, market) => toBN(acc).add(toBN(market.tvl)), '0')).toString()
-    let total = (Object.values(markets).reduce((acc, market) => toBN(acc).add(toBN(market.total)), '0')).toString()
-    let {decimals} = Object.values(markets)[0]
-    const decimalName = deciamlNameMap[Math.pow(10, decimals).toString()]
-    const totalDebt = Math.abs(parseFloat(fromWei(total, decimalName)))
-    tvl = Math.abs(parseFloat(fromWei(tvl, decimalName)))
-    let updated = Object.values(markets).map(({updated})=> updated).sort((a, b)=> Number(a) - Number(b))[0]
-    let users = [].concat(...Object.values(markets).map(({users}) => users))
+    const tvl = Math.abs(Object.values(markets).reduce((acc, market) => acc + normalize(market.tvl, market.decimals), 0))
+    const total = Math.abs(Object.values(markets).reduce((acc, market) => acc + normalize(market.total, market.decimals), 0))
+    const updated = Object.values(markets).map(({updated})=> updated).sort((a, b)=> Number(a) - Number(b))[0]
+    const users = [].concat(...Object.values(markets).map(({users}) => users))
 
     return {
       platform,
       chain,
       tvl,
-      total: totalDebt,
-      ratio: 100 * (totalDebt/tvl),
+      total: total,
+      ratio: 100 * (total/tvl),
       updated,
       users,
       markets

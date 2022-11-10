@@ -54,58 +54,58 @@ class TableView extends Component {
     return (
       <div style={containerStyle}>
         <table role="grid">
-        <thead>
-          <tr>
-            {head.map(v=> {
-              if(sortable[v]){
-                return (
-                  <td className="clickable" key={v} onClick={()=>mainStore.sortBy(v)}>
-                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+          <thead>
+            <tr>
+              {head.map((v)=> {
+                if(sortable[v]){
+                  return (
+                    <td className="clickable" key={v} onClick={()=>mainStore.sortBy(v)}>
+                      <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                        <b>{headTitleMap[v]}</b>
+                          <img style={{maxWidth: '24px', filter: `invert(${mainStore.blackMode? 1 : 0})`}} src={'/images/sort.svg'} alt='Sort'/>
+                      </div>
+                    </td> 
+                  )
+                } else {
+                  return (
+                    <td key={v}>
                       <b>{headTitleMap[v]}</b>
-                      <img style={{maxWidth: '24px', filter: `invert(${mainStore.blackMode? 1 : 0})`}} src={'/images/sort.svg'}/>
-                    </div>
-                  </td> 
-                )
-              } else {
-                return (
-                  <td key={v}>
-                    <b>{headTitleMap[v]}</b>
-                  </td> 
-                )
+                    </td> 
+                  )
+                }
               }
-            }
-          )}
-          </tr>
-        </thead>
-        <tbody>
-          {body.map(row=> <Fragment key={row.platform}><tr>
-            {Object.entries(row).map(([k, v])=> {
-              if (k === 'platform'){
-                return (<td key={k+v}><Platform name={v}/></td>)
-              }
-              if (k === 'chain'){
-                return (<td key={k+v}><ChainIcon chain={v}/></td>)
-              }
-              if (k === 'tvl'){
-                return (<td key={k+v}>$<WhaleFriendly num={v}/></td>)
-              }                   
-              if (k === 'total'){
-                return (<td key={k+v}>$<WhaleFriendly num={v}/></td>)
-              }                 
-              if (k === 'ratio'){
-                return (<td key={k+v}>{v.toFixed(2)}%</td>)
-              }                  
-              if (k === 'updated'){
-                return (<td key={k+v}><LastUpdate timestamp={v}/></td>)
-              }               
-              if (k === 'users'){
-                return (<td key={k+v}><Details data={row}/></td>)
-              }            
-            })}
-          </tr>
-          {row.platform === mainStore.tableRowDetails && <tr><td colSpan='7'><PlatformDetails name={row.platform}/></td></tr>}
-          </Fragment>)}
-        </tbody>
+            )}
+            </tr>
+          </thead>
+          <tbody>
+            {body.map((row, i)=> <Fragment key={row.platform+i}><tr>
+              {Object.entries(row).map(([k, v])=> {
+                if (k === 'platform'){
+                  return (<td key={k+v}><Platform name={v}/></td>)
+                }
+                if (k === 'chain'){
+                  return (<td key={k+v}><ChainIcon chain={v}/></td>)
+                }
+                if (k === 'tvl'){
+                  return (<td key={k+v}>$<WhaleFriendly num={v}/></td>)
+                }                   
+                if (k === 'total'){
+                  return (<td key={k+v}>$<WhaleFriendly num={v}/></td>)
+                }                 
+                if (k === 'ratio'){
+                  return (<td key={k+v}>{v.toFixed(2)}%</td>)
+                }                  
+                if (k === 'updated'){
+                  return (<td key={k+v}><LastUpdate timestamp={v}/></td>)
+                }               
+                if (k === 'users'){
+                  return (<td key={k+v}><Details data={row}/></td>)
+                }            
+              })}
+            </tr>
+            {row.platform === mainStore.tableRowDetails && <tr><td colSpan='7'><PlatformDetails name={row.platform}/></td></tr>}
+            </Fragment>)}
+          </tbody>
         </table>
       </div>
     )
