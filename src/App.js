@@ -9,6 +9,7 @@ import './themeSwitcher'
 import './App.css'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import React from "react";
+import Links from "./components/Links"
 
 function renderPage (props, PageComponent) {
   return (
@@ -20,6 +21,7 @@ function App() {
   return (
     <Router>
       <div className="App">
+        <Links/>
         <Hero/>
         <DaySelector/>
         <div className="container page">
