@@ -1,13 +1,9 @@
-import React from "react";
- 
 const Inverse = ()=> {
   return (
     <div>
-      <h5>Inverse Finance</h5>
+      <h5>Inverse Finance - frontier (deprecated)</h5>
       <blockquote>
-        We classify this debt as undercollateralized borrowing given that the debt is being serviced with repayment and collateral. <br/>
-        This debt was the result of an oracle price manipulation exploit in April 2022 and affected markets have been deprecated and collateral token receipts frozen until the make-good on the bad debt has been completed. <br/>
-        Inverse Finance's Frontier money market continues to operate on Ethereum and DOLA lending and liquidity continues to operate across Ethereum, Fantom, and Optimism chains, with new products and liquidity announcements actively in development.
+      Frontier is a deprecated lending market that incurred bad debt as a result of oracle price manipulation incidents in April and June 2022. All lending on Frontier has been permanently halted since June 2022; the DAO executes weekly repayments to reduce the bad debt and in September released two products that allow affected users to expedite return of their funds (and overall repayment of the bad debt for the DAO): the Debt Repayer and Debt Converter. For more detailed information: https://tinyurl.com/mrx3nurt.
         <footer>
           <cite>- Inverse Finance team</cite>
         </footer>

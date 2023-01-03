@@ -1,14 +1,11 @@
-import React, { Component } from "react";
-import {observer} from "mobx-react"
+import { Component } from "react";
 import { capitalizeFirstLetter } from "../utils";
-
-
 
 const nameMaps = {
   "rari-capital": "Rari (Tetranode pool)",
   "rikki": "Rikkei Finance",
   "apeswap": "ApeSwap",
-  "inverse": "Inverse Finance",
+  "inverse": "Inverse Finance - frontier (deprecated)",
 }
 
 class PlatformName extends Component {
