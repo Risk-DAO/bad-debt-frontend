@@ -1,5 +1,6 @@
 import IronBank from './IronBank'
 import Inverse from './Inverse'
+import Mai from './Mai'
 
 /**
  * use kabab-case to register your platform component
@@ -7,7 +8,8 @@ import Inverse from './Inverse'
  */
 const register = {
   "iron-bank": IronBank,
-  "inverse": Inverse
+  "inverse": Inverse,
+  "MAI": Mai,
 }
 
 export default register
