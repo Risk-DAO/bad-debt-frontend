@@ -1,6 +1,6 @@
 import '@picocss/pico'
 import {observer} from "mobx-react"
-import CompoundFroksBadDebt from "./pages/CompoundFroksBadDebt"
+import CompoundForksBadDebt from "./pages/CompoundForksBadDebt"
 import Markets from "./pages/Markets"
 import Hero from './components/Hero'
 import DaySelector from './components/DaySelector'
@@ -26,7 +26,7 @@ function App() {
         <DaySelector/>
         <div className="container page">
             <Routes>
-              <Route exact path="/"  element={<CompoundFroksBadDebt/>}/>
+              <Route exact path="/"  element={<CompoundForksBadDebt/>}/>
               <Route exact path="/markets"  element={<Markets/>}/>
             </Routes>
         </div>

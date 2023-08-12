@@ -5,7 +5,7 @@ import {observer} from "mobx-react"
 import mainStore from "../stores/main.store"
 import TableView from "../components/TableView";
 
-class CompoundFroksBadDebt extends Component {
+class CompoundForksBadDebt extends Component {
 
   constructor(props) {
     super(props);
@@ -37,4 +37,4 @@ class CompoundFroksBadDebt extends Component {
   }
 }
 
-export default observer(CompoundFroksBadDebt)
+export default observer(CompoundForksBadDebt);
