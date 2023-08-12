@@ -10,6 +10,7 @@ import './App.css'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import React from "react";
 import Links from "./components/Links"
+import CLFs from './pages/CLFs'
 
 function renderPage (props, PageComponent) {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Routes>
               <Route exact path="/"  element={<CompoundForksBadDebt/>}/>
               <Route exact path="/markets"  element={<Markets/>}/>
+              <Route exact path="clfs" element={<CLFs/>}/>
             </Routes>
         </div>
         <Footer/>
