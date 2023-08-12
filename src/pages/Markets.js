@@ -14,10 +14,8 @@ class Markets extends Component {
   }
 
   render () {
-    console.log(marketsStore.loading)
     const urlParams = new URLSearchParams(window.location.search);
     const platform = urlParams.get('platform')
-    console.log('markets for platform:',platform);
     return (
       <div>
         <article>
