@@ -5,6 +5,8 @@ import web3Utils from "web3-utils"
 const {fromWei, toBN} = web3Utils
 const {normalize} = require('../utils.js');
 
+const CLF_API_URL = 'https://api.la-tribu.xyz/dexhistory/getallCLFs';
+
 const getToday = ()=> {
   const dateObj = new Date();
   const month = dateObj.getUTCMonth() + 1; //months from 1-12
@@ -23,6 +25,7 @@ class MainStore {
   tableData = []
   tableRowDetails = null
   loading = true
+  CLFs = null;
   blackMode =  null
   badDebtCache = {}
   badDebtSubJobsCache = {}
@@ -37,7 +40,6 @@ class MainStore {
 
     const urlParams = new URLSearchParams(window.location.search);
     const staging = urlParams.get('staging')
-    console.log('staging mode:',staging);
 
     if(staging && staging.toLowerCase() === 'true') {
       this.headDirectory = 'bad-debt-staging'
@@ -128,6 +130,18 @@ class MainStore {
     }
   }
 
+  getCLFs = async () => {
+    try{
+    const CLFs = await axios.get(CLF_API_URL);
+    this.CLFs = CLFs;
+  }
+  catch(err){
+    console.log("Could not get CLFs");
+    console.log(err);
+    this.CLFs = undefined;
+  }
+  }
+
   getMultiResultPlatforms = (fileNames) => {
     const platformsCount = [];
     fileNames.forEach(filename => {
@@ -158,13 +172,14 @@ class MainStore {
     runInAction(()=> this.loading = true)
     this.clearCache()
     await this.badDebtFetcher()
+    await this.getCLFs()
     const subJobs = this.badDebtSubJobsCache
     const subJobSummeries = Object.entries(subJobs).map(this.summarizeSubJobs)
     const badDebt = this.badDebtCache
     
     const rows = Object.entries(badDebt).map(([k, v])=> {
       const [chain, platform, market] = k.split('_')
-      let {total, updated, users, decimals, tvl} = v
+      let {total, updated, users, decimals, tvl, clf} = v
       const totalDebt = Math.abs(normalize(total, decimals))
       tvl = Math.abs(normalize(tvl, decimals));
       return {
@@ -174,11 +189,13 @@ class MainStore {
         total: totalDebt,
         ratio: 100 * (totalDebt/tvl),
         updated,
+        clf,
         users,
       }
     })
     
     runInAction(() => {
+      console.log('subJobSummeries', subJobSummeries);
       this.tableData = rows.concat(subJobSummeries)
       this.loading = false
     })
@@ -205,6 +222,7 @@ class MainStore {
     const tvl = Math.abs(Object.values(markets).reduce((acc, market) => acc + normalize(market.tvl, market.decimals), 0))
     const total = Math.abs(Object.values(markets).reduce((acc, market) => acc + normalize(market.total, market.decimals), 0))
     const updated = Object.values(markets).map(({updated})=> updated).sort((a, b)=> Number(a) - Number(b))[0]
+    const clf = this.CLFs ? Object.values(this.CLFs).map((_) => _.protocol === "platform" ? this.CLFs.plateform : undefined) : undefined ;
     const users = [].concat(...Object.values(markets).map(({users}) => users))
 
     return {
@@ -215,6 +233,7 @@ class MainStore {
       ratio: 100 * (total/tvl),
       updated,
       users,
+      clf,
       markets
     }
   }
