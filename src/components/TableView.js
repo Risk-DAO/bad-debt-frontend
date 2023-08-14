@@ -46,6 +46,9 @@ function Row(props){
   }
   const displayName = nameMaps[row.platform]
   const name = !displayName ? row.platform.split("-").map(capitalizeFirstLetter).join(" ") : displayName
+  if(row.platform === "compound v3"){
+  console.log('row', row)
+}
   return(
     <React.Fragment>
     <tr>
@@ -80,7 +83,7 @@ function Row(props){
         {moment(row.updated * 1000).fromNow()}
       </td>
       <td>
-        {row.clf && row.clf[row.platform] ? row.clf[row.platform] : '-'}
+        {row.clf && row.clf['weightedCLF'] ? row.clf['weightedCLF'] : '-'}
       </td>
       <td>
         <Details data={row} />

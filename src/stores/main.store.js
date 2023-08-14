@@ -1,6 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx"
 import axios from "axios"
 import web3Utils from "web3-utils"
+import { dummyData } from "./dummyData.js";
 
 const {fromWei, toBN} = web3Utils
 const {normalize} = require('../utils.js');
@@ -138,7 +139,8 @@ class MainStore {
   catch(err){
     console.log("Could not get CLFs");
     console.log(err);
-    this.CLFs = undefined;
+    this.CLFs = dummyData;
+    console.log(this.CLFs);
   }
   }
 
@@ -218,11 +220,12 @@ class MainStore {
   }
 
   summarizeSubJobs = ([platform, markets]) => {
+    const platformLC = platform.toLowerCase();
     const chain = [...new Set(Object.keys(markets).map(market => market.split('_')[0]))].join(',')
     const tvl = Math.abs(Object.values(markets).reduce((acc, market) => acc + normalize(market.tvl, market.decimals), 0))
     const total = Math.abs(Object.values(markets).reduce((acc, market) => acc + normalize(market.total, market.decimals), 0))
     const updated = Object.values(markets).map(({updated})=> updated).sort((a, b)=> Number(a) - Number(b))[0]
-    const clf = this.CLFs ? Object.values(this.CLFs).map((_) => _.protocol === "platform" ? this.CLFs.plateform : undefined) : undefined ;
+    const clf = this.CLFs ? this.CLFs[platformLC] ? this.CLFs[platformLC] : undefined : undefined;
     const users = [].concat(...Object.values(markets).map(({users}) => users))
 
     return {
