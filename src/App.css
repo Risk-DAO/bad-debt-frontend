@@ -24,6 +24,17 @@
   color: white;
 }
 
+.CLFMarketButtonsRow{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.CLFMarketButtonsRow select{
+margin-bottom: 0 !important;
+max-width: 25%;
+}
+
 .App-link {
   color: #61dafb;
 }
