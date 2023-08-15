@@ -140,7 +140,6 @@ class MainStore {
     console.log("Could not get CLFs");
     console.log(err);
     this.CLFs = dummyData;
-    console.log(this.CLFs);
   }
   }
 
