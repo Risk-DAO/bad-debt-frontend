@@ -33,9 +33,6 @@ export default function CLFMarket(props) {
     const spans = [7, 30, 180];
     const [selectedVolatility, setSelectedVolatility] = useState(7);
     const [selectedLiquidity, setSelectedLiquidity] = useState(7);
-
-
-
     return (
         <div className="CLFMarket">
             <div className="CLFMarketButtonsRow">
@@ -45,15 +42,13 @@ export default function CLFMarket(props) {
                 <a href="" role="button" class="secondary">{collateral}</a>
                 {/* liquidity picker */}
                 <label for="Liquidity"></label>
-                <select id="liquidity" required>
-                    <option value="" selected>Select liquidity timespan</option>
-                    <option>…</option>
+                <select onChange={(e)=>{setSelectedLiquidity(e.target.value)}} id="liquidity" required>
+                    {spans.map(_ => <option value={_}>Avg. liquidity {_} days</option>)}
                 </select>
                 {/* liquidity picker */}
                 <label for="Volatility"></label>
-                <select id="volatility" required>
-                    <option value="" selected>Select volatility timespan</option>
-                    <option>…</option>
+                <select onChange={(e)=>{setSelectedVolatility(e.target.value)}}  id="volatility" required>
+                    {spans.map(_ => <option value={_}>Avg. volatility {_} days</option>)}
                 </select>
             </div>
             <div className="CLFDataDisplay">
