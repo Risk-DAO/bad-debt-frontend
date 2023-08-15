@@ -1,7 +1,38 @@
+import { useState } from "react";
+
+
+function Row(props){
+    const name = props.tokenData[0];
+    let CLFs = undefined;
+    function formatCLF(clf){
+        return (clf * 100).toFixed(2);
+    }
+    if(props.tokenData[1]){
+        CLFs = props.tokenData[1]['clfs'];
+    }
+    return <tr>
+        <td>
+            {name}
+        </td>
+        <td>
+            {CLFs ? formatCLF(CLFs['7']['7']) : "N/A"}
+        </td>
+        <td>
+            {CLFs ? formatCLF(CLFs['30']['30']) : "N/A"}
+        </td>
+        <td>
+            {CLFs ? formatCLF(CLFs['180']['180']) : "N/A"}
+        </td>
+    </tr>
+}
+
 export default function CLFMarket(props) {
     const collateral = props.collateral;
-    const data = props.marketData;
+    const data = props.marketData.data;
     const protocol = props.protocol;
+    const spans = [7, 30, 180];
+    const [selectedVolatility, setSelectedVolatility] = useState(7);
+    const [selectedLiquidity, setSelectedLiquidity] = useState(7);
 
 
 
@@ -9,7 +40,7 @@ export default function CLFMarket(props) {
         <div className="CLFMarket">
             <div className="CLFMarketButtonsRow">
                 {/* protocol display */}
-                <article>{protocol}</article>
+                <a href="" role="button" class="secondary">{protocol}</a>
                 {/* pool display */}
                 <a href="" role="button" class="secondary">{collateral}</a>
                 {/* liquidity picker */}
@@ -25,6 +56,24 @@ export default function CLFMarket(props) {
                     <option>…</option>
                 </select>
             </div>
+            <div className="CLFDataDisplay">
+                <div className="CLFGraph">
+
+                </div>
+                <article className="CLFTable">
+                    <table>
+                        <thead>
+                            <tr>
+                            <td>Avg. CLF</td>
+                            {spans.map(_=> <td>{_}</td>)}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {Object.entries(data).map(_=> <Row tokenData={_} />)}
+                        </tbody>
+                    </table>
+                </article>
+            </div>
         </div>
     )
-}
+    }

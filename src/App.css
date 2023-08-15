@@ -24,6 +24,26 @@
   color: white;
 }
 
+.CLFMarket{
+  margin-bottom: 2%;
+}
+
+.CLFDataDisplay{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.CLFGraph{
+  width: 66%;
+
+}
+.CLFTable{
+  width: 33%;
+
+}
+
 .CLFMarketButtonsRow{
   display: flex;
   flex-direction: row;
@@ -33,6 +53,23 @@
 .CLFMarketButtonsRow select{
 margin-bottom: 0 !important;
 max-width: 25%;
+}
+
+[data-tooltip]::after{
+  position: absolute !important;
+  z-index: 99 !important;
+}
+[data-tooltip]::before{
+  position: absolute !important;
+  z-index: 99 !important;
+}
+[data-tooltip]::after ::before{
+  position: absolute !important;
+  z-index: 99 !important;
+}
+::after ::before{
+  position: absolute !important;
+  z-index: 99 !important;
 }
 
 .App-link {
