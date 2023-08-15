@@ -29,6 +29,15 @@ class CLFs extends Component {
                 <div className="clfBody">
                     {dummyData ? Object.entries(dummyData['compound v3']['pools']).map(([k, v]) =><CLFMarket protocol="CompoundV3" collateral={k} marketData={v} />) : "Could not load data" }
                 </div>
+                <div className="clfMethodology">
+                    <article style={{display: "flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between"}}>
+                        <div style={{display: "flex", width:"70%", flexDirection:"column", alignItems:"start", justifyContent:"space-evenly"}}>
+                        <h2>Methodology</h2>
+                        <sub>Methodology short text by Yaron</sub>
+                        </div>
+                        <button style={{width:"20%", height:"30%"}}>Read More</button>
+                    </article>
+                </div>
             </div>
         )
     }
