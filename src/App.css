@@ -49,11 +49,13 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
+  width: 70%;
 }
-.CLFMarketButtonsRow select{
+.CLFMarketButtonsRow select, a{
 margin-bottom: 0 !important;
-max-width: 25%;
+margin: 2px;
 }
+
 
 [data-tooltip]::after{
   position: absolute !important;

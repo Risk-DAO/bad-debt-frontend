@@ -6,7 +6,7 @@ import { dummyData } from "./dummyData.js";
 const {fromWei, toBN} = web3Utils
 const {normalize} = require('../utils.js');
 
-const CLF_API_URL = 'https://api.la-tribu.xyz/dexhistory/getallCLFs';
+const apiUrl = "https://api.dex-history.la-tribu.xyz/api";
 
 const getToday = ()=> {
   const dateObj = new Date();
@@ -24,6 +24,7 @@ class MainStore {
   headDirectory = 'bad-debt'
   multiResultPlatforms = [];
   tableData = []
+  liquidityData = undefined;
   tableRowDetails = null
   loading = true
   CLFs = null;
@@ -72,6 +73,13 @@ class MainStore {
 
   setBlackMode = (mode) => {
     this.blackMode = mode
+  }
+  getLiquidityDataForMarket = async(){
+    const spans = [7, 30, 180];
+    const urls = [];
+    for (let j = 0; j < this.spans.length; j++) {
+      urls.push(`${apiUrl}/getprecomputeddata?platform=uniswapv3&span=${spans[j]}`);
+    }
   }
 
   getJsonFile = async (fileName, combinedMarkets) => {
