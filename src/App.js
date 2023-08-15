@@ -23,8 +23,6 @@ function App() {
     <Router>
       <div className="App">
         <Links/>
-        <Hero/>
-        <DaySelector/>
         <div className="container page">
             <Routes>
               <Route exact path="/"  element={<CompoundForksBadDebt/>}/>

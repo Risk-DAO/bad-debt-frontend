@@ -6,6 +6,9 @@ import marketsStore from "../stores/markets.store"
 import MarketsTableView from "../components/MarketsTableView";
 import PlatformIcon from "../components/PlatformIcon";
 import { capitalizeFirstLetter } from "../utils";
+import Hero from "../components/Hero";
+import DaySelector from "../components/DaySelector";
+
 
 class Markets extends Component {
 
@@ -18,6 +21,8 @@ class Markets extends Component {
     const platform = urlParams.get('platform')
     return (
       <div>
+                <Hero/>
+        <DaySelector/>
         <article>
           <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
             <PlatformIcon name={platform}/> 
