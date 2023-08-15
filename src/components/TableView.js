@@ -138,7 +138,20 @@ class TableView extends Component {
                       </div>
                     </td> 
                   )
-                } else {
+                } 
+                if(v === "clf"){
+                  return(
+                  <td key={v}>
+                    <div style={{display:"flex", flexDirection:"row", alignItems:"start", justifyContent:"center"}}>
+                      <b style={{marginRight:"3px"}}>{headTitleMap[v]}</b>
+                      <em data-placement="Bottom" data-tooltip="test azdafezf zfekregs rsg rsgslrgsrgsrg sdgflqedqfef">
+                        <img data style={{maxWidth: '24px', filter: `invert(${mainStore.blackMode? 1 : 0})`}} src={'/images/tooltip.svg'} alt='tooltip'/>
+                        </em>
+                        </div>
+                    </td> 
+                    )
+                }
+                else {
                   return (
                     <td key={v}>
                       <b>{headTitleMap[v]}</b>
