@@ -1,9 +1,9 @@
 import { LineChart, CartesianGrid, XAxis, YAxis, Legend, Line, ResponsiveContainer } from "recharts";
 import mainStore from "../stores/main.store";
-import { roundTo } from "../utils";
+import { largeNumberFormatter, roundTo } from "../utils";
 
 const strokes = {
-    USDC: '#0088FE',
+    UNI: '#0088FE',
     WBTC: '#00C49F',
     WETH: '#FFBB28'
 }
@@ -12,33 +12,31 @@ export default function CLFMarketGraph(props) {
     const { baseAsset, market, span } = props;
     const loading = mainStore.loading;
     const displayData = [];
-    const availableQuotesForBase = [];
     const slippage = 5;
     const timestamps = mainStore.timestamps;
-
-
+    const collaterals = [];
+    for(const [k , v] of Object.entries(market)){
+        collaterals.push(k)
+    };
     if (!loading) {
         const graphData = mainStore.graphData;
         const volumeData = {};
-        const dataForDex = graphData['uniswapv3'][span];
-        const dataForDexForBase = dataForDex.filter(_ => _.base.toLowerCase() === baseAsset.toLowerCase());
-        for (const slippageData of dataForDexForBase) {
-            const quote = slippageData.quote;
-            if (!availableQuotesForBase.includes(quote)) {
-                availableQuotesForBase.push(quote);
-            }
-            availableQuotesForBase.sort();
-            for (const volumeForSlippage of slippageData.volumeForSlippage) {
+        const dataForDexForSpan = graphData['uniswapv3'][span];
+        for(const collateral of collaterals){
+        const dataForDexForSpanForCollateral = dataForDexForSpan.filter(_ => _.base.toLowerCase() === collateral.toLowerCase());
+        for (const coll of dataForDexForSpanForCollateral) {
+            for (const volumeForSlippage of coll.volumeForSlippage) {
                 const blockNumber = volumeForSlippage.blockNumber;
                 const slippageValue = volumeForSlippage.aggregated[slippage];
                 if (!volumeData[blockNumber]) {
                     volumeData[blockNumber] = {};
                 }
-                if (!volumeData[blockNumber][quote]) {
-                    volumeData[blockNumber][quote] = 0;
+                if (!volumeData[blockNumber][collateral]) {
+                    volumeData[blockNumber][collateral] = 0;
                 }
-                volumeData[blockNumber][quote] += slippageValue;
+                volumeData[blockNumber][collateral] += slippageValue;
             }
+        }
         }
         for (const [blockNumber, quotesData] of Object.entries(volumeData)) {
             const toPush = {};
@@ -64,9 +62,9 @@ export default function CLFMarketGraph(props) {
                     >
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="blockNumber" tickMargin={15} label={{ value: 'block number', position: 'bottom', offset: '7' }} />
-                        <YAxis unit={` ${baseAsset}`} tickMargin={5} />
+                        <YAxis unit={` ${baseAsset}`} tickMargin={5} tickFormatter={largeNumberFormatter} />
                         <Legend verticalAlign='top' />
-                        {availableQuotesForBase.map(_ => <Line key={_} type="monotone" stroke={strokes[_]} dataKey={_} activeDot={{ r: 8 }} />)}
+                        {collaterals.map(_ => <Line key={_} type="monotone" stroke={strokes[_]} dataKey={_} activeDot={{ r: 8 }} />)}
                     </LineChart> : <p>test</p>}
             </ResponsiveContainer>
         )

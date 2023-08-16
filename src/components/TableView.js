@@ -1,13 +1,13 @@
-import React, { Component, Fragment, useState } from "react";
-import {observer} from "mobx-react"
+import React, { Component, useState } from "react";
+import { observer } from "mobx-react";
 import ChainIcon from "./ChainIcon";
 import PlatformDetails from "./PlatformDetails";
 import WhaleFriendly from "./WhaleFriendly";
 import Details from "./Details";
 import { capitalizeFirstLetter } from "../utils";
 import mainStore from "../stores/main.store";
-import moment from 'moment'
-import platformDetails from "../lending-platfroms-details/index"
+import moment from 'moment';
+import platformDetails from "../lending-platfroms-details/index";
 import NoDataFound from "./NoDataFound";
 
 const checkPlatformIcon = platform => {
@@ -83,7 +83,7 @@ function Row(props){
         {moment(row.updated * 1000).fromNow()}
       </td>
       <td>
-        {row.clf && row.clf['weightedCLF'] ? row.clf['weightedCLF'] : '-'}
+        {row.clf && row.clf['weightedCLF'] ? <a href={`/clfs?protocol=${row.platform}`}>{row.clf['weightedCLF']}</a> : '-'}
       </td>
       <td>
         <Details data={row} />
@@ -144,8 +144,8 @@ class TableView extends Component {
                   <td key={v}>
                     <div style={{display:"flex", flexDirection:"row", alignItems:"start", justifyContent:"center"}}>
                       <b style={{marginRight:"3px"}}>{headTitleMap[v]}</b>
-                      <em data-placement="Bottom" data-tooltip="test azdafezf zfekregs rsg rsgslrgsrgsrg sdgflqedqfef">
-                        <img data style={{maxWidth: '24px', filter: `invert(${mainStore.blackMode? 1 : 0})`}} src={'/images/tooltip.svg'} alt='tooltip'/>
+                      <em data-placement="Bottom" data-tooltip="zfgzeezfzefzefQVV ZefzQEFZEFVGGBQFGV gsdfsdfsdf sdfdfsf">
+                        <img style={{maxWidth: '24px', filter: `invert(${mainStore.blackMode? 1 : 0})`}} src={'/images/tooltip.svg'} alt='tooltip'/>
                         </em>
                         </div>
                     </td> 

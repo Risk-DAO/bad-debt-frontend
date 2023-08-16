@@ -30,17 +30,21 @@ function Row(props){
 export default function CLFMarket(props) {
     const baseAsset = props.baseAsset;
     const data = props.marketData.data;
+    const display = props.marketData.totalCollateral > 0 ? true : false;
     const protocol = props.protocol;
     const spans = [7, 30, 180];
     const [selectedVolatility, setSelectedVolatility] = useState(7);
     const [selectedLiquidity, setSelectedLiquidity] = useState(7);
+    if(!display){
+        return
+    }
     return (
         <div className="CLFMarket">
             <div className="CLFMarketButtonsRow">
                 {/* protocol display */}
-                <button class="secondary">{protocol}</button>
+                <select disabled={true}><option>{protocol}</option></select>
                 {/* pool display */}
-                <button class="secondary">{baseAsset}</button>
+                <select disabled={true}><option>{baseAsset}</option></select>
                 {/* liquidity picker */}
                 <label for="Liquidity"></label>
                 <select onChange={(e)=>{setSelectedLiquidity(e.target.value)}} id="liquidity" required>
@@ -53,15 +57,15 @@ export default function CLFMarket(props) {
                 </select>
             </div>
             <div className="CLFDataDisplay">
-                <div className="CLFGraph">
+                <article className="CLFGraph">
                     <CLFMarketGraph baseAsset={baseAsset} span={7} market={data} />
-                </div>
+                </article>
                 <article className="CLFTable">
                     <table>
                         <thead>
                             <tr>
                             <td>Avg. CLF</td>
-                            {spans.map(_=> <td>{_}</td>)}
+                            {spans.map(_=> <td>{_}D</td>)}
                             </tr>
                         </thead>
                         <tbody>
