@@ -36,6 +36,9 @@ class MainStore {
   selectedDate = getToday()
   initializationPromise = null
   badDebtSha = null
+  graphData = {};
+  lastUpdate = {};
+  timestamps = {};
 
   constructor () {
     makeAutoObservable(this)
@@ -74,12 +77,31 @@ class MainStore {
   setBlackMode = (mode) => {
     this.blackMode = mode
   }
-  getLiquidityDataForMarket = async(){
+  getLiquidityData = async() => {
     const spans = [7, 30, 180];
     const urls = [];
-    for (let j = 0; j < this.spans.length; j++) {
+    for (let j = 0; j < spans.length; j++) {
       urls.push(`${apiUrl}/getprecomputeddata?platform=uniswapv3&span=${spans[j]}`);
     }
+    this.sendParallelRequests(urls)
+    .then(data => {
+      for (let i = 0; i < data.length; i++) {
+        const url = new URL(data[i].request.responseURL);
+        const span = url.searchParams.get('span');
+        const platform = url.searchParams.get('platform');
+        if (!this.graphData[platform]) {
+          this.graphData[platform] = {}
+        };
+        this.graphData[platform][span] = data[i].data.concatData;
+        this.lastUpdate[span] = data[i].data.lastUpdate;
+        this.timestamps[span] = data[i].data.blockTimestamps;
+      }})
+  }
+
+  async sendParallelRequests(urls) {
+    const requests = urls.map(url => axios.get(url)); // Create an array of requests
+    const data = await axios.all(requests); // Wait for all requests to complete
+    return data;
   }
 
   getJsonFile = async (fileName, combinedMarkets) => {
@@ -141,7 +163,8 @@ class MainStore {
 
   getCLFs = async () => {
     try{
-    const CLFs = await axios.get(CLF_API_URL);
+    const url = apiUrl + "/getallclfs";
+    const CLFs = await axios.get(url);
     this.CLFs = CLFs;
   }
   catch(err){
@@ -182,6 +205,7 @@ class MainStore {
     this.clearCache()
     await this.badDebtFetcher()
     await this.getCLFs()
+    await this.getLiquidityData();
     const subJobs = this.badDebtSubJobsCache
     const subJobSummeries = Object.entries(subJobs).map(this.summarizeSubJobs)
     const badDebt = this.badDebtCache
