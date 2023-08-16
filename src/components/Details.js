@@ -1,14 +1,8 @@
 import React, { Component } from "react";
-import {observer} from "mobx-react"
-import mainStore from '../stores/main.store'
-import marketsStore from '../stores/markets.store'
+import { observer } from "mobx-react";
+import mainStore from '../stores/main.store';
 
 class Details extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
   render () {
     const { chain, platform, users, markets } = this.props.data
     const name = chain + '_' + platform + '.json'
@@ -24,7 +18,7 @@ class Details extends Component {
       )
     }
     return (
-      <a target="_blank" href={`https://raw.githubusercontent.com/Risk-DAO/simulation-results/main/${mainStore.headDirectory}/${mainStore.githubDirName}/${encodeURIComponent(name)}`}>{users.length} insolvent accounts</a>
+      <a target="_blank" href={`https://raw.githubusercontent.com/Risk-DAO/simulation-results/main/${mainStore.headDirectory}/${mainStore.githubDirName}/${encodeURIComponent(name)}`} rel="noreferrer">{users.length} insolvent accounts</a>
     )
   }
 }

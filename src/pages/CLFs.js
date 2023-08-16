@@ -4,10 +4,6 @@ import { observer } from "mobx-react";
 import CLFMarket from "../components/CLFMarket";
 
 class CLFs extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const urlParams = new URLSearchParams(window.location.search);
         const protocol = urlParams.get('protocol');

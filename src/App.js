@@ -10,12 +10,6 @@ import React from "react"
 import Links from "./components/Links"
 import CLFs from './pages/CLFs'
 
-function renderPage (props, PageComponent) {
-  return (
-    <PageComponent {...props}/> 
-  )
-}
-
 function App() {
   return (
     <Router>

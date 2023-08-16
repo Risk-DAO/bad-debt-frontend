@@ -1,8 +1,6 @@
-import { makeAutoObservable, runInAction, observe} from "mobx"
-import web3Utils from "web3-utils"
-import mainStore from "./main.store"
+import { makeAutoObservable, runInAction, observe } from "mobx";
+import mainStore from "./main.store";
 
-const {fromWei} = web3Utils
 const {normalize, capitalizeFirstLetter} = require('../utils.js');
 
 class MarketsStore {

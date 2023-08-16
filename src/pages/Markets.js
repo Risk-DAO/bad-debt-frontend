@@ -11,11 +11,6 @@ import DaySelector from "../components/DaySelector";
 
 
 class Markets extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
   render () {
     const urlParams = new URLSearchParams(window.location.search);
     const platform = urlParams.get('platform')

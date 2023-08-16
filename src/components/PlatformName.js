@@ -9,11 +9,6 @@ const nameMaps = {
 }
 
 class PlatformName extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
   render () {
     const displayName = nameMaps[this.props.name]
     const txt = !displayName ? this.props.name.split("-").map(capitalizeFirstLetter).join(" ") : displayName

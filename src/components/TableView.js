@@ -55,13 +55,13 @@ function Row(props){
       <td>
         {canOpen ? <details style={detailsStyle}>
           <summary style={summaryStyle} onClick={()=> setOpen(!open)}>
-          <img style={{borderRadius: '50%', width: '24px', height: '24px', display: 'inline'}} src={`/images/platforms/${row.platform.toLowerCase()}.webp`}/>
+          <img alt="platform logo" style={{borderRadius: '50%', width: '24px', height: '24px', display: 'inline'}} src={`/images/platforms/${row.platform.toLowerCase()}.webp`}/>
         <span style={{marginLeft: '5px'}}>{name}</span>
             </summary>
             </details>
         : 
         <div>
-        <img style={{borderRadius: '50%', width: '24px', height: '24px', display: 'inline'}} src={`/images/platforms/${row.platform.toLowerCase()}.webp`}/>
+        <img alt="platform logo" style={{borderRadius: '50%', width: '24px', height: '24px', display: 'inline'}} src={`/images/platforms/${row.platform.toLowerCase()}.webp`}/>
         <span style={{marginLeft: '5px'}}>{name}</span>
         </div>
         }
@@ -95,11 +95,6 @@ function Row(props){
 }
 
 class TableView extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const data = this.props.data
     const headTitleMap = {
