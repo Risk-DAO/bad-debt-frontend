@@ -15,7 +15,7 @@ class CLFs extends Component {
         const CLFsValues = mainStore.CLFs && mainStore.CLFs[platform];
 
         return (
-            <div>
+            <div style={{margin:"0 15vw 0 15vw"}}>
                 <div className="clfTitle">
                     <h1>
                         Risk Appetite Index
@@ -27,7 +27,7 @@ class CLFs extends Component {
                     </h5>
                 </div>
                 <div className="clfBody">
-                    {dummyData ? Object.entries(dummyData['compound v3']['pools']).map(([k, v]) =><CLFMarket protocol="CompoundV3" collateral={k} marketData={v} />) : "Could not load data" }
+                    {dummyData ? Object.entries(dummyData['compound v3']['pools']).map(([k, v]) =><CLFMarket protocol="CompoundV3" baseAsset={k} marketData={v} />) : "Could not load data" }
                 </div>
                 <div className="clfMethodology">
                     <article style={{display: "flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between"}}>

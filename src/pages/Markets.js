@@ -1,8 +1,8 @@
 
 
 import React, { Component } from "react";
-import {observer} from "mobx-react"
-import marketsStore from "../stores/markets.store"
+import { observer } from "mobx-react";
+import marketsStore from "../stores/markets.store";
 import MarketsTableView from "../components/MarketsTableView";
 import PlatformIcon from "../components/PlatformIcon";
 import { capitalizeFirstLetter } from "../utils";
@@ -20,7 +20,7 @@ class Markets extends Component {
     const urlParams = new URLSearchParams(window.location.search);
     const platform = urlParams.get('platform')
     return (
-      <div>
+      <div className="container page">
                 <Hero/>
         <DaySelector/>
         <article>

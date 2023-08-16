@@ -1,8 +1,8 @@
 
 
 import React, { Component } from "react";
-import {observer} from "mobx-react"
-import mainStore from "../stores/main.store"
+import { observer } from "mobx-react";
+import mainStore from "../stores/main.store";
 import TableView from "../components/TableView";
 import Hero from "../components/Hero";
 import DaySelector from "../components/DaySelector";
@@ -15,7 +15,7 @@ class CompoundForksBadDebt extends Component {
   render () {
     const theme = mainStore.blackMode ? 'dark' : 'light';
     return (
-      <div>
+      <div className="container page">
                 <Hero/>
         <DaySelector/>
          <article>

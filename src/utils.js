@@ -22,3 +22,7 @@ export function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+export function roundTo(num, dec = 2) {
+  const pow = Math.pow(10, dec);
+  return Math.round((num + Number.EPSILON) * pow) / pow;
+}

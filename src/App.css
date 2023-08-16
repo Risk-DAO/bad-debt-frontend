@@ -37,6 +37,7 @@
 
 .CLFGraph{
   width: 66%;
+  min-height: 400px;
 
 }
 .CLFTable{
@@ -48,10 +49,10 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   width: 70%;
 }
-.CLFMarketButtonsRow select, a{
+.CLFMarketButtonsRow select, button{
 margin-bottom: 0 !important;
 margin: 2px;
 }

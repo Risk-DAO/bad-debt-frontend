@@ -1,4 +1,5 @@
 import { useState } from "react";
+import CLFMarketGraph from "./CLFMarketGraph";
 
 
 function Row(props){
@@ -27,7 +28,7 @@ function Row(props){
 }
 
 export default function CLFMarket(props) {
-    const collateral = props.collateral;
+    const baseAsset = props.baseAsset;
     const data = props.marketData.data;
     const protocol = props.protocol;
     const spans = [7, 30, 180];
@@ -37,9 +38,9 @@ export default function CLFMarket(props) {
         <div className="CLFMarket">
             <div className="CLFMarketButtonsRow">
                 {/* protocol display */}
-                <a href="" role="button" class="secondary">{protocol}</a>
+                <button class="secondary">{protocol}</button>
                 {/* pool display */}
-                <a href="" role="button" class="secondary">{collateral}</a>
+                <button class="secondary">{baseAsset}</button>
                 {/* liquidity picker */}
                 <label for="Liquidity"></label>
                 <select onChange={(e)=>{setSelectedLiquidity(e.target.value)}} id="liquidity" required>
@@ -53,7 +54,7 @@ export default function CLFMarket(props) {
             </div>
             <div className="CLFDataDisplay">
                 <div className="CLFGraph">
-
+                    <CLFMarketGraph baseAsset={baseAsset} span={7} market={data} />
                 </div>
                 <article className="CLFTable">
                     <table>

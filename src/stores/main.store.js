@@ -1,6 +1,6 @@
-import { makeAutoObservable, runInAction } from "mobx"
-import axios from "axios"
-import web3Utils from "web3-utils"
+import { makeAutoObservable, runInAction } from "mobx";
+import axios from "axios";
+import web3Utils from "web3-utils";
 import { dummyData } from "./dummyData.js";
 
 const {fromWei, toBN} = web3Utils
@@ -83,7 +83,7 @@ class MainStore {
     for (let j = 0; j < spans.length; j++) {
       urls.push(`${apiUrl}/getprecomputeddata?platform=uniswapv3&span=${spans[j]}`);
     }
-    this.sendParallelRequests(urls)
+    await this.sendParallelRequests(urls)
     .then(data => {
       for (let i = 0; i < data.length; i++) {
         const url = new URL(data[i].request.responseURL);

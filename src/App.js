@@ -1,14 +1,12 @@
 import '@picocss/pico'
-import {observer} from "mobx-react"
+import { observer } from "mobx-react"
 import CompoundForksBadDebt from "./pages/CompoundForksBadDebt"
 import Markets from "./pages/Markets"
-import Hero from './components/Hero'
-import DaySelector from './components/DaySelector'
 import Footer from './components/Footer'
 import './themeSwitcher'
 import './App.css'
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
+import React from "react"
 import Links from "./components/Links"
 import CLFs from './pages/CLFs'
 
@@ -23,7 +21,7 @@ function App() {
     <Router>
       <div className="App">
         <Links/>
-        <div className="container page">
+        <div>
             <Routes>
               <Route exact path="/"  element={<CompoundForksBadDebt/>}/>
               <Route exact path="/markets"  element={<Markets/>}/>
