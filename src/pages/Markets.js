@@ -1,11 +1,14 @@
 
 
 import React, { Component } from "react";
-import {observer} from "mobx-react"
-import marketsStore from "../stores/markets.store"
+import { observer } from "mobx-react";
+import marketsStore from "../stores/markets.store";
 import MarketsTableView from "../components/MarketsTableView";
 import PlatformIcon from "../components/PlatformIcon";
 import { capitalizeFirstLetter } from "../utils";
+import Hero from "../components/Hero";
+import DaySelector from "../components/DaySelector";
+
 
 class Markets extends Component {
 
@@ -14,12 +17,12 @@ class Markets extends Component {
   }
 
   render () {
-    console.log(marketsStore.loading)
     const urlParams = new URLSearchParams(window.location.search);
     const platform = urlParams.get('platform')
-    console.log('markets for platform:',platform);
     return (
-      <div>
+      <div className="container page">
+                <Hero/>
+        <DaySelector/>
         <article>
           <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
             <PlatformIcon name={platform}/> 

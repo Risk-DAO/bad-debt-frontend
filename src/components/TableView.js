@@ -1,12 +1,13 @@
-import React, { Component, Fragment } from "react";
-import {observer} from "mobx-react"
+import React, { Component, useState } from "react";
+import { observer } from "mobx-react";
 import ChainIcon from "./ChainIcon";
-import Platform from "./Platform";
 import PlatformDetails from "./PlatformDetails";
-import LastUpdate from "./LastUpdate";
 import WhaleFriendly from "./WhaleFriendly";
 import Details from "./Details";
+import { capitalizeFirstLetter } from "../utils";
 import mainStore from "../stores/main.store";
+import moment from 'moment';
+import platformDetails from "../lending-platfroms-details/index";
 import NoDataFound from "./NoDataFound";
 
 const checkPlatformIcon = platform => {
@@ -21,6 +22,76 @@ const checkPlatformIcon = platform => {
 
 const containerStyle = {
   overflowY: 'auto'
+}
+const detailsStyle = {
+  minWidth: '180px',
+  padding: 0,
+  margin: 0,
+  border: 'none'
+
+}
+const summaryStyle = {
+  padding: 0,
+  margin: 0,
+}
+function Row(props){
+  const row = props.data;
+  const canOpen = platformDetails[row.platform];
+  const [open, setOpen] = useState(false);
+  const nameMaps = {
+    "rari-capital": "Rari (Tetranode pool)",
+    "rikki": "Rikkei Finance",
+    "apeswap": "ApeSwap",
+    "inverse": "Inverse Finance - frontier (deprecated)",
+  }
+  const displayName = nameMaps[row.platform]
+  const name = !displayName ? row.platform.split("-").map(capitalizeFirstLetter).join(" ") : displayName
+  if(row.platform === "compound v3"){
+  console.log('row', row)
+}
+  return(
+    <React.Fragment>
+    <tr>
+      <td>
+        {canOpen ? <details style={detailsStyle}>
+          <summary style={summaryStyle} onClick={()=> setOpen(!open)}>
+          <img style={{borderRadius: '50%', width: '24px', height: '24px', display: 'inline'}} src={`/images/platforms/${row.platform.toLowerCase()}.webp`}/>
+        <span style={{marginLeft: '5px'}}>{name}</span>
+            </summary>
+            </details>
+        : 
+        <div>
+        <img style={{borderRadius: '50%', width: '24px', height: '24px', display: 'inline'}} src={`/images/platforms/${row.platform.toLowerCase()}.webp`}/>
+        <span style={{marginLeft: '5px'}}>{name}</span>
+        </div>
+        }
+
+      </td>
+      <td>
+        <ChainIcon chain={row.chain}/>
+      </td>
+      <td>
+        $<WhaleFriendly num={row.tvl}/>
+      </td>
+      <td>
+        $<WhaleFriendly num={row.total}/>
+      </td>
+      <td>
+      {row.ratio.toFixed(2)}%
+      </td>
+      <td>
+        {moment(row.updated * 1000).fromNow()}
+      </td>
+      <td>
+        {row.clf && row.clf['weightedCLF'] ? <a href={`/clfs?protocol=${row.platform}`}>{row.clf['weightedCLF']}</a> : '-'}
+      </td>
+      <td>
+        <Details data={row} />
+      </td>
+    </tr>
+    {open ? <tr><td colSpan='7'><PlatformDetails name={row.platform}/></td></tr> :''}
+    </React.Fragment>
+  )
 }
 
 class TableView extends Component {
@@ -37,7 +108,8 @@ class TableView extends Component {
       tvl: 'TVL', 
       total: 'Bad Debt', 
       ratio: 'Bad Debt Ratio', 
-      updated: 'Last Update', 
+      updated: 'Last Update',
+      clf: 'Avg. CLF',
       users: 'Details'
     }
     const body = data.filter(({platform})=> checkPlatformIcon(platform))
@@ -66,7 +138,20 @@ class TableView extends Component {
                       </div>
                     </td> 
                   )
-                } else {
+                } 
+                if(v === "clf"){
+                  return(
+                  <td key={v}>
+                    <div style={{display:"flex", flexDirection:"row", alignItems:"start", justifyContent:"center"}}>
+                      <b style={{marginRight:"3px"}}>{headTitleMap[v]}</b>
+                      <em data-placement="Bottom" data-tooltip="zfgzeezfzefzefQVV ZefzQEFZEFVGGBQFGV gsdfsdfsdf sdfdfsf">
+                        <img style={{maxWidth: '24px', filter: `invert(${mainStore.blackMode? 1 : 0})`}} src={'/images/tooltip.svg'} alt='tooltip'/>
+                        </em>
+                        </div>
+                    </td> 
+                    )
+                }
+                else {
                   return (
                     <td key={v}>
                       <b>{headTitleMap[v]}</b>
@@ -78,33 +163,7 @@ class TableView extends Component {
             </tr>
           </thead>
           <tbody>
-            {body.map((row, i)=> <Fragment key={row.platform+i}><tr>
-              {Object.entries(row).map(([k, v])=> {
-                if (k === 'platform'){
-                  return (<td key={k+v}><Platform name={v}/></td>)
-                }
-                if (k === 'chain'){
-                  return (<td key={k+v}><ChainIcon chain={v}/></td>)
-                }
-                if (k === 'tvl'){
-                  return (<td key={k+v}>$<WhaleFriendly num={v}/></td>)
-                }                   
-                if (k === 'total'){
-                  return (<td key={k+v}>$<WhaleFriendly num={v}/></td>)
-                }                 
-                if (k === 'ratio'){
-                  return (<td key={k+v}>{v.toFixed(2)}%</td>)
-                }                  
-                if (k === 'updated'){
-                  return (<td key={k+v}><LastUpdate timestamp={v}/></td>)
-                }               
-                if (k === 'users'){
-                  return (<td key={k+v}><Details data={row}/></td>)
-                }            
-              })}
-            </tr>
-            {row.platform === mainStore.tableRowDetails && <tr><td colSpan='7'><PlatformDetails name={row.platform}/></td></tr>}
-            </Fragment>)}
+            {body.map((row, i)=> <Row key={i} data={row} />)}
           </tbody>
         </table>
       </div>

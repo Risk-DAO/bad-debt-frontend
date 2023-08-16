@@ -24,6 +24,57 @@
   color: white;
 }
 
+.CLFMarket{
+  margin-bottom: 2%;
+}
+
+.CLFDataDisplay{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.CLFGraph{
+  width: 66%;
+  min-height: 400px;
+
+}
+.CLFTable{
+  width: 33%;
+
+}
+
+.CLFMarketButtonsRow{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 70%;
+}
+.CLFMarketButtonsRow select, button{
+margin-bottom: 0 !important;
+margin: 2px;
+}
+
+
+[data-tooltip]::after{
+  position: absolute !important;
+  z-index: 99 !important;
+}
+[data-tooltip]::before{
+  position: absolute !important;
+  z-index: 99 !important;
+}
+[data-tooltip]::after ::before{
+  position: absolute !important;
+  z-index: 99 !important;
+}
+::after ::before{
+  position: absolute !important;
+  z-index: 99 !important;
+}
+
 .App-link {
   color: #61dafb;
 }
@@ -97,5 +148,5 @@
 article{
   /* light gray box shadow */
   /* box-shadow: [horizontal offset] [vertical offset] [blur radius] [optional spread radius] [color]; */
-  box-shadow: 0rem 0.25rem 1rem rgba(128, 128, 128, 0.25), 0rem -0.25rem 1rem rgba(128, 128, 128, 0.25) !important;
+  /* box-shadow: 0rem 0.25rem 1rem rgba(128, 128, 128, 0.25), 0rem -0.25rem 1rem rgba(128, 128, 128, 0.25) !important; */
 }

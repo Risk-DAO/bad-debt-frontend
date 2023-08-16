@@ -1,9 +1,11 @@
-import { makeAutoObservable, runInAction } from "mobx"
-import axios from "axios"
-import web3Utils from "web3-utils"
+import { makeAutoObservable, runInAction } from "mobx";
+import axios from "axios";
+import web3Utils from "web3-utils";
 
 const {fromWei, toBN} = web3Utils
 const {normalize} = require('../utils.js');
+
+const apiUrl = "https://api.dex-history.la-tribu.xyz/api";
 
 const getToday = ()=> {
   const dateObj = new Date();
@@ -21,8 +23,10 @@ class MainStore {
   headDirectory = 'bad-debt'
   multiResultPlatforms = [];
   tableData = []
+  liquidityData = undefined;
   tableRowDetails = null
   loading = true
+  CLFs = null;
   blackMode =  null
   badDebtCache = {}
   badDebtSubJobsCache = {}
@@ -31,13 +35,15 @@ class MainStore {
   selectedDate = getToday()
   initializationPromise = null
   badDebtSha = null
+  graphData = {};
+  lastUpdate = {};
+  timestamps = {};
 
   constructor () {
     makeAutoObservable(this)
 
     const urlParams = new URLSearchParams(window.location.search);
     const staging = urlParams.get('staging')
-    console.log('staging mode:',staging);
 
     if(staging && staging.toLowerCase() === 'true') {
       this.headDirectory = 'bad-debt-staging'
@@ -69,6 +75,32 @@ class MainStore {
 
   setBlackMode = (mode) => {
     this.blackMode = mode
+  }
+  getLiquidityData = async() => {
+    const spans = [7, 30, 180];
+    const urls = [];
+    for (let j = 0; j < spans.length; j++) {
+      urls.push(`${apiUrl}/getprecomputeddata?platform=uniswapv3&span=${spans[j]}`);
+    }
+    await this.sendParallelRequests(urls)
+    .then(data => {
+      for (let i = 0; i < data.length; i++) {
+        const url = new URL(data[i].request.responseURL);
+        const span = url.searchParams.get('span');
+        const platform = url.searchParams.get('platform');
+        if (!this.graphData[platform]) {
+          this.graphData[platform] = {}
+        };
+        this.graphData[platform][span] = data[i].data.concatData;
+        this.lastUpdate[span] = data[i].data.lastUpdate;
+        this.timestamps[span] = data[i].data.blockTimestamps;
+      }})
+  }
+
+  async sendParallelRequests(urls) {
+    const requests = urls.map(url => axios.get(url)); // Create an array of requests
+    const data = await axios.all(requests); // Wait for all requests to complete
+    return data;
   }
 
   getJsonFile = async (fileName, combinedMarkets) => {
@@ -128,6 +160,18 @@ class MainStore {
     }
   }
 
+  getCLFs = async () => {
+    try{
+    const url = apiUrl + "/getallclfs?latest=true";
+    const CLFs = await axios.get(url);
+    this.CLFs = CLFs.data;
+  }
+  catch(err){
+    console.log("Could not get CLFs");
+    console.log(err);
+  }
+  }
+
   getMultiResultPlatforms = (fileNames) => {
     const platformsCount = [];
     fileNames.forEach(filename => {
@@ -158,13 +202,15 @@ class MainStore {
     runInAction(()=> this.loading = true)
     this.clearCache()
     await this.badDebtFetcher()
+    await this.getCLFs()
+    await this.getLiquidityData();
     const subJobs = this.badDebtSubJobsCache
     const subJobSummeries = Object.entries(subJobs).map(this.summarizeSubJobs)
     const badDebt = this.badDebtCache
     
     const rows = Object.entries(badDebt).map(([k, v])=> {
       const [chain, platform, market] = k.split('_')
-      let {total, updated, users, decimals, tvl} = v
+      let {total, updated, users, decimals, tvl, clf} = v
       const totalDebt = Math.abs(normalize(total, decimals))
       tvl = Math.abs(normalize(tvl, decimals));
       return {
@@ -174,11 +220,13 @@ class MainStore {
         total: totalDebt,
         ratio: 100 * (totalDebt/tvl),
         updated,
+        clf,
         users,
       }
     })
     
     runInAction(() => {
+      console.log('subJobSummeries', subJobSummeries);
       this.tableData = rows.concat(subJobSummeries)
       this.loading = false
     })
@@ -201,10 +249,14 @@ class MainStore {
   }
 
   summarizeSubJobs = ([platform, markets]) => {
+    console.log(this.CLFs)
+    const platformLC = platform.toLowerCase();
+    console.log(platformLC)
     const chain = [...new Set(Object.keys(markets).map(market => market.split('_')[0]))].join(',')
     const tvl = Math.abs(Object.values(markets).reduce((acc, market) => acc + normalize(market.tvl, market.decimals), 0))
     const total = Math.abs(Object.values(markets).reduce((acc, market) => acc + normalize(market.total, market.decimals), 0))
     const updated = Object.values(markets).map(({updated})=> updated).sort((a, b)=> Number(a) - Number(b))[0]
+    const clf = this.CLFs ? (this.CLFs.filter(_ => _.protocol === platformLC))[0] : undefined;
     const users = [].concat(...Object.values(markets).map(({users}) => users))
 
     return {
@@ -215,6 +267,7 @@ class MainStore {
       ratio: 100 * (total/tvl),
       updated,
       users,
+      clf,
       markets
     }
   }

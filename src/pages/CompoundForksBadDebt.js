@@ -1,11 +1,12 @@
 
 
 import React, { Component } from "react";
-import {observer} from "mobx-react"
-import mainStore from "../stores/main.store"
+import { observer } from "mobx-react";
+import mainStore from "../stores/main.store";
 import TableView from "../components/TableView";
-
-class CompoundFroksBadDebt extends Component {
+import Hero from "../components/Hero";
+import DaySelector from "../components/DaySelector";
+class CompoundForksBadDebt extends Component {
 
   constructor(props) {
     super(props);
@@ -14,7 +15,9 @@ class CompoundFroksBadDebt extends Component {
   render () {
     const theme = mainStore.blackMode ? 'dark' : 'light';
     return (
-      <div>
+      <div className="container page">
+                <Hero/>
+        <DaySelector/>
          <article>
           <header>
             <h2 style={{margin: 0, textAlign: 'center'}}>Lending Markets Bad Debt</h2>
@@ -37,4 +40,4 @@ class CompoundFroksBadDebt extends Component {
   }
 }
 
-export default observer(CompoundFroksBadDebt)
+export default observer(CompoundForksBadDebt);
