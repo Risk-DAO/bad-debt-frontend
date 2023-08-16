@@ -1,8 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import axios from "axios";
-import web3Utils from "web3-utils";
 
-const {fromWei, toBN} = web3Utils
 const {normalize} = require('../utils.js');
 
 const apiUrl = "https://api.dex-history.la-tribu.xyz/api";
@@ -209,7 +207,7 @@ class MainStore {
     const badDebt = this.badDebtCache
     
     const rows = Object.entries(badDebt).map(([k, v])=> {
-      const [chain, platform, market] = k.split('_')
+      const [chain, platform ] = k.split('_')
       let {total, updated, users, decimals, tvl, clf} = v
       const totalDebt = Math.abs(normalize(total, decimals))
       tvl = Math.abs(normalize(tvl, decimals));

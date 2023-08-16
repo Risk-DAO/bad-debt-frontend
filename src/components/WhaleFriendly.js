@@ -1,13 +1,8 @@
 import React, { Component } from "react";
-import {observer} from "mobx-react"
+import { observer } from "mobx-react";
 
 const tenth = 100
 class WhaleFriendly extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
   render () {
     let wfn
     if(this.props.num === 0) {

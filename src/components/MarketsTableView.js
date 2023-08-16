@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
-import {observer} from "mobx-react"
+import { observer } from "mobx-react";
 import ChainIcon from "./ChainIcon";
-import Platform from "./Platform";
 import PlatformDetails from "./PlatformDetails";
 import LastUpdate from "./LastUpdate";
 import WhaleFriendly from "./WhaleFriendly";
@@ -24,11 +23,6 @@ const containerStyle = {
 }
 
 class MarketsTableView extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const data = this.props.data
     if(!data) {
@@ -56,7 +50,6 @@ class MarketsTableView extends Component {
     const totalBadDebt = body.reduce((a, b)=> a + Number(b.total), 0)
     const totalInsolvent = body.reduce((a, b)=> a + Number(b.users.length), 0)
     const totalChains = [...new Set(body.map(({chain})=>chain))]
-    const totalMarkets = [...new Set(body.map(({market})=>market))]
 
 
     const totalRatio = (totalBadDebt / totalTvl) * 100
@@ -74,7 +67,7 @@ class MarketsTableView extends Component {
                   <td className="clickable" key={v} onClick={()=>marketsStore.sortBy(v)}>
                     <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                       <b>{headTitleMap[v]}</b>
-                      <img style={{maxWidth: '24px', filter: `invert(${mainStore.blackMode? 1 : 0})`}} src={'/images/sort.svg'}/>
+                      <img alt="sort column" style={{maxWidth: '24px', filter: `invert(${mainStore.blackMode? 1 : 0})`}} src={'/images/sort.svg'}/>
                     </div>
                   </td> 
                 )
@@ -103,7 +96,7 @@ class MarketsTableView extends Component {
           <td>{totalInsolvent} insolvent accounts</td>
         </tr>
           {body.map((row, index)=> <Fragment key={index}><tr>
-            {Object.entries(row).map(([k, v], i)=> {
+            {Object.entries(row).map(([k, v], i) => {
               if (k === 'market'){
                 return (<td key={v+i}>{v}</td>)
               }              
@@ -124,7 +117,8 @@ class MarketsTableView extends Component {
               }               
               if (k === 'users'){
                 return (<td key={v+i}><DetailsForMarkets data={row}/></td>)
-              }            
+              }
+              return ""           
             })}
           </tr>
 

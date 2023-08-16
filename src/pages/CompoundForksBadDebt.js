@@ -7,11 +7,6 @@ import TableView from "../components/TableView";
 import Hero from "../components/Hero";
 import DaySelector from "../components/DaySelector";
 class CompoundForksBadDebt extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
   render () {
     const theme = mainStore.blackMode ? 'dark' : 'light';
     return (
@@ -27,11 +22,11 @@ class CompoundForksBadDebt extends Component {
             <div style={{minHeight: '80vh'}} aria-busy="true"></div>
           </div>}
           <footer style={{display: 'flex', justifyContent: 'space-around'}}>
-            <a href="https://krystal.app" target="_blank">
-              <img style={{ width:"254px", height:"54px" }} src={`/images/power-krystal-${theme}.svg`}/>
+            <a href="https://krystal.app" target="_blank" rel="noreferrer">
+              <img alt="kyber logo" style={{ width:"254px", height:"54px" }} src={`/images/power-krystal-${theme}.svg`}/>
             </a>
-            <a href="https://zapper.fi" target="_blank">
-              <img src={`/images/power-zapper-${theme}.svg`}/>
+            <a href="https://zapper.fi" target="_blank" rel="noreferrer">
+              <img alt="zapper logo" src={`/images/power-zapper-${theme}.svg`}/>
             </a>
           </footer>
         </article>

@@ -1,4 +1,4 @@
-import mainStore from './stores/main.store'
+import mainStore from './stores/main.store';
 
 const themeSwitcher = {
   
@@ -40,7 +40,7 @@ const themeSwitcher = {
     const buttons = document.querySelectorAll(this.buttonsTarget);
     buttons.forEach(button => {
       button.addEventListener('click', () => {
-        this.scheme == 'dark' ? this.scheme = 'light' : this.scheme = 'dark';
+        this.scheme === 'dark' ? this.scheme = 'light' : this.scheme = 'dark';
       }, false);
     });
   },
@@ -54,10 +54,10 @@ const themeSwitcher = {
 
   // Set scheme
   set scheme(scheme) {
-    if (scheme == 'auto') {
-      this.preferedColorScheme == 'dark' ? this._scheme = 'dark' : this._scheme = 'light';
+    if (scheme === 'auto') {
+      this.preferedColorScheme === 'dark' ? this._scheme = 'dark' : this._scheme = 'light';
     }
-    else if (scheme == 'dark' || scheme == 'light') {
+    else if (scheme === 'dark' || scheme === 'light') {
       this._scheme = scheme;
     }
     this.applyScheme();
@@ -76,7 +76,7 @@ const themeSwitcher = {
     const buttons = document.querySelectorAll(this.buttonsTarget);
     buttons.forEach(
       button => {
-        const text = this.scheme == 'dark' ? this.change.dark : this.change.light;
+        const text = this.scheme === 'dark' ? this.change.dark : this.change.light;
         button.innerHTML = text;
         button.setAttribute('aria-label', text.replace(/<[^>]*>?/gm, ''));
       }

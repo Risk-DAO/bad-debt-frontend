@@ -1,6 +1,6 @@
 import React from "react";
 
-export default ()=> {
+export default function NoData(){
   return <div>
     <hgroup>
       <h4>No Data Found</h4>

@@ -35,6 +35,7 @@ export default function CLFMarket(props) {
     const spans = [7, 30, 180];
     const [selectedVolatility, setSelectedVolatility] = useState(7);
     const [selectedLiquidity, setSelectedLiquidity] = useState(7);
+    console.log(selectedLiquidity, selectedVolatility);
     if(!display){
         return
     }

@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from "react";
-import {observer} from "mobx-react"
-import PlatformName from './PlatformName'
-import PlatformIcon from './PlatformIcon'
+import { observer } from "mobx-react";
+import PlatformName from './PlatformName';
+import PlatformIcon from './PlatformIcon';
 import mainStore from "../stores/main.store";
-import platformDetails from "../lending-platfroms-details/index"
+import platformDetails from "../lending-platfroms-details/index";
 
 const detailsStyle = {
   minWidth: '180px',
@@ -18,11 +18,6 @@ const summaryStyle = {
 }
 
 class Platform extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
   render () {
     const {name} = this.props
     const hasDetails = platformDetails[name]
