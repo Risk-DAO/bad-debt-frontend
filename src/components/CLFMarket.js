@@ -43,16 +43,16 @@ export default function CLFMarket(props) {
         <div className="CLFMarket">
             <div className="CLFMarketButtonsRow">
                 {/* protocol display */}
-                <select disabled={true}><option>{protocol}</option></select>
+                <button className="secondary outline">{protocol.charAt(0).toUpperCase() + protocol.slice(1)}</button>
                 {/* pool display */}
-                <select disabled={true}><option>{baseAsset}</option></select>
+                <button className="secondary outline">{baseAsset} Market</button>
                 {/* liquidity picker */}
                 <select onChange={(e) => { setSelectedLiquidity(e.target.value) }} id="liquidity" required>
-                    {spans.map(_ => <option key={_} value={_}>Avg. liquidity {_} days</option>)}
+                    {spans.map(_ => <option key={_} value={_}>Avg. Liquidity Over {_}D</option>)}
                 </select>
                 {/* liquidity picker */}
                 <select onChange={(e) => { setSelectedVolatility(e.target.value) }} id="volatility" required>
-                    {spans.map(_ => <option key={_} value={_}>Avg. volatility {_} days</option>)}
+                    {spans.map(_ => <option key={_} value={_}>Avg. Volatility Over {_}D</option>)}
                 </select>
             </div>
             <div className="CLFDataDisplay">

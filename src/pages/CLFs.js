@@ -12,14 +12,14 @@ class CLFs extends Component {
         return (
             <div style={{margin:"0 15vw 0 15vw"}}>
                 <div className="clfTitle">
-                    <h1>
+                    <h1 style={{fontSize:"400%"}}>
                         Risk Appetite Index
                     </h1>
                 </div>
                 <div className="clfSubtitle">
-                    <h5>
+                    <p style={{color:"white", fontSize:"150%", marginBottom:"4vh"}}>
                         The LTV Index tracks changes in Confidence Level Factor (CLF) values that reflect the confidence of a market in an asset to go through liquidation with no defaults. The higher the CLF the lower the recommended LTV of the asset should be.
-                    </h5>
+                    </p>
                 </div>
                 <div aria-busy={loading} className="clfBody">
                     {CLFsValues ? Object.entries(CLFsValues['results']).map(([k, v]) =><CLFMarket key={k} protocol={protocol} baseAsset={k} marketData={v} />) : loading ? `Loading ${protocol} data` : "No data to display." }

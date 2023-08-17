@@ -1,4 +1,4 @@
-import { LineChart, CartesianGrid, XAxis, YAxis, Legend, Line, ResponsiveContainer } from "recharts";
+import { LineChart, CartesianGrid, XAxis, YAxis, Legend, Line, ResponsiveContainer, Tooltip } from "recharts";
 import mainStore from "../stores/main.store";
 import { largeNumberFormatter, roundTo } from "../utils";
 
@@ -8,6 +8,33 @@ const strokes = {
     WETH: '#FFBB28'
 }
 
+const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+        const loadedPayload = Object.assign({}, payload[0].payload)
+        const selectedBase = mainStore.selectedAsset;
+        const blockNumber = loadedPayload.blockNumber;
+        const selectedQuotes = mainStore.selectedQuotes;
+        const date = new Date(loadedPayload.timestamp * 1000);
+        delete loadedPayload.blockNumber;
+        delete loadedPayload.timestamp;
+        const displayValues = [];
+        for (const key of Object.entries(loadedPayload)) {
+            if (selectedQuotes.includes(key[0])) {
+                displayValues.push(key);
+            }
+        }
+        displayValues.sort((a, b) => b[1] - a[1]);
+
+        return (
+            <div className="tooltip-container">
+                <div>Date: {date.toLocaleString()}</div>
+                <div>Blocknumber: {blockNumber}</div>
+                {displayValues.map(_ => <div key={_[0]}>{_[0]}: {largeNumberFormatter(_[1])} {selectedBase.name}</div>)}
+            </div>
+        );
+    }
+}
+
 export default function CLFMarketGraph(props) {
     const { baseAsset, market, span } = props;
     const loading = mainStore.loading;
@@ -15,30 +42,30 @@ export default function CLFMarketGraph(props) {
     const slippage = 5;
     const timestamps = mainStore.timestamps;
     const collaterals = [];
-    for(const [k , v] of Object.entries(market)){
-        if(v){
-        collaterals.push(k)
-    }
+    for (const [k, v] of Object.entries(market)) {
+        if (v) {
+            collaterals.push(k)
+        }
     };
     if (!loading) {
         const graphData = mainStore.graphData;
         const volumeData = {};
         const dataForDexForSpan = graphData['uniswapv3'][span];
-        for(const collateral of collaterals){
-        const dataForDexForSpanForCollateral = dataForDexForSpan.filter(_ => _.base.toLowerCase() === collateral.toLowerCase());
-        for (const coll of dataForDexForSpanForCollateral) {
-            for (const volumeForSlippage of coll.volumeForSlippage) {
-                const blockNumber = volumeForSlippage.blockNumber;
-                const slippageValue = volumeForSlippage.aggregated[slippage];
-                if (!volumeData[blockNumber]) {
-                    volumeData[blockNumber] = {};
+        for (const collateral of collaterals) {
+            const dataForDexForSpanForCollateral = dataForDexForSpan.filter(_ => _.base.toLowerCase() === collateral.toLowerCase());
+            for (const coll of dataForDexForSpanForCollateral) {
+                for (const volumeForSlippage of coll.volumeForSlippage) {
+                    const blockNumber = volumeForSlippage.blockNumber;
+                    const slippageValue = volumeForSlippage.aggregated[slippage];
+                    if (!volumeData[blockNumber]) {
+                        volumeData[blockNumber] = {};
+                    }
+                    if (!volumeData[blockNumber][collateral]) {
+                        volumeData[blockNumber][collateral] = 0;
+                    }
+                    volumeData[blockNumber][collateral] += slippageValue;
                 }
-                if (!volumeData[blockNumber][collateral]) {
-                    volumeData[blockNumber][collateral] = 0;
-                }
-                volumeData[blockNumber][collateral] += slippageValue;
             }
-        }
         }
         for (const [blockNumber, quotesData] of Object.entries(volumeData)) {
             const toPush = {};
@@ -51,7 +78,7 @@ export default function CLFMarketGraph(props) {
         }
 
         return (
-      <ResponsiveContainer width="100%" height="100%" minHeight="400px">
+            <ResponsiveContainer width="100%" height="100%" minHeight="400px">
                 {displayData ?
                     <LineChart
                         data={displayData}
@@ -65,6 +92,7 @@ export default function CLFMarketGraph(props) {
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="blockNumber" tickMargin={15} label={{ value: 'block number', position: 'bottom', offset: '7' }} />
                         <YAxis unit={` ${baseAsset}`} tickMargin={5} tickFormatter={largeNumberFormatter} />
+                        <Tooltip />
                         <Legend verticalAlign='top' />
                         {collaterals.map(_ => <Line key={_} type="monotone" stroke={strokes[_]} dataKey={_} activeDot={{ r: 8 }} />)}
                     </LineChart> : <p>test</p>}
