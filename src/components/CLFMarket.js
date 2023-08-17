@@ -43,9 +43,9 @@ export default function CLFMarket(props) {
         <div className="CLFMarket">
             <div className="CLFMarketButtonsRow">
                 {/* protocol display */}
-                <select disabled={true}><option>{protocol}</option></select>
+                <button className="secondary outline">{protocol}</button>
                 {/* pool display */}
-                <select disabled={true}><option>{baseAsset}</option></select>
+                <button className="secondary outline">{baseAsset}</button>
                 {/* liquidity picker */}
                 <select onChange={(e) => { setSelectedLiquidity(e.target.value) }} id="liquidity" required>
                     {spans.map(_ => <option key={_} value={_}>Avg. liquidity {_} days</option>)}
