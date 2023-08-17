@@ -9,6 +9,7 @@ import mainStore from "../stores/main.store";
 import moment from 'moment';
 import platformDetails from "../lending-platfroms-details/index";
 import NoDataFound from "./NoDataFound";
+import { Tooltip } from "@mui/material";
 
 const checkPlatformIcon = platform => {
   try{
@@ -139,9 +140,9 @@ class TableView extends Component {
                   <td key={v}>
                     <div style={{display:"flex", flexDirection:"row", alignItems:"start", justifyContent:"center"}}>
                       <b style={{marginRight:"3px"}}>{headTitleMap[v]}</b>
-                      <em data-placement="Bottom" data-tooltip="zfgzeezfzefzefQVV ZefzQEFZEFVGGBQFGV gsdfsdfsdf sdfdfsf">
+                        <Tooltip title="Explanation text goes here">
                         <img style={{maxWidth: '24px', filter: `invert(${mainStore.blackMode? 1 : 0})`}} src={'/images/tooltip.svg'} alt='tooltip'/>
-                        </em>
+                        </Tooltip>
                         </div>
                     </td> 
                     )
