@@ -17,7 +17,7 @@ class CLFs extends Component {
                     </h1>
                 </div>
                 <div className="clfSubtitle">
-                    <p style={{color:"white", fontSize:"150%", marginBottom:"4vh"}}>
+                    <p style={{color:"primary", fontSize:"150%", marginBottom:"4vh"}}>
                         The LTV Index tracks changes in Confidence Level Factor (CLF) values that reflect the confidence of a market in an asset to go through liquidation with no defaults. The higher the CLF the lower the recommended LTV of the asset should be.
                     </p>
                 </div>
