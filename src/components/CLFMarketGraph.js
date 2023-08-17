@@ -8,33 +8,6 @@ const strokes = {
     WETH: '#FFBB28'
 }
 
-const CustomTooltip = ({ active, payload, label }) => {
-    if (active && payload && payload.length) {
-        const loadedPayload = Object.assign({}, payload[0].payload)
-        const selectedBase = mainStore.selectedAsset;
-        const blockNumber = loadedPayload.blockNumber;
-        const selectedQuotes = mainStore.selectedQuotes;
-        const date = new Date(loadedPayload.timestamp * 1000);
-        delete loadedPayload.blockNumber;
-        delete loadedPayload.timestamp;
-        const displayValues = [];
-        for (const key of Object.entries(loadedPayload)) {
-            if (selectedQuotes.includes(key[0])) {
-                displayValues.push(key);
-            }
-        }
-        displayValues.sort((a, b) => b[1] - a[1]);
-
-        return (
-            <div className="tooltip-container">
-                <div>Date: {date.toLocaleString()}</div>
-                <div>Blocknumber: {blockNumber}</div>
-                {displayValues.map(_ => <div key={_[0]}>{_[0]}: {largeNumberFormatter(_[1])} {selectedBase.name}</div>)}
-            </div>
-        );
-    }
-}
-
 export default function CLFMarketGraph(props) {
     const { baseAsset, market, span } = props;
     const loading = mainStore.loading;
