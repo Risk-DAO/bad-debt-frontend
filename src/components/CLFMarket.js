@@ -2,13 +2,13 @@ import { useState } from "react";
 import CLFMarketGraph from "./CLFMarketGraph";
 
 
-function Row(props){
+function Row(props) {
     const name = props.tokenData[0];
     let CLFs = undefined;
-    function formatCLF(clf){
+    function formatCLF(clf) {
         return (clf * 100).toFixed(2);
     }
-    if(props.tokenData[1]){
+    if (props.tokenData[1]) {
         CLFs = props.tokenData[1]['clfs'];
     }
     return <tr>
@@ -36,7 +36,7 @@ export default function CLFMarket(props) {
     const [selectedVolatility, setSelectedVolatility] = useState(7);
     const [selectedLiquidity, setSelectedLiquidity] = useState(7);
     console.log(selectedLiquidity, selectedVolatility);
-    if(!display){
+    if (!display) {
         return
     }
     return (
@@ -47,14 +47,12 @@ export default function CLFMarket(props) {
                 {/* pool display */}
                 <select disabled={true}><option>{baseAsset}</option></select>
                 {/* liquidity picker */}
-                <label for="Liquidity"></label>
-                <select onChange={(e)=>{setSelectedLiquidity(e.target.value)}} id="liquidity" required>
-                    {spans.map(_ => <option value={_}>Avg. liquidity {_} days</option>)}
+                <select onChange={(e) => { setSelectedLiquidity(e.target.value) }} id="liquidity" required>
+                    {spans.map(_ => <option key={_} value={_}>Avg. liquidity {_} days</option>)}
                 </select>
                 {/* liquidity picker */}
-                <label for="Volatility"></label>
-                <select onChange={(e)=>{setSelectedVolatility(e.target.value)}}  id="volatility" required>
-                    {spans.map(_ => <option value={_}>Avg. volatility {_} days</option>)}
+                <select onChange={(e) => { setSelectedVolatility(e.target.value) }} id="volatility" required>
+                    {spans.map(_ => <option key={_} value={_}>Avg. volatility {_} days</option>)}
                 </select>
             </div>
             <div className="CLFDataDisplay">
@@ -65,16 +63,16 @@ export default function CLFMarket(props) {
                     <table>
                         <thead>
                             <tr>
-                            <td>Avg. CLF</td>
-                            {spans.map(_=> <td>{_}D</td>)}
+                                <td>Avg. CLF</td>
+                                {spans.map(_ => <td key={_}>{_}D</td>)}
                             </tr>
                         </thead>
                         <tbody>
-                            {Object.entries(data).map(_=> <Row tokenData={_} />)}
+                            {Object.entries(data).map(_ => <Row key={_} tokenData={_} />)}
                         </tbody>
                     </table>
                 </article>
             </div>
         </div>
     )
-    }
+}

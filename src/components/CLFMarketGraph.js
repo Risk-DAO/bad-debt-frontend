@@ -15,8 +15,10 @@ export default function CLFMarketGraph(props) {
     const slippage = 5;
     const timestamps = mainStore.timestamps;
     const collaterals = [];
-    for(const [k , ] of Object.entries(market)){
+    for(const [k , v] of Object.entries(market)){
+        if(v){
         collaterals.push(k)
+    }
     };
     if (!loading) {
         const graphData = mainStore.graphData;

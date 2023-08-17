@@ -8,7 +8,7 @@ class CLFs extends Component {
         const urlParams = new URLSearchParams(window.location.search);
         const protocol = urlParams.get('protocol');
         const CLFsValues = mainStore.CLFs ? mainStore.CLFs.filter((_ => _.protocol === protocol))[0] : undefined;
-        console.log('CLFsValues', CLFsValues);
+        const loading = mainStore.CLFs ? false : true;
         return (
             <div style={{margin:"0 15vw 0 15vw"}}>
                 <div className="clfTitle">
@@ -21,8 +21,8 @@ class CLFs extends Component {
                         The LTV Index tracks changes in Confidence Level Factor (CLF) values that reflect the confidence of a market in an asset to go through liquidation with no defaults. The higher the CLF the lower the recommended LTV of the asset should be.
                     </h5>
                 </div>
-                <div className="clfBody">
-                    {CLFsValues ? Object.entries(CLFsValues['results']).map(([k, v]) =><CLFMarket key={k} protocol={protocol} baseAsset={k} marketData={v} />) : "Could not load data" }
+                <div aria-busy={loading} className="clfBody">
+                    {CLFsValues ? Object.entries(CLFsValues['results']).map(([k, v]) =><CLFMarket key={k} protocol={protocol} baseAsset={k} marketData={v} />) : loading ? `Loading ${protocol} data` : "No data to display." }
                 </div>
                 <div className="clfMethodology">
                     <article style={{display: "flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between"}}>
