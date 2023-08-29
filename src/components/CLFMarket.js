@@ -29,7 +29,7 @@ function Row(props) {
 
 export default function CLFMarket(props) {
     const baseAsset = props.baseAsset;
-    const data = props.marketData.data;
+    const data = props.marketData.collateralsData;
     const display = props.marketData.totalCollateral > 0 ? true : false;
     const protocol = props.protocol;
     const spans = [7, 30, 180];
