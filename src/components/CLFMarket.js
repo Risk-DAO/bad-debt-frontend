@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CLFMarketGraph from "./CLFMarketGraph";
 
 
@@ -36,6 +36,41 @@ export default function CLFMarket(props) {
     const [selectedVolatility, setSelectedVolatility] = useState(7);
     const [selectedLiquidity, setSelectedLiquidity] = useState(7);
     console.log(selectedLiquidity, selectedVolatility);
+    const [displayData, setDisplayData] = useState([]);
+    const collaterals = [];
+    for (const [k, v] of Object.entries(data)) {
+        console.log(k,v)
+        if (v) {
+            collaterals.push(k)
+        }
+    };
+
+
+    useEffect(()=> {
+        if(data){
+            const firstToken = Object.keys(data)[0];
+            const blocksArray = [];
+            const sortedData = [];
+            for(const blockNumber in data[firstToken]["liquidityHistory"][selectedLiquidity]){
+                blocksArray.push(blockNumber);
+            }
+            for(const block of blocksArray){
+                const toPush = {};
+                for(const [collateral, collateralValues] of Object.entries(data)){
+                    toPush['blockNumber'] = block;
+                    toPush[collateral] = collateralValues.liquidityHistory[selectedLiquidity][block];
+                }
+                sortedData.push(toPush);
+            }
+            console.log('sortedData', sortedData)
+            setDisplayData(sortedData);
+        }
+    }, [data, selectedLiquidity])
+
+
+
+
+
     if (!display) {
         return
     }
@@ -57,7 +92,7 @@ export default function CLFMarket(props) {
             </div>
             <div className="CLFDataDisplay">
                 <article className="CLFGraph">
-                    <CLFMarketGraph baseAsset={baseAsset} span={7} market={data} />
+                    <CLFMarketGraph baseAsset={baseAsset} collaterals={collaterals} displayData={displayData} />
                 </article>
                 <article className="CLFTable">
                     <table>
