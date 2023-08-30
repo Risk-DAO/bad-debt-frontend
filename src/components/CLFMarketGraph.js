@@ -7,6 +7,10 @@ const strokes = {
     WETH: '#FFBB28'
 }
 
+
+/// blockinfo
+// https://web3.api.la-tribu.xyz `/api/getblocktimestamp?blocknumber=${blockNumber}`
+
 export default function CLFMarketGraph(props) {
     const { displayData, baseAsset, collaterals } = props;
     console.log(displayData)
@@ -25,7 +29,7 @@ export default function CLFMarketGraph(props) {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="blockNumber" tickMargin={15} label={{ value: 'block number', position: 'bottom', offset: '7' }} />
                     <YAxis unit={` ${baseAsset}`} tickMargin={5} tickFormatter={largeNumberFormatter} />
-                    <Tooltip />
+                    <Tooltip formatter={largeNumberFormatter} />
                     <Legend verticalAlign='top' />
                     {collaterals.map(_ => <Line key={_} type="monotone" stroke={strokes[_]} dataKey={_} activeDot={{ r: 8 }} />)}
                 </LineChart> : <p>test</p>}

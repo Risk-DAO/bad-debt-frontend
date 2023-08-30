@@ -6,7 +6,11 @@ function Row(props) {
     const name = props.tokenData[0];
     let CLFs = undefined;
     function formatCLF(clf) {
-        return (clf * 100).toFixed(2);
+        if(clf === "N/A" || clf === undefined){
+            return "N/A"
+        }
+        const computedClf = (clf * 100).toFixed(2);
+        return computedClf > 100 ? 100 : computedClf;
     }
     if (props.tokenData[1]) {
         CLFs = props.tokenData[1]['clfs'];

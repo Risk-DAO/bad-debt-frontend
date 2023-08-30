@@ -48,7 +48,6 @@ function Row(props){
   const displayName = nameMaps[row.platform]
   const name = !displayName ? row.platform.split("-").map(capitalizeFirstLetter).join(" ") : displayName
   if(row.platform === "compound v3"){
-  console.log('row', row)
 }
   return(
     <React.Fragment>
