@@ -43,7 +43,6 @@ export default function CLFMarket(props) {
     const [displayData, setDisplayData] = useState([]);
     const collaterals = [];
     for (const [k, v] of Object.entries(data)) {
-        console.log(k,v)
         if (v) {
             collaterals.push(k)
         }
@@ -66,7 +65,6 @@ export default function CLFMarket(props) {
                 }
                 sortedData.push(toPush);
             }
-            console.log('sortedData', sortedData)
             setDisplayData(sortedData);
         }
     }, [data, selectedLiquidity])
