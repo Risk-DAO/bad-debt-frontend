@@ -40,6 +40,7 @@ export default function CLFMarket(props) {
     const [selectedVolatility, setSelectedVolatility] = useState(7);
     const [selectedLiquidity, setSelectedLiquidity] = useState(7);
     console.log(selectedLiquidity, selectedVolatility);
+    console.log('data', data)
     const [displayData, setDisplayData] = useState([]);
     const collaterals = [];
     for (const [k, v] of Object.entries(data)) {
@@ -52,16 +53,16 @@ export default function CLFMarket(props) {
     useEffect(()=> {
         if(data){
             const firstToken = Object.keys(data)[0];
-            const blocksArray = [];
+            const timestampArray = [];
             const sortedData = [];
             for(const blockNumber in data[firstToken]["liquidityHistory"][selectedLiquidity]){
-                blocksArray.push(blockNumber);
+                timestampArray.push(blockNumber);
             }
-            for(const block of blocksArray){
+            for(const timestamp of timestampArray){
                 const toPush = {};
                 for(const [collateral, collateralValues] of Object.entries(data)){
-                    toPush['blockNumber'] = block;
-                    toPush[collateral] = collateralValues.liquidityHistory[selectedLiquidity][block];
+                    toPush['timestamp'] = timestamp;
+                    toPush[collateral] = collateralValues.liquidityHistory[selectedLiquidity][timestamp];
                 }
                 sortedData.push(toPush);
             }

@@ -8,12 +8,20 @@ const strokes = {
 }
 
 
+function timestampFormatter(timestamp){
+    const formattedDate = new Date(timestamp*1000);
+    return formattedDate.toDateString();
+}
+function tooltipLabelFormatter(timestamp){
+        const formattedDate = new Date(timestamp*1000);
+    return formattedDate.toLocaleString();
+}
+
 /// blockinfo
 // https://web3.api.la-tribu.xyz `/api/getblocktimestamp?blocknumber=${blockNumber}`
 
 export default function CLFMarketGraph(props) {
     const { displayData, baseAsset, collaterals } = props;
-    console.log(displayData)
     return (
         <ResponsiveContainer width="100%" height="100%" minHeight="400px">
             {displayData ?
@@ -27,9 +35,9 @@ export default function CLFMarketGraph(props) {
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="blockNumber" tickMargin={15} label={{ value: 'block number', position: 'bottom', offset: '7' }} />
+                    <XAxis dataKey="timestamp" tickFormatter={timestampFormatter} tickMargin={15}/>
                     <YAxis unit={` ${baseAsset}`} tickMargin={5} tickFormatter={largeNumberFormatter} />
-                    <Tooltip formatter={largeNumberFormatter} />
+                    <Tooltip labelFormatter={tooltipLabelFormatter} formatter={largeNumberFormatter} />
                     <Legend verticalAlign='top' />
                     {collaterals.map(_ => <Line key={_} type="monotone" stroke={strokes[_]} dataKey={_} activeDot={{ r: 8 }} />)}
                 </LineChart> : <p>test</p>}
