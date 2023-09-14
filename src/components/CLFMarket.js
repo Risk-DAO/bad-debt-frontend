@@ -38,9 +38,9 @@ export default function CLFMarket(props) {
     const protocol = props.protocol;
     const spans = [7, 30, 180];
     const [selectedVolatility, setSelectedVolatility] = useState(7);
+    console.log(selectedVolatility);
     const [selectedLiquidity, setSelectedLiquidity] = useState(7);
-    console.log(selectedLiquidity, selectedVolatility);
-    console.log('data', data)
+
     const [displayData, setDisplayData] = useState([]);
     const collaterals = [];
     for (const [k, v] of Object.entries(data)) {

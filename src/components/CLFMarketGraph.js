@@ -1,5 +1,6 @@
 import { LineChart, CartesianGrid, XAxis, YAxis, Legend, Line, ResponsiveContainer, Tooltip } from "recharts";
 import { largeNumberFormatter } from "../utils";
+import moment from "moment/moment";
 
 const strokes = {
     UNI: '#0088FE',
@@ -9,8 +10,8 @@ const strokes = {
 
 
 function timestampFormatter(timestamp){
-    const formattedDate = new Date(timestamp*1000);
-    return formattedDate.toDateString();
+    const formattedDate = moment(timestamp * 1000).format('l')
+    return formattedDate;
 }
 function tooltipLabelFormatter(timestamp){
         const formattedDate = new Date(timestamp*1000);
@@ -35,7 +36,7 @@ export default function CLFMarketGraph(props) {
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="timestamp" tickFormatter={timestampFormatter} tickMargin={15}/>
+                    <XAxis dataKey="timestamp" tickFormatter={timestampFormatter} tickMargin={35} angle={300}/>
                     <YAxis unit={` ${baseAsset}`} tickMargin={5} tickFormatter={largeNumberFormatter} />
                     <Tooltip labelFormatter={tooltipLabelFormatter} formatter={largeNumberFormatter} />
                     <Legend verticalAlign='top' />
