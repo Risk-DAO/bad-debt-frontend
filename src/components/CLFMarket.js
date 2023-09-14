@@ -79,24 +79,26 @@ export default function CLFMarket(props) {
     }
     return (
         <div className="CLFMarket">
+            <div className="CLFDataDisplay">
+                <div className="CLFGraphContainer">
             <div className="CLFMarketButtonsRow">
                 {/* protocol display */}
                 <button className="secondary outline">{protocol.charAt(0).toUpperCase() + protocol.slice(1)}</button>
                 {/* pool display */}
                 <button className="secondary outline">{baseAsset} Market</button>
                 {/* liquidity picker */}
-                <select onChange={(e) => { setSelectedLiquidity(e.target.value) }} id="liquidity" required>
+                <select className="secondary outline" onChange={(e) => { setSelectedLiquidity(e.target.value) }} id="liquidity" required>
                     {spans.map(_ => <option key={_} value={_}>Avg. Liquidity Over {_}D</option>)}
                 </select>
-                {/* liquidity picker */}
-                <select onChange={(e) => { setSelectedVolatility(e.target.value) }} id="volatility" required>
+                {/* volatility picker */}
+                <select className="secondary outline" onChange={(e) => { setSelectedVolatility(e.target.value) }} id="volatility" required>
                     {spans.map(_ => <option key={_} value={_}>Avg. Volatility Over {_}D</option>)}
                 </select>
             </div>
-            <div className="CLFDataDisplay">
                 <article className="CLFGraph">
                     <CLFMarketGraph baseAsset={baseAsset} collaterals={collaterals} displayData={displayData} />
                 </article>
+                </div>
                 <article className="CLFTable">
                     <table>
                         <thead>

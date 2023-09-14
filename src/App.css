@@ -24,53 +24,61 @@
   color: white;
 }
 
-.CLFMarket{
+.CLFMarket {
   margin-bottom: 2%;
 }
 
-.CLFDataDisplay{
+.CLFDataDisplay {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
-.CLFGraph{
-  width: 66%;
+.CLFGraph {
+  flex: 1 1 1;
   min-height: 400px;
-
-}
-.CLFTable{
-  width: 33%;
-
+  max-width: 1280px;
 }
 
-.CLFMarketButtonsRow{
+.CLFTable {
+  flex: 1 1 1;
+  min-width: 400px;
+  margin-left: 2%;
+}
+
+.CLFMarketButtonsRow {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 70%;
+  width: 100%;
 }
-.CLFMarketButtonsRow select, button{
-margin-bottom: 0 !important;
-margin: 2px;
+
+.CLFMarketButtonsRow select,
+button {
+  margin-bottom: 0 !important;
+  margin: 2px;
 }
 
 
-[data-tooltip]::after{
+[data-tooltip]::after {
   position: absolute !important;
   z-index: 99 !important;
 }
-[data-tooltip]::before{
+
+[data-tooltip]::before {
   position: absolute !important;
   z-index: 99 !important;
 }
-[data-tooltip]::after ::before{
+
+[data-tooltip]::after ::before {
   position: absolute !important;
   z-index: 99 !important;
 }
-::after ::before{
+
+::after ::before {
   position: absolute !important;
   z-index: 99 !important;
 }
@@ -83,6 +91,7 @@ margin: 2px;
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -92,7 +101,7 @@ margin: 2px;
 /**
  * Docs: Theme switcher
  */
- .switcher {
+.switcher {
   position: fixed;
   right: calc(var(--spacing) / 2 + var(--scrollbar-width, 0px));
   bottom: var(--spacing);
@@ -104,6 +113,7 @@ margin: 2px;
   line-height: 1;
   text-align: right;
 }
+
 .switcher::after {
   display: inline-block;
   width: 1rem;
@@ -115,6 +125,7 @@ margin: 2px;
   vertical-align: bottom;
   transition: transform var(--transition);
 }
+
 .switcher i {
   display: inline-block;
   max-width: 0;
@@ -124,28 +135,34 @@ margin: 2px;
   font-size: 0.875rem;
   white-space: nowrap;
 }
-.switcher:hover, .switcher:focus {
+
+.switcher:hover,
+.switcher:focus {
   max-width: 100%;
   transition: background-color var(--transition), border-color var(--transition), color var(--transition), box-shadow var(--transition);
 }
+
 .switcher:hover::after {
   transform: rotate(180deg);
 }
+
 .switcher:hover i {
   max-width: 100%;
   padding: 0 calc(var(--spacing) / 2) 0 calc(var(--spacing) / 4);
   transition: max-width var(--transition), padding var(--transition);
 }
+
 .switcher:focus {
   box-shadow: var(--card-box-shadow), 0 0 0 0.2rem var(--secondary-focus);
 }
+
 @media (min-width: 576px) {
   .switcher {
     right: calc(var(--spacing) + var(--scrollbar-width, 0px));
   }
 }
 
-article{
+article {
   /* light gray box shadow */
   /* box-shadow: [horizontal offset] [vertical offset] [blur radius] [optional spread radius] [color]; */
   /* box-shadow: 0rem 0.25rem 1rem rgba(128, 128, 128, 0.25), 0rem -0.25rem 1rem rgba(128, 128, 128, 0.25) !important; */
