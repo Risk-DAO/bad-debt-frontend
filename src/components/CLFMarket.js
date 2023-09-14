@@ -83,15 +83,15 @@ export default function CLFMarket(props) {
                 <div className="CLFGraphContainer">
             <div className="CLFMarketButtonsRow">
                 {/* protocol display */}
-                <button className="secondary outline">{protocol.charAt(0).toUpperCase() + protocol.slice(1)}</button>
+                <button style={{fontSize:"0.75rem"}}  className="secondary outline">{protocol.charAt(0).toUpperCase() + protocol.slice(1)}</button>
                 {/* pool display */}
-                <button className="secondary outline">{baseAsset} Market</button>
+                <button style={{fontSize:"0.75rem"}}  className="secondary outline">{baseAsset} Market</button>
                 {/* liquidity picker */}
-                <select className="secondary outline" onChange={(e) => { setSelectedLiquidity(e.target.value) }} id="liquidity" required>
+                <select style={{fontSize:"0.75rem"}}  className="secondary outline" onChange={(e) => { setSelectedLiquidity(e.target.value) }} id="liquidity" required>
                     {spans.map(_ => <option key={_} value={_}>Avg. Liquidity Over {_}D</option>)}
                 </select>
                 {/* volatility picker */}
-                <select className="secondary outline" onChange={(e) => { setSelectedVolatility(e.target.value) }} id="volatility" required>
+                <select style={{fontSize:"0.75rem"}}  className="secondary outline" onChange={(e) => { setSelectedVolatility(e.target.value) }} id="volatility" required>
                     {spans.map(_ => <option key={_} value={_}>Avg. Volatility Over {_}D</option>)}
                 </select>
             </div>
@@ -113,6 +113,7 @@ export default function CLFMarket(props) {
                     </table>
                 </article>
             </div>
+            <hr/>
         </div>
     )
 }
