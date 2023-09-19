@@ -1,4 +1,4 @@
-import { LineChart, CartesianGrid, XAxis, YAxis, Legend, Line, ResponsiveContainer, Tooltip } from "recharts";
+import { LineChart, XAxis, YAxis, Legend, Line, ResponsiveContainer, Tooltip, CartesianGrid } from "recharts";
 import { largeNumberFormatter } from "../utils";
 import moment from "moment/moment";
 
@@ -35,7 +35,7 @@ export default function CLFMarketGraph(props) {
                         bottom: 60,
                     }}
                 >
-                    <CartesianGrid strokeDasharray="3 3" />
+                    <CartesianGrid vertical={false} horiz strokeDasharray="3 3" />
                     <XAxis dataKey="timestamp" tickFormatter={timestampFormatter} tickMargin={35} angle={300}/>
                     <YAxis unit={` ${baseAsset}`} tickMargin={5} tickFormatter={largeNumberFormatter} />
                     <Tooltip labelFormatter={tooltipLabelFormatter} formatter={largeNumberFormatter} />
