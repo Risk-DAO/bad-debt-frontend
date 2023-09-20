@@ -23,10 +23,7 @@ class CLFs extends Component {
                     
                 </div>
             <hr style={{marginBottom:"2%"}}/>
-                <div aria-busy={loading} className="clfBody">
-                    {CLFsValues ? Object.entries(CLFsValues['results']).map(([k, v]) =><CLFMarket key={k} protocol={protocol} baseAsset={k} marketData={v} />) : loading ? `Loading ${protocol} data` : "No data to display." }
-                </div>
-                <div className="clfMethodology">
+            <div className="clfMethodology">
                     <article style={{display: "flex", flexDirection:"row", alignItems:"center", justifyContent:"space-between"}}>
                         <div style={{display: "flex", width:"70%", flexDirection:"column", alignItems:"start", justifyContent:"space-evenly"}}>
                         <h2>Methodology</h2>
@@ -35,6 +32,12 @@ class CLFs extends Component {
                         <button style={{width:"20%", height:"30%"}}>Read More</button>
                     </article>
                 </div>
+            <hr style={{marginBottom:"2%"}}/>
+
+                <div aria-busy={loading} className="clfBody">
+                    {CLFsValues ? Object.entries(CLFsValues['results']).map(([k, v]) =><CLFMarket key={k} protocol={protocol} baseAsset={k} marketData={v} />) : loading ? `Loading ${protocol} data` : "No data to display." }
+                </div>
+                
             </div>
         )
     }
