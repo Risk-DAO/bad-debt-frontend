@@ -38,7 +38,8 @@ export default function CLFMarketGraph(props) {
                     <CartesianGrid vertical={false} horiz strokeDasharray="3 3" />
                     <XAxis dataKey="timestamp" tickFormatter={timestampFormatter} tickMargin={35} angle={300}/>
                     <YAxis label={{ value: 'CLF', offset:'45', position: 'top'}} unit={` ${baseAsset}`} tickMargin={5} tickFormatter={largeNumberFormatter} />
-                    <Tooltip labelFormatter={tooltipLabelFormatter} formatter={largeNumberFormatter} />
+                    <Tooltip labelFormatter={tooltipLabelFormatter} formatter={largeNumberFormatter}
+                    wrapperClassName="card shadow" />
                     <Legend verticalAlign='top' />
                     {collaterals.map(_ => <Line key={_} type="monotone" stroke={strokes[_]} dataKey={_} activeDot={{ r: 8 }} />)}
                 </LineChart> : <p>test</p>}
