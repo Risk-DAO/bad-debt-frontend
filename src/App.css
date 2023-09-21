@@ -26,6 +26,7 @@
 
 .CLFMarket {
   margin-bottom: 2%;
+  width: 100%;
 }
 
 .CLFGraphContainer{
@@ -34,8 +35,8 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  min-width: 70%;
-  max-width: 1440px;
+  max-width: 50vw;
+  min-width: 50vw;
 }
 
 .CLFDataDisplay {
@@ -44,10 +45,11 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .CLFGraph {
-  min-height: 400px;
+  min-height: 500px;
   width: 100%;
   margin-top: 0 !important;
 }
@@ -55,7 +57,9 @@
 .CLFTable {
   min-width: 400px;
   margin-left: 2%;
+  max-width: 10vw;
 }
+
 
 .CLFMarketButtonsRow {
   display: flex;

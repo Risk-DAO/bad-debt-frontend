@@ -24,12 +24,12 @@ function tooltipLabelFormatter(timestamp){
 export default function CLFMarketGraph(props) {
     const { displayData, baseAsset, collaterals } = props;
     return (
-        <ResponsiveContainer width="100%" height="100%" minHeight="400px">
+        <ResponsiveContainer width="100%" height="100%" minHeight="450px">
             {displayData ?
                 <LineChart
                     data={displayData}
                     margin={{
-                        top: 5,
+                        top: 25,
                         right: 0,
                         left: 60,
                         bottom: 60,
@@ -37,7 +37,7 @@ export default function CLFMarketGraph(props) {
                 >
                     <CartesianGrid vertical={false} horiz strokeDasharray="3 3" />
                     <XAxis dataKey="timestamp" tickFormatter={timestampFormatter} tickMargin={35} angle={300}/>
-                    <YAxis label={{ value: 'CLF', offset:'20', position: 'top', textAnchor: 'middle' }} unit={` ${baseAsset}`} tickMargin={5} tickFormatter={largeNumberFormatter} />
+                    <YAxis label={{ value: 'CLF', offset:'45', position: 'top'}} unit={` ${baseAsset}`} tickMargin={5} tickFormatter={largeNumberFormatter} />
                     <Tooltip labelFormatter={tooltipLabelFormatter} formatter={largeNumberFormatter} />
                     <Legend verticalAlign='top' />
                     {collaterals.map(_ => <Line key={_} type="monotone" stroke={strokes[_]} dataKey={_} activeDot={{ r: 8 }} />)}

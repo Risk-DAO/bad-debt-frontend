@@ -10,7 +10,7 @@ class CLFs extends Component {
         const CLFsValues = mainStore.CLFs ? mainStore.CLFs.filter((_ => _.protocol === protocol))[0] : undefined;
         const loading = mainStore.CLFs ? false : true;
         return (
-            <div style={{margin:"0 5vw 0 5vw"}}>
+            <div style={{margin:"0 2vw 0 2vw"}}>
                 <div className="clfTitle">
                     <h1 style={{fontSize:"400%"}}>
                         Risk Appetite Index
