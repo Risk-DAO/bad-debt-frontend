@@ -11,15 +11,17 @@ function CLFs() {
     const CLFsValues = mainStore.CLFs ? mainStore.CLFs.filter((_ => _.protocol === protocol))[0] : undefined;
     const loading = mainStore.CLFs ? false : true;
     const [graphData, setGraphData] = useState(undefined);
+    const [averageData, setAverageData] = useState(undefined)
 
 
     useEffect(() => {
         async function getGraphData(protocol) {
-            console.log('firing')
-            console.log(protocol);
-            const apiResponse = await axios.get(`${API_URL}/getcurrentclfgraphdata?platform=${protocol}&latest=true`);
-            console.log('apiResponse', apiResponse)
-            setGraphData(apiResponse.data);
+            const apiResponseGraph = await axios.get(`${API_URL}/getcurrentclfgraphdata?platform=${protocol}&latest=true`);
+            const apiResponseAverages = await axios.get(`${API_URL}/getcurrentaverageclfs?platform=${protocol}&latest=true`);
+            setAverageData(apiResponseAverages.data);
+            setGraphData(apiResponseGraph.data);
+            console.log('apiResponse.data', apiResponseAverages.data);
+
         }
         getGraphData('compoundv3');
     }, [])
@@ -49,7 +51,7 @@ function CLFs() {
             <hr style={{ marginBottom: "2%" }} />
 
             <div aria-busy={loading} className="clfBody">
-                {CLFsValues ? Object.entries(CLFsValues['results']).map(([k, v]) => <CLFMarket key={k} protocol={protocol} baseAsset={k} marketData={v} graphData={graphData[k]} />) : loading ? `Loading ${protocol} data` : "No data to display."}
+                {CLFsValues ? Object.entries(CLFsValues['results']).map(([k, v]) => <CLFMarket key={k} protocol={protocol} baseAsset={k} marketData={v} averageData={averageData[k]} graphData={graphData[k]} />) : loading ? `Loading ${protocol} data` : "No data to display."}
             </div>
 
         </div>

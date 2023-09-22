@@ -5,7 +5,8 @@ import { Divider } from "@mui/material";
 
 function Row(props) {
     const name = props.tokenData[0];
-    let CLFs = undefined;
+    let CLFs = props.tokenData[1];
+    console.log(props.selectedLiquidity)
     function formatCLF(clf) {
         if(clf === "N/A" || clf === undefined){
             return "N/A"
@@ -13,21 +14,18 @@ function Row(props) {
         const computedClf = (clf * 100).toFixed(2);
         return computedClf > 100 ? 100 : computedClf;
     }
-    if (props.tokenData[1]) {
-        CLFs = props.tokenData[1]['clfs'];
-    }
     return <tr>
         <td>
             {name}
         </td>
         <td>
-            {CLFs ? formatCLF(CLFs['7']['7']) : "N/A"}
+            {CLFs['7D_averageSpan'][props.selectedLiquidity] ? formatCLF(CLFs['7D_averageSpan'][props.selectedLiquidity]['7']) : "N/A"}
         </td>
         <td>
-            {CLFs ? formatCLF(CLFs['30']['30']) : "N/A"}
+            {CLFs['30D_averageSpan'][props.selectedLiquidity] ? formatCLF(CLFs['30D_averageSpan'][props.selectedLiquidity]['30']) : "N/A"}
         </td>
         <td>
-            {CLFs ? formatCLF(CLFs['180']['180']) : "N/A"}
+            {CLFs['180D_averageSpan'][props.selectedLiquidity] ? formatCLF(CLFs['180D_averageSpan'][props.selectedLiquidity]['180']) : "N/A"}
         </td>
     </tr>
 }
@@ -38,6 +36,7 @@ export default function CLFMarket(props) {
     const display = props.marketData.totalCollateral > 0 ? true : false;
     const protocol = props.protocol;
     const graphData = props.graphData;
+    const averagesTableData = props.averageData;
     const spans = [7, 30, 180];
     const [selectedVolatility, setSelectedVolatility] = useState(7);
     const [selectedLiquidity, setSelectedLiquidity] = useState(7);
@@ -49,7 +48,6 @@ export default function CLFMarket(props) {
         }
     };
 
-console.log(selectedGraphData);
 useEffect(()=> {
     setSelectedGraphData(graphData[selectedVolatility][selectedLiquidity].toReversed());
 }, [selectedVolatility, selectedLiquidity, graphData])
@@ -97,7 +95,7 @@ useEffect(()=> {
                             </tr>
                         </thead>
                         <tbody>
-                            {Object.entries(data).map(_ => <Row key={_} tokenData={_} />)}
+                            {Object.entries(averagesTableData).map(_ => <Row selectedLiquidity={selectedLiquidity} key={_} tokenData={_} />)}
                         </tbody>
                     </table>
                 </article>
