@@ -18,6 +18,9 @@ export function normalize(amount, decimals) {
   }
 }
 
+export const API_URL = 'https://api.dex-history.la-tribu.xyz/api';
+
+
 export function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }

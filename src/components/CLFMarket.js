@@ -37,12 +37,11 @@ export default function CLFMarket(props) {
     const data = props.marketData.collateralsData;
     const display = props.marketData.totalCollateral > 0 ? true : false;
     const protocol = props.protocol;
+    const graphData = props.graphData;
     const spans = [7, 30, 180];
     const [selectedVolatility, setSelectedVolatility] = useState(7);
-    console.log(selectedVolatility);
     const [selectedLiquidity, setSelectedLiquidity] = useState(7);
-
-    const [displayData, setDisplayData] = useState([]);
+    const [selectedGraphData, setSelectedGraphData] = useState(undefined);
     const collaterals = [];
     for (const [k, v] of Object.entries(data)) {
         if (v) {
@@ -50,28 +49,10 @@ export default function CLFMarket(props) {
         }
     };
 
-
-    useEffect(()=> {
-        if(data){
-            const firstToken = Object.keys(data)[0];
-            const timestampArray = [];
-            const sortedData = [];
-            for(const blockNumber in data[firstToken]["liquidityHistory"][selectedLiquidity]){
-                timestampArray.push(blockNumber);
-            }
-            for(const timestamp of timestampArray){
-                const toPush = {};
-                for(const [collateral, collateralValues] of Object.entries(data)){
-                    toPush['timestamp'] = timestamp;
-                    toPush[collateral] = collateralValues.liquidityHistory[selectedLiquidity][timestamp];
-                }
-                sortedData.push(toPush);
-            }
-            setDisplayData(sortedData);
-        }
-    }, [data, selectedLiquidity])
-
-
+console.log(selectedGraphData);
+useEffect(()=> {
+    setSelectedGraphData(graphData[selectedVolatility][selectedLiquidity].toReversed());
+}, [selectedVolatility, selectedLiquidity, graphData])
 
 
 
@@ -104,7 +85,7 @@ export default function CLFMarket(props) {
                     </article>
                     </div>
                 <article className="CLFGraph">
-                    <CLFMarketGraph baseAsset={baseAsset} collaterals={collaterals} displayData={displayData} />
+                    <CLFMarketGraph baseAsset={baseAsset} collaterals={collaterals} displayData={selectedGraphData} />
                 </article>
                 </div>
                 <article className="CLFTable">

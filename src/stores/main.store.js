@@ -21,7 +21,7 @@ class MainStore {
   headDirectory = 'bad-debt'
   multiResultPlatforms = [];
   tableData = []
-  liquidityData = undefined;
+  averageCLFdata = undefined;
   tableRowDetails = null
   loading = true
   CLFs = null;
