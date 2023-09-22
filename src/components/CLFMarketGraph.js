@@ -10,7 +10,6 @@ const strokes = {
 
 
 function timestampFormatter(timestamp){
-    console.log()
     const formattedDate = moment(timestamp * 1000).format('l')
     return formattedDate;
 }

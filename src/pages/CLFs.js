@@ -20,8 +20,6 @@ function CLFs() {
             const apiResponseAverages = await axios.get(`${API_URL}/getcurrentaverageclfs?platform=${protocol}&latest=true`);
             setAverageData(apiResponseAverages.data);
             setGraphData(apiResponseGraph.data);
-            console.log('apiResponse.data', apiResponseAverages.data);
-
         }
         getGraphData('compoundv3');
     }, [])

@@ -6,7 +6,6 @@ import { Divider } from "@mui/material";
 function Row(props) {
     const name = props.tokenData[0];
     let CLFs = props.tokenData[1];
-    console.log(props.selectedLiquidity)
     function formatCLF(clf) {
         if(clf === "N/A" || clf === undefined){
             return "N/A"
