@@ -3,26 +3,26 @@ import { largeNumberFormatter } from "../utils";
 import moment from "moment/moment";
 
 const strokes = {
-    UNI: '#0088FE',
+    UNI: '#b03a78',
     WBTC: '#00C49F',
-    WETH: '#FFBB28'
+    WETH: '#FFBB28',
+    cbETH: "#b24521",
+    COMP: '#9c5e31',
+    LINK: '#b791dc'
 }
 
 
-function timestampFormatter(timestamp){
-    const formattedDate = moment(timestamp * 1000).format('l')
+function timestampFormatter(date) {
+    const formattedDate = moment(date, "DD.MM.YYYY").format('l')
     return formattedDate;
 }
-function tooltipLabelFormatter(timestamp){
-        const formattedDate = new Date(timestamp*1000);
-    return formattedDate.toLocaleString();
-}
+
 
 /// blockinfo
 // https://web3.api.la-tribu.xyz `/api/getblocktimestamp?blocknumber=${blockNumber}`
 
 export default function CLFMarketGraph(props) {
-    const { displayData, baseAsset, collaterals } = props;
+    const { displayData, collaterals } = props;
     return (
         <ResponsiveContainer width="100%" height="100%" minHeight="450px">
             {displayData ?
@@ -36,10 +36,10 @@ export default function CLFMarketGraph(props) {
                     }}
                 >
                     <CartesianGrid vertical={false} horiz strokeDasharray="3 3" />
-                    <XAxis dataKey="date" tickMargin={35} angle={300}/>
-                    <YAxis label={{ value: 'CLF', offset:'45', position: 'top'}} tickMargin={5} tickFormatter={largeNumberFormatter} />
+                    <XAxis dataKey="date" tickMargin={35} angle={300} tickFormatter={timestampFormatter} />
+                    <YAxis type="number" domain={[0, 1]} label={{ value: 'CLF', offset: '45', position: 'top' }} tickMargin={5} tickFormatter={largeNumberFormatter} />
                     <Tooltip formatter={largeNumberFormatter}
-                    wrapperClassName="card shadow" />
+                        wrapperClassName="card shadow" />
                     <Legend verticalAlign='top' />
                     {collaterals.map(_ => <Line key={_} type="monotone" stroke={strokes[_]} dataKey={_} activeDot={{ r: 8 }} />)}
                 </LineChart> : <p>test</p>}
