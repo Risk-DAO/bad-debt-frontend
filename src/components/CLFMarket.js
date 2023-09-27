@@ -10,8 +10,7 @@ function Row(props) {
         if(clf === "N/A" || clf === undefined){
             return "N/A"
         }
-        const computedClf = (clf * 100).toFixed(2);
-        return computedClf > 100 ? 100 : computedClf;
+        return clf.toFixed(2);
     }
     return <tr>
         <td>
