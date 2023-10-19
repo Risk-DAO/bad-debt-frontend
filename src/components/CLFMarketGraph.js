@@ -31,7 +31,7 @@ export default function CLFMarketGraph(props) {
                     margin={{
                         top: 25,
                         right: 0,
-                        left: 60,
+                        left: 10,
                         bottom: 60,
                     }}
                 >
