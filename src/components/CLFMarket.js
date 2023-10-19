@@ -62,11 +62,11 @@ useEffect(()=> {
                     <div className="CLFMarketButtonsRow">
             <div className="CLFMarketButtonsContainer">
                 {/* liquidity picker */}
-                <select style={{fontSize:"0.75rem", maxWidth:"40%"}}  className="secondary outline" onChange={(e) => { setSelectedLiquidity(e.target.value) }} id="liquidity" required>
+                <select style={{fontSize:"0.75rem", maxWidth:"50%"}}  className="secondary outline" onChange={(e) => { setSelectedLiquidity(e.target.value) }} id="liquidity" required>
                     {spans.map(_ => <option key={_} value={_}>Avg. Liquidity Over {_}D</option>)}
                 </select>
                 {/* volatility picker */}
-                <select style={{fontSize:"0.75rem", maxWidth:"40%"}}  className="secondary outline" onChange={(e) => { setSelectedVolatility(e.target.value) }} id="volatility" required>
+                <select style={{fontSize:"0.75rem", maxWidth:"50%"}}  className="secondary outline" onChange={(e) => { setSelectedVolatility(e.target.value) }} id="volatility" required>
                     {spans.map(_ => <option key={_} value={_}>Avg. Volatility Over {_}D</option>)}
                 </select>
             </div>
@@ -84,6 +84,8 @@ useEffect(()=> {
                     <CLFMarketGraph baseAsset={baseAsset} collaterals={collaterals} displayData={selectedGraphData} />
                 </article>
                 </div>
+                <div className="CLFTableContainer">
+                    <div className="CLFTableOffset"/>
                 <article className="CLFTable">
                     <table>
                         <thead>
@@ -97,6 +99,7 @@ useEffect(()=> {
                         </tbody>
                     </table>
                 </article>
+                </div>
             </div>
             <hr/>
         </div>

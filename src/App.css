@@ -39,11 +39,12 @@
   min-width: 50vw;
 }
 
+
 .CLFDataDisplay {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: start;
   flex-wrap: wrap;
   width: 100%;
 }
@@ -70,6 +71,10 @@
   min-width: 400px;
   margin-left: 2%;
   max-width: 10vw;
+  margin-top: 0%;
+}
+.CLFTableOffset{
+  margin: 29%;
 }
 
 
@@ -219,4 +224,24 @@ article {
   /* light gray box shadow */
   /* box-shadow: [horizontal offset] [vertical offset] [blur radius] [optional spread radius] [color]; */
   /* box-shadow: 0rem 0.25rem 1rem rgba(128, 128, 128, 0.25), 0rem -0.25rem 1rem rgba(128, 128, 128, 0.25) !important; */
+}
+
+@media only screen and (max-width: 810px) {
+  .CLFGraphContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 95vw;
+    min-width: 95vw;
+  }
+  .CLFMarketButtonsContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    width: 100%;
+    justify-content: flex-end;
+    max-width: 1440px;
+  }
 }
