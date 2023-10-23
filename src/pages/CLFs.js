@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import CLFMarket from "../components/CLFMarket";
 import axios from "axios";
 import { API_URL } from "../utils";
+import { MathComponent } from "mathjax-react";
 
 function CLFs() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -40,12 +41,17 @@ Higher r values reflect a higher risk exposure which results from changes in mar
             </div>
             <hr style={{ marginBottom: "2%" }} />
             <div className="clfMethodology">
-                <article style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                    <div style={{ display: "flex", width: "70%", flexDirection: "column", alignItems: "start", justifyContent: "space-evenly" }}>
+                <article style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between" }}>
+                <div style={{display:"flex", width:"100%", justifyContent:'center'}}>
+                    <MathComponent tex={String.raw`r = \frac{\sigma * \sqrt{d}}{\ln\frac{1}{(LTV + \beta)}*\sqrt{l}}`} />
+                    </div>
+                    <div style={{ display: "flex", width: "90%", flexDirection: "column", alignItems: "start", justifyContent: "space-evenly" }}>
                         <h2>Methodology</h2>
                         <sub>Methodology short text by Yaron</sub>
                     </div>
+                <div style={{display:"flex", width:"100%", justifyContent:'flex-end'}}>
                     <button style={{ width: "20%", height: "30%" }}>Read More</button>
+                    </div>
                 </article>
             </div>
             <hr style={{ marginBottom: "2%" }} />
