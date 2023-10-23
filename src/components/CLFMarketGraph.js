@@ -37,7 +37,7 @@ export default function CLFMarketGraph(props) {
                 >
                     <CartesianGrid vertical={false} horiz strokeDasharray="3 3" />
                     <XAxis dataKey="date" tickMargin={35} angle={300} tickFormatter={timestampFormatter} />
-                    <YAxis type="number" label={{ value: 'CLF', offset: '45', position: 'top' }} tickMargin={5} tickFormatter={CLFNumberFormatter} />
+                    <YAxis type="number" label={{ value: 'r', offset: '45', position: 'top' }} tickMargin={5} tickFormatter={CLFNumberFormatter} />
                     <Tooltip formatter={CLFNumberFormatter} labelFormatter={timestampFormatter}
                         wrapperClassName="card shadow" />
                     <Legend verticalAlign='top' />

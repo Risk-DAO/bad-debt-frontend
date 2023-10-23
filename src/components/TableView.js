@@ -104,7 +104,7 @@ class TableView extends Component {
       total: 'Bad Debt', 
       ratio: 'Bad Debt Ratio', 
       updated: 'Last Update',
-      clf: 'Avg. CLF',
+      clf: 'Avg. Risk Level',
       users: 'Details'
     }
     const body = data.filter(({platform})=> checkPlatformIcon(platform))
@@ -139,7 +139,7 @@ class TableView extends Component {
                   <td key={v}>
                     <div style={{display:"flex", flexDirection:"row", alignItems:"start", justifyContent:"center"}}>
                       <b style={{marginRight:"3px"}}>{headTitleMap[v]}</b>
-                        <Tooltip title="Explanation text goes here">
+                        <Tooltip title="A weighted average of all markets' risk levels">
                         <img style={{maxWidth: '24px', filter: `invert(${mainStore.blackMode? 1 : 0})`}} src={'/images/tooltip.svg'} alt='tooltip'/>
                         </Tooltip>
                         </div>

@@ -27,12 +27,14 @@ function CLFs() {
         <div style={{ margin: "0 2vw 0 2vw" }}>
             <div className="clfTitle">
                 <h1 style={{ fontSize: "400%" }}>
-                    Risk Appetite Index
+                    Risk Level Index
                 </h1>
             </div>
             <div className="clfSubtitle">
                 <p style={{ color: "primary", fontSize: "150%", marginBottom: "4vh" }}>
-                    The LTV Index tracks changes in Confidence Level Factor (CLF) values that reflect the confidence of a market in an asset to go through liquidation with no defaults. The higher the CLF the lower the recommended LTV of the asset should be.
+                The Risk Level Index compares lending markets’ economic risk levels (r) over time as they are being calculated by the <a href="https://medium.com/risk-dao/a-smart-contract-formula-for-ltv-ratio-a60a8373d54d" target="_blank" rel="noreferrer">SmartLTV formula.</a>
+                <br/>
+Higher r values reflect a higher risk exposure which results from changes in market conditions without adjustments of LTV ratios of the market.
                 </p>
 
             </div>

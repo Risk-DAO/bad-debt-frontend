@@ -90,7 +90,7 @@ useEffect(()=> {
                     <table>
                         <thead>
                             <tr>
-                                <td>Avg. CLF</td>
+                                <td>Avg. Risk Levels</td>
                                 {spans.map(_ => <td key={_}>{_}D</td>)}
                             </tr>
                         </thead>
