@@ -4,7 +4,6 @@ import { observer } from "mobx-react";
 import CLFMarket from "../components/CLFMarket";
 import axios from "axios";
 import { API_URL } from "../utils";
-import { MathComponent } from "mathjax-react";
 
 function CLFs() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -33,25 +32,11 @@ function CLFs() {
             </div>
             <div className="clfSubtitle">
                 <p style={{ color: "primary", fontSize: "150%", marginBottom: "4vh" }}>
-                The Risk Level Index compares lending markets’ economic risk levels (<em>r</em>)  over time as they are being calculated by the <a href="https://medium.com/risk-dao/a-smart-contract-formula-for-ltv-ratio-a60a8373d54d" target="_blank" rel="noreferrer">SmartLTV formula.</a>
-Higher <em>r</em> values reflect a higher risk exposure which results from changes in market conditions without adjustments of LTV ratios of the market.
+                The Risk Level Index compares lending markets’ economic risk levels (<em>r</em>)  over time as they are being calculated by the <a href="https://medium.com/risk-dao/a-smart-contract-formula-for-ltv-ratio-a60a8373d54d" target="_blank" rel="noreferrer">SmartLTV formula.</a> Higher <em>r</em> values reflect a higher risk exposure which results from changes in market conditions without adjustments of LTV ratios of the market.
                 </p>
-
-            </div>
-            <hr style={{ marginBottom: "2%" }} />
-            <div className="clfMethodology">
-                <article style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between" }}>
-                <div style={{display:"flex", width:"100%", justifyContent:'center'}}>
-                    <MathComponent tex={String.raw`r = \frac{\sigma * \sqrt{d}}{\ln\frac{1}{(LTV + \beta)}*\sqrt{l}}`} />
-                    </div>
-                    <div style={{ display: "flex", width: "90%", flexDirection: "column", alignItems: "start", justifyContent: "space-evenly" }}>
-                        <h2>Methodology</h2>
-                        <sub>Methodology short text by Yaron</sub>
-                    </div>
-                <div style={{display:"flex", width:"100%", justifyContent:'flex-end'}}>
-                    <button style={{ width: "20%", height: "30%" }}>Read More</button>
-                    </div>
-                </article>
+                <div style={{display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+                <button style={{ width: "10%", height: "30%" }}>Read More</button>
+                </div>
             </div>
             <hr style={{ marginBottom: "2%" }} />
 
