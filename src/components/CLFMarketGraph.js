@@ -15,6 +15,10 @@ function timestampFormatter(date) {
     const formattedDate = moment(date, "DD.MM.YYYY").format('l')
     return formattedDate;
 }
+function xAxisTimestampFormatter(date) {
+    const formattedDate = moment(date, "DD.MM.YYYY").format('MMM DD')
+    return formattedDate;
+}
 
 function CLFNumberFormatter(number) {
     return number.toFixed(2);
@@ -36,7 +40,7 @@ export default function CLFMarketGraph(props) {
                     }}
                 >
                     <CartesianGrid vertical={false} horiz strokeDasharray="3 3" />
-                    <XAxis dataKey="date" tickMargin={35} angle={300} tickFormatter={timestampFormatter} />
+                    <XAxis dataKey="date" minTickGap={10} tickFormatter={xAxisTimestampFormatter} />
                     <YAxis type="number" label={{ value: 'r', offset: '45', position: 'top' }} tickMargin={5} tickFormatter={CLFNumberFormatter} />
                     <Tooltip formatter={CLFNumberFormatter} labelFormatter={timestampFormatter}
                         wrapperClassName="card shadow" />
