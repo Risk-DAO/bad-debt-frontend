@@ -36,8 +36,8 @@ export default function CLFMarket(props) {
     const graphData = props.graphData;
     const averagesTableData = props.averageData;
     const spans = [7, 30, 180];
-    const [selectedVolatility, setSelectedVolatility] = useState(7);
-    const [selectedLiquidity, setSelectedLiquidity] = useState(7);
+    const [selectedVolatility, setSelectedVolatility] = useState(30);
+    const [selectedLiquidity, setSelectedLiquidity] = useState(30);
     const [selectedGraphData, setSelectedGraphData] = useState(undefined);
     const collaterals = [];
     for (const [k, v] of Object.entries(data)) {
@@ -62,11 +62,11 @@ useEffect(()=> {
                     <div className="CLFMarketButtonsRow">
             <div className="CLFMarketButtonsContainer">
                 {/* liquidity picker */}
-                <select style={{fontSize:"0.75rem", maxWidth:"50%"}}  className="secondary outline" onChange={(e) => { setSelectedLiquidity(e.target.value) }} id="liquidity" required>
+                <select style={{fontSize:"0.75rem", maxWidth:"50%"}} value={selectedLiquidity}  className="secondary outline" onChange={(e) => { setSelectedLiquidity(e.target.value) }} id="liquidity" required>
                     {spans.map(_ => <option key={_} value={_}>Avg. Liquidity Over {_}D</option>)}
                 </select>
                 {/* volatility picker */}
-                <select style={{fontSize:"0.75rem", maxWidth:"50%"}}  className="secondary outline" onChange={(e) => { setSelectedVolatility(e.target.value) }} id="volatility" required>
+                <select style={{fontSize:"0.75rem", maxWidth:"50%"}} value={selectedVolatility}  className="secondary outline" onChange={(e) => { setSelectedVolatility(e.target.value) }} id="volatility" required>
                     {spans.map(_ => <option key={_} value={_}>Avg. Volatility Over {_}D</option>)}
                 </select>
             </div>
