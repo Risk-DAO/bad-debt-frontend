@@ -77,6 +77,10 @@ useEffect(()=> {
                     </article>
                     <Divider orientation="vertical" />
                     <article className="CLFPoolNameTab">
+                    Ethereum
+                    </article>
+                    <Divider orientation="vertical" />
+                    <article className="CLFPoolNameTab">
                     {baseAsset} Market
                     </article>
                     </div>
