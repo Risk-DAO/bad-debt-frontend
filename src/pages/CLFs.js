@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import CLFMarket from "../components/CLFMarket";
 import axios from "axios";
 import { API_URL } from "../utils";
+import CLFProtocolAverage from "../components/CLFProtocolAverage";
 
 function CLFs() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -38,6 +39,8 @@ function CLFs() {
                 <button style={{ width: "10%", height: "30%" }}>Read More</button>
                 </div>
             </div>
+            <hr style={{ marginBottom: "2%" }} />
+            <CLFProtocolAverage />
             <hr style={{ marginBottom: "2%" }} />
 
             <div aria-busy={loading} className="clfBody">
