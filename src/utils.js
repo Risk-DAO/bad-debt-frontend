@@ -1,4 +1,5 @@
 
+import moment from "moment"
 import web3Utils from "web3-utils"
 
 const {fromWei, toBN} = web3Utils
@@ -20,6 +21,19 @@ export function normalize(amount, decimals) {
 
 export const API_URL = 'https://api.dex-history.la-tribu.xyz/api';
 
+export function xAxisTimestampFormatter(date) {
+  const formattedDate = moment(date, "DD.MM.YYYY").format('MMM DD');
+  return formattedDate;
+}
+
+export function timestampFormatter(date) {
+  const formattedDate = moment(date, "DD.MM.YYYY").format('l')
+  return formattedDate;
+}
+
+export function CLFNumberFormatter(number) {
+  return number.toFixed(2);
+}
 
 export function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);

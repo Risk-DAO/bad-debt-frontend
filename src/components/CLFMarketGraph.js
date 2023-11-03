@@ -1,5 +1,5 @@
 import { LineChart, XAxis, YAxis, Legend, Line, ResponsiveContainer, Tooltip, CartesianGrid } from "recharts";
-import moment from "moment/moment";
+import { CLFNumberFormatter, timestampFormatter, xAxisTimestampFormatter } from "../utils";
 
 const strokes = {
     UNI: '#b03a78',
@@ -11,18 +11,7 @@ const strokes = {
 }
 
 
-function timestampFormatter(date) {
-    const formattedDate = moment(date, "DD.MM.YYYY").format('l')
-    return formattedDate;
-}
-function xAxisTimestampFormatter(date) {
-    const formattedDate = moment(date, "DD.MM.YYYY").format('MMM DD')
-    return formattedDate;
-}
 
-function CLFNumberFormatter(number) {
-    return number.toFixed(2);
-}
 
 
 export default function CLFMarketGraph(props) {

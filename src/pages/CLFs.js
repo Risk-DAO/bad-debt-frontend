@@ -40,7 +40,7 @@ function CLFs() {
                 </div>
             </div>
             <hr style={{ marginBottom: "2%" }} />
-            <CLFProtocolAverage protocol={protocol} />
+            <CLFProtocolAverage protocol={protocol} averageData={averageData} />
             <hr style={{ marginBottom: "2%" }} />
 
             <div aria-busy={loading} className="clfBody">
