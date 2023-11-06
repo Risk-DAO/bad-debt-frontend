@@ -26,7 +26,6 @@ export default function CLFProtocolAverage(props) {
 
     function xAxisFormat(timestamp){
         const date = moment(Number(timestamp));
-        console.log('date', date)
   const formattedDate = moment(date, "DD.MM.YYYY").format('MMM DD');
         return formattedDate
     }
@@ -35,6 +34,7 @@ export default function CLFProtocolAverage(props) {
         return [number.toFixed(2), 'Risk Level'];
       }
 
+      console.log(averageData)
 
     return (
         <div className="CLFMarket">
@@ -48,6 +48,10 @@ export default function CLFProtocolAverage(props) {
                         <article className="CLFPoolNameTab">
                             Ethereum
                         </article>
+                        <Divider orientation="vertical" />
+                        <article className="CLFPoolNameTab">
+                            <b><em>r</em> = {graphData.slice(-1)[0]['weightedAverage']}</b>
+                        </article>
                     </div>
                     <article className="CLFProtocolAverage" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                         <div className="RiskFormula">
@@ -58,7 +62,7 @@ export default function CLFProtocolAverage(props) {
                                     <InfoIcon fontSize="small" />
                                 </div>
                             </MUITooltip>
-                            <MathComponent tex={String.raw`r = \frac{\sigma \cdot \sqrt{d}}{\ln\frac{1}{(LTV + \beta)}*\sqrt{l}}`} />
+                            <MathComponent tex={String.raw`r = \frac{\sigma \cdot \sqrt{d}}{\ln\frac{1}{(LTV + \beta)}\cdot\sqrt{l}}`} />
                         </div>
                         <div className="CLFProtocolAverageGraph">
                             <ResponsiveContainer width="100%" height="100%" minHeight="350px">
