@@ -89,15 +89,7 @@ export default function CLFProtocolAverage(props) {
                                         <CartesianGrid vertical={false} horiz strokeDasharray="3 3" />
                                         <XAxis dataKey="date" minTickGap={10} tickFormatter={xAxisFormat} />
                                         <YAxis type="number" tickMargin={5} tickFormatter={CLFNumberFormatter}>
-                                            <Label offset={30} position='top'>
-                                                <MUITooltip title="Weighted average across all markets">
-                                                    <div style={{ display: "flex", flexDirection: "row" }}>
-                                                        r
-                                                        <Divider orientation="vertical" />
-                                                        <InfoIcon fontSize="small" />
-                                                    </div>
-                                                </MUITooltip>
-                                            </Label>
+                                            <Label content={<RLegend />} offset={0} position='top'/>
                                         </YAxis>
                                         <Tooltip formatter={RiskLevelNumberFormatter} labelFormatter={xAxisFormat}
                                             wrapperClassName="card shadow" />
