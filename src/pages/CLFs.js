@@ -41,7 +41,7 @@ function CLFs() {
             </div>
             <hr style={{ marginBottom: "2%" }} />
             <CLFProtocolAverage protocol={protocol} averageData={averageData} />
-            <hr style={{ marginBottom: "2%" }} />
+            <hr style={{ marginBottom: "5%" }} />
 
             <div aria-busy={loading} className="clfBody">
                 {CLFsValues ? Object.entries(CLFsValues['results']).map(([k, v]) => <CLFMarket key={k} protocol={protocol} baseAsset={k} marketData={v} averageData={averageData[k]} graphData={graphData[k]} />) : loading ? `Loading ${protocol} data` : "No data to display."}
