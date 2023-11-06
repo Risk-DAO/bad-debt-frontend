@@ -36,7 +36,7 @@ function CLFs() {
                 The Risk Level Index compares lending markets’ economic risk levels (<em>r</em>)  over time as they are being calculated by the <a href="https://medium.com/risk-dao/a-smart-contract-formula-for-ltv-ratio-a60a8373d54d" target="_blank" rel="noreferrer">SmartLTV formula.</a> Higher index values reflect a higher risk exposure which results from changes in market conditions without adjustments of LTV ratios of the market.
                 </p>
                 <div style={{display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
-                <button style={{ width: "10%", height: "30%" }}>Read More</button>
+                <button className="ReadMoreButton">Read More</button>
                 </div>
             </div>
             <hr style={{ marginBottom: "2%" }} />

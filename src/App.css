@@ -242,7 +242,16 @@ article {
   /* box-shadow: 0rem 0.25rem 1rem rgba(128, 128, 128, 0.25), 0rem -0.25rem 1rem rgba(128, 128, 128, 0.25) !important; */
 }
 
+.ReadMoreButton {
+  height: 30%;
+  width: 10%;
+}
+
 @media only screen and (max-width: 1280px) {
+  .ReadMoreButton {
+    height: 2%;
+    width: 50%;
+  }
   .CLFGraphContainer {
     display: flex;
     flex-direction: column;

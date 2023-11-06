@@ -1,6 +1,5 @@
-import { Divider, Tooltip as MUITooltip } from "@mui/material";
+import { Divider} from "@mui/material";
 import { MathComponent } from "mathjax-react";
-import InfoIcon from '@mui/icons-material/Info';
 import { useEffect, useState } from "react";
 import { CartesianGrid, Label, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { CLFNumberFormatter } from "../utils";
