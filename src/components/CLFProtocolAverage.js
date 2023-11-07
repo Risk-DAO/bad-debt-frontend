@@ -1,18 +1,11 @@
-import { Divider} from "@mui/material";
+import { Divider, Tooltip as MUITooltip  } from "@mui/material";
+import InfoIcon from '@mui/icons-material/Info';
 import { MathComponent } from "mathjax-react";
 import { useEffect, useState } from "react";
-import { CartesianGrid, Label, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { CLFNumberFormatter } from "../utils";
 import CircularProgress from '@mui/material/CircularProgress';
 import moment from "moment";
-
-function rLegend() {
-    return (
-        <div>
-            r
-        </div>
-    )
-}
 
 export default function CLFProtocolAverage(props) {
     const protocol = props.protocol;
@@ -68,21 +61,32 @@ export default function CLFProtocolAverage(props) {
                             <div className="RiskFormula">
                                 <MathComponent tex={String.raw`r = \frac{\sigma \cdot \sqrt{d}}{\ln\frac{1}{(LTV + \beta)}\cdot\sqrt{l}}`} />
                             </div>
-                            <div className="RiskFormulaLegend" style={{alignContent:'flex-start', justifyContent:'flex-start', textAlign:'start'}}>
-                                σ - Price volatility between the collateral and debt asset.<br/>
-                                β  - Liquidation bonus.<br/>
-                                ℓ - Available dex liquidity with a slippage of β.<br/>
-                                d - Debt cap of the borrowable asset.<br/>
+                            <div className="RiskFormulaLegend" style={{ alignContent: 'flex-start', justifyContent: 'flex-start', textAlign: 'start' }}>
+                                σ - Price volatility between the collateral and debt asset.<br />
+                                β  - Liquidation bonus.<br />
+                                ℓ - Available dex liquidity with a slippage of β.<br />
+                                d - Debt cap of the borrowable asset.<br />
                                 LTV - Loan to Value ratio.
                             </div>
                         </div>
                         <div className="CLFProtocolAverageGraph">
+                            <div style={{marginLeft:'5%'}}>
+                                <div style={{ display: "flex", flexDirection: "row" }}>
+                            <MUITooltip title="Weighted average across all markets">
+                                <div style={{ display: "flex", flexDirection: "row" }}>
+                                    <em>r</em>
+                                    <Divider style={{marginLeft:'2%'}} orientation="vertical" />
+                                    <InfoIcon fontSize="small" />
+                                </div>
+                            </MUITooltip>
+                                </div>
+                            </div>
                             <ResponsiveContainer width="100%" height="100%" minHeight="350px">
                                 {graphData ?
                                     <LineChart
                                         data={graphData}
                                         margin={{
-                                            top: 55,
+                                            top: 5,
                                             right: 0,
                                             left: 10,
                                             bottom: 60,
@@ -90,9 +94,7 @@ export default function CLFProtocolAverage(props) {
                                     >
                                         <CartesianGrid vertical={false} horiz strokeDasharray="3 3" />
                                         <XAxis dataKey="date" minTickGap={10} tickFormatter={xAxisFormat} />
-                                        <YAxis type="number" tickMargin={5} tickFormatter={CLFNumberFormatter}>
-                                            <Label value={'L'} content={rLegend} offset={0} position='top' />
-                                        </YAxis>
+                                        <YAxis type="number" tickMargin={5} tickFormatter={CLFNumberFormatter} />
                                         <Tooltip formatter={RiskLevelNumberFormatter} labelFormatter={xAxisFormat}
                                             wrapperClassName="card shadow" />
                                         <Line dot={false} key='weightedAverage' type="monotone" stroke={'#3182BD'} dataKey='weightedAverage' activeDot={{ r: 8 }} />
