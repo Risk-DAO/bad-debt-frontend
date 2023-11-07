@@ -74,8 +74,7 @@ export default function CLFProtocolAverage(props) {
                                 <div style={{ display: "flex", flexDirection: "row" }}>
                             <MUITooltip title="Weighted average across all markets">
                                 <div style={{ display: "flex", flexDirection: "row" }}>
-                                    <em>r</em>
-                                    <Divider style={{marginLeft:'2%'}} orientation="vertical" />
+                                    <em style={{marginRight:'10px'}}>r</em>
                                     <InfoIcon fontSize="small" />
                                 </div>
                             </MUITooltip>
