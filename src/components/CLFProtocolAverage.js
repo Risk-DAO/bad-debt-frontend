@@ -1,4 +1,4 @@
-import { Divider, Tooltip as MUITooltip  } from "@mui/material";
+import { Divider, Tooltip as MUITooltip } from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
 import { MathComponent } from "mathjax-react";
 import { useEffect, useState } from "react";
@@ -56,8 +56,8 @@ export default function CLFProtocolAverage(props) {
                             <b><em>r</em> = {graphData ? graphData.slice(-1)[0]['weightedAverage'] : ''}</b>
                         </article>
                     </div>
-                    <article className="CLFProtocolAverage" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <div className="RiskFormulaContainer">
+                    <article className="CLFProtocolAverage" style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                        <div className="RiskFormulaContainer" style={{maxWidth:'25vw'}}>
                             <div className="RiskFormula">
                                 <MathComponent tex={String.raw`r = \frac{\sigma \cdot \sqrt{d}}{\ln\frac{1}{(LTV + \beta)}\cdot\sqrt{l}}`} />
                             </div>
@@ -70,14 +70,14 @@ export default function CLFProtocolAverage(props) {
                             </div>
                         </div>
                         <div className="CLFProtocolAverageGraph">
-                            <div style={{marginLeft:'5%'}}>
+                            <div style={{ marginLeft: '5%' }}>
                                 <div style={{ display: "flex", flexDirection: "row" }}>
-                            <MUITooltip title="Weighted average across all markets">
-                                <div style={{ display: "flex", flexDirection: "row" }}>
-                                    <em style={{marginRight:'10px'}}>r</em>
-                                    <InfoIcon fontSize="small" />
-                                </div>
-                            </MUITooltip>
+                                    <MUITooltip title="Weighted average across all markets">
+                                        <div style={{ display: "flex", flexDirection: "row" }}>
+                                            <em style={{ marginRight: '10px' }}>r</em>
+                                            <InfoIcon fontSize="small" />
+                                        </div>
+                                    </MUITooltip>
                                 </div>
                             </div>
                             <ResponsiveContainer width="100%" height="100%" minHeight="350px">
