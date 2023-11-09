@@ -24,6 +24,140 @@
   color: white;
 }
 
+.CLFMarket {
+  margin-bottom: 5%;
+  width: 100%;
+}
+
+.CLFGraphContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 50vw;
+  min-width: 50vw;
+}
+.RiskProtocolGraphContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 80vw;
+  min-width: 80vw;
+}
+
+.CLFDataDisplay {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.CLFGraph {
+  min-height: 500px;
+  width: 100%;
+  margin-top: 0 !important;
+}
+.CLFProtocolAverage {
+  width: 100%;
+  margin-top: 0 !important;
+}
+.CLFProtocolAverageGraph {
+  min-height: 350px;
+  width: 100%;
+  max-width: 45vw;
+  margin-top: 0 !important;
+}
+.card {
+  background: white;
+  border-radius: 10px;
+  transition: border-radius 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.shadow {
+  box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1),
+    0 0 0 2px rgb(190, 190, 190),
+    0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+}
+
+.CLFTable {
+  min-width: 400px;
+  margin-left: 2%;
+  max-width: 10vw;
+  margin-top: 0%;
+}
+.CLFTableOffset{
+  margin: 29%;
+}
+
+
+.CLFMarketButtonsRow {
+  display: flex;
+  flex-direction: row;
+  align-items: right;
+  width: 100%;
+  justify-content: right;
+}
+
+.CLFMarketButtonsContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  width: 70%;
+  justify-content: flex-end;
+  max-width: 1440px;
+}
+
+.CLFMarketTabRow {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.CLFProtocolNameTab {
+  margin: 10px 10px 0px 0px;
+  padding: 10px;
+}
+
+.CLFPoolNameTab {
+  margin: 10px 0px 0px 10px;
+  padding: 10px;
+}
+
+
+.CLFMarketButtonsRow select,
+button {
+  margin-bottom: 0 !important;
+  margin: 2px;
+}
+
+
+[data-tooltip]::after {
+  position: absolute !important;
+  z-index: 99 !important;
+}
+
+[data-tooltip]::before {
+  position: absolute !important;
+  z-index: 99 !important;
+}
+
+[data-tooltip]::after ::before {
+  position: absolute !important;
+  z-index: 99 !important;
+}
+
+::after ::before {
+  position: absolute !important;
+  z-index: 99 !important;
+}
+
 .App-link {
   color: #61dafb;
 }
@@ -32,6 +166,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -41,7 +176,7 @@
 /**
  * Docs: Theme switcher
  */
- .switcher {
+.switcher {
   position: fixed;
   right: calc(var(--spacing) / 2 + var(--scrollbar-width, 0px));
   bottom: var(--spacing);
@@ -53,6 +188,7 @@
   line-height: 1;
   text-align: right;
 }
+
 .switcher::after {
   display: inline-block;
   width: 1rem;
@@ -64,6 +200,7 @@
   vertical-align: bottom;
   transition: transform var(--transition);
 }
+
 .switcher i {
   display: inline-block;
   max-width: 0;
@@ -73,29 +210,79 @@
   font-size: 0.875rem;
   white-space: nowrap;
 }
-.switcher:hover, .switcher:focus {
+
+.switcher:hover,
+.switcher:focus {
   max-width: 100%;
   transition: background-color var(--transition), border-color var(--transition), color var(--transition), box-shadow var(--transition);
 }
+
 .switcher:hover::after {
   transform: rotate(180deg);
 }
+
 .switcher:hover i {
   max-width: 100%;
   padding: 0 calc(var(--spacing) / 2) 0 calc(var(--spacing) / 4);
   transition: max-width var(--transition), padding var(--transition);
 }
+
 .switcher:focus {
   box-shadow: var(--card-box-shadow), 0 0 0 0.2rem var(--secondary-focus);
 }
+
 @media (min-width: 576px) {
   .switcher {
     right: calc(var(--spacing) + var(--scrollbar-width, 0px));
   }
 }
 
-article{
+article {
   /* light gray box shadow */
   /* box-shadow: [horizontal offset] [vertical offset] [blur radius] [optional spread radius] [color]; */
-  box-shadow: 0rem 0.25rem 1rem rgba(128, 128, 128, 0.25), 0rem -0.25rem 1rem rgba(128, 128, 128, 0.25) !important;
+  /* box-shadow: 0rem 0.25rem 1rem rgba(128, 128, 128, 0.25), 0rem -0.25rem 1rem rgba(128, 128, 128, 0.25) !important; */
+}
+
+.ReadMoreButton {
+  height: 30%;
+  width: 10%;
+}
+
+@media only screen and (max-width: 1280px) {
+  .ReadMoreButton {
+    height: 2%;
+    width: 50%;
+  }
+  .CLFProtocolAverageGraph {
+    min-height: 350px;
+    width: 100%;
+    max-width: 99vw;
+    margin-top: 0 !important;
+  }
+  .CLFGraphContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 95vw;
+    min-width: 95vw;
+  }
+  .RiskProtocolGraphContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 95vw;
+    min-width: 95vw;
+  }
+  .CLFMarketButtonsContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    width: 100%;
+    justify-content: flex-end;
+    max-width: 1440px;
+  }
 }
