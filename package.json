@@ -68,6 +68,6 @@
     "url": "^0.11.0",    
     "json2toml": "^3.0.1",
     "toml": "^3.0.0",
-    "wrangler": "^2.1.11"
+    "@cloudflare/wrangler": "^1.14.1"
   }
 }
