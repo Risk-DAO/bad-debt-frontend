@@ -1,0 +1,10 @@
+account_id = "xyz"
+compatibility_date = "2022-06-25"
+name = "xyz"
+route = ""
+type = "webpack"
+workers_dev = true
+zone_id = "xyz"
+[site]
+bucket = "./build"
+entry-point = "workers-site"

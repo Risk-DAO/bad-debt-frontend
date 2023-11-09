@@ -31,6 +31,9 @@
     "build-server": "BUILD_PATH='../public' react-app-rewired build",
     "build": "react-app-rewired build && ./generate-static.sh",
     "build-coming-soon": "REACT_APP_COMING_SOON=true react-app-rewired build",
+    "predeploy": "node tomlGen.js --name bad-debt-frontend",
+    "deploy": "wrangler publish",
+    "deploy-full": "npm run build && npm run predeploy && npm run deploy",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject"
   },
@@ -62,6 +65,9 @@
     "react-app-rewired": "^2.2.1",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
-    "url": "^0.11.0"
+    "url": "^0.11.0",    
+    "json2toml": "^3.0.1",
+    "toml": "^3.0.0",
+    "wrangler": "^2.1.11"
   }
 }
