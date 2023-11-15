@@ -19,7 +19,7 @@ function App() {
             <Routes>
               <Route exact path="/"  element={<CompoundForksBadDebt/>}/>
               <Route exact path="/markets"  element={<Markets/>}/>
-              <Route exact path="clfs" element={<CLFs/>}/>
+              <Route exact path="risk-index" element={<CLFs/>}/>
             </Routes>
         </div>
         <Footer/>

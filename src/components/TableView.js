@@ -83,7 +83,7 @@ function Row(props){
         {moment(row.updated * 1000).fromNow()}
       </td>
       <td>
-        {row.clf && row.clf['weightedCLF'] ? <a href={`/clfs?protocol=${row.platform}`}>{row.clf['weightedCLF']}</a> : '-'}
+        {row.clf && row.clf['weightedCLF'] ? <a href={`/risk-index?protocol=${row.platform}`}>{row.clf['weightedCLF']}</a> : '-'}
       </td>
       <td>
         <Details data={row} />
