@@ -1,3 +1,3 @@
 cd build
 mkdir markets && cp index.html markets
-mkdir clfs && cp index.html clfs
+mkdir risk-index && cp index.html risk-index
