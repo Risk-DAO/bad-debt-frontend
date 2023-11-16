@@ -17,13 +17,13 @@ function Row(props) {
             {name}
         </td>
         <td>
-            {CLFs['7D_averageSpan'][props.selectedLiquidity] ? formatCLF(CLFs['7D_averageSpan'][props.selectedLiquidity]['7']) : "N/A"}
+            {CLFs['7D_averageSpan'][props.selectedLiquidity] ? formatCLF(CLFs['7D_averageSpan'][props.selectedVolatility][props.selectedLiquidity]) : "N/A"}
         </td>
         <td>
-            {CLFs['30D_averageSpan'][props.selectedLiquidity] ? formatCLF(CLFs['30D_averageSpan'][props.selectedLiquidity]['30']) : "N/A"}
+            {CLFs['30D_averageSpan'][props.selectedLiquidity] ? formatCLF(CLFs['30D_averageSpan'][props.selectedVolatility][props.selectedLiquidity]) : "N/A"}
         </td>
         <td>
-            {CLFs['180D_averageSpan'][props.selectedLiquidity] ? formatCLF(CLFs['180D_averageSpan'][props.selectedLiquidity]['180']) : "N/A"}
+            {CLFs['180D_averageSpan'][props.selectedLiquidity] ? formatCLF(CLFs['180D_averageSpan'][props.selectedVolatility][props.selectedLiquidity]) : "N/A"}
         </td>
     </tr>
 }
@@ -49,7 +49,6 @@ export default function CLFMarket(props) {
 useEffect(()=> {
     setSelectedGraphData(graphData[selectedVolatility][selectedLiquidity].toReversed());
 }, [selectedVolatility, selectedLiquidity, graphData])
-
 
 
     if (!display) {
@@ -99,7 +98,7 @@ useEffect(()=> {
                             </tr>
                         </thead>
                         <tbody>
-                            {Object.entries(averagesTableData).map(_ => <Row selectedLiquidity={selectedLiquidity} key={_} tokenData={_} />)}
+                            {Object.entries(averagesTableData).map(_ => <Row selectedLiquidity={selectedLiquidity} selectedVolatility={selectedVolatility} key={_} tokenData={_} />)}
                         </tbody>
                     </table>
                 </article>

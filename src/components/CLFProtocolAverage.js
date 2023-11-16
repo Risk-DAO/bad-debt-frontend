@@ -37,7 +37,6 @@ export default function CLFProtocolAverage(props) {
         return [number.toFixed(2), 'Risk Level'];
     }
 
-    console.log(averageData)
 
     return (
         <div className="CLFMarket">
