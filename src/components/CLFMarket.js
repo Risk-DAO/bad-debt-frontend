@@ -50,7 +50,6 @@ useEffect(()=> {
     setSelectedGraphData(graphData[selectedVolatility][selectedLiquidity].toReversed());
 }, [selectedVolatility, selectedLiquidity, graphData])
 
-console.log('averagesTableData', averagesTableData);
 
     if (!display) {
         return
