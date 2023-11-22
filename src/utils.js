@@ -19,7 +19,7 @@ export function normalize(amount, decimals) {
   }
 }
 
-export const API_URL = 'https://api.dex-history.la-tribu.xyz/api';
+export const API_URL = 'http://5.196.66.126:9899/api';
 
 export function xAxisTimestampFormatter(date) {
   const formattedDate = moment(date, "DD.MM.YYYY").format('MMM DD');

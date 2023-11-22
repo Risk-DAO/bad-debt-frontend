@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CLFMarketGraph from "./CLFMarketGraph";
 import { Divider } from "@mui/material";
-
+import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 
 function Row(props) {
     const name = props.tokenData[0];
@@ -39,18 +39,38 @@ export default function CLFMarket(props) {
     const [selectedVolatility, setSelectedVolatility] = useState(30);
     const [selectedLiquidity, setSelectedLiquidity] = useState(30);
     const [selectedGraphData, setSelectedGraphData] = useState(undefined);
+    const [selectedCollaterals, setSelectedCollaterals] = useState([]);
+    const [availableCollaterals, setAvailableCollaterals] = useState([]);
+    const urlParams = new URLSearchParams(window.location.search);
+    const advanced = urlParams.get('advanced');
+    
+
+useEffect(()=> {
+    setSelectedGraphData(graphData[selectedVolatility][selectedLiquidity].toReversed());
+}, [selectedVolatility, selectedLiquidity, graphData]);
+useEffect(()=> {
     const collaterals = [];
     for (const [k, v] of Object.entries(data)) {
         if (v) {
             collaterals.push(k)
         }
     };
+    setAvailableCollaterals(collaterals);
+    setSelectedCollaterals(collaterals);
+}, [data]);
 
-useEffect(()=> {
-    setSelectedGraphData(graphData[selectedVolatility][selectedLiquidity].toReversed());
-}, [selectedVolatility, selectedLiquidity, graphData])
-
-
+function updateCollaterals(collateral){
+    if(selectedCollaterals.includes(collateral)){
+        if(selectedCollaterals.length === 1){
+            return
+        }
+        const updatedCollaterals = selectedCollaterals.filter(_ => _ !== collateral);
+        setSelectedCollaterals(updatedCollaterals);
+    }
+    else{
+        setSelectedCollaterals([...selectedCollaterals, collateral])
+    }
+}
     if (!display) {
         return
     }
@@ -60,6 +80,7 @@ useEffect(()=> {
                 <div className="CLFGraphContainer">
                     <div className="CLFMarketButtonsRow">
             <div className="CLFMarketButtonsContainer">
+                {/* <IOSSwitch checked={showAdvancedControls} onChange={()=>setShowAdvancedControls(!showAdvancedControls)}/> */}
                 {/* liquidity picker */}
                 <select style={{fontSize:"0.75rem", maxWidth:"50%"}} value={selectedLiquidity}  className="secondary outline" onChange={(e) => { setSelectedLiquidity(e.target.value) }} id="liquidity" required>
                     {spans.map(_ => <option key={_} value={_}>Avg. Liquidity Over {_}D</option>)}
@@ -84,7 +105,15 @@ useEffect(()=> {
                     </article>
                     </div>
                 <article className="CLFGraph">
-                    <CLFMarketGraph baseAsset={baseAsset} collaterals={collaterals} displayData={selectedGraphData} />
+                    <div>
+                    <FormGroup
+          sx={{all:"unset"}}
+          >
+        
+          {advanced ? availableCollaterals.map(collateral => <FormControlLabel className="collateralsControls" key={collateral} control={<Checkbox color="primary" checked={selectedCollaterals.includes(collateral)} onChange={() => updateCollaterals(collateral)} />} label={collateral} />) : ''}
+          </FormGroup>
+                    </div>
+                    <CLFMarketGraph baseAsset={baseAsset} advanced={advanced} collaterals={selectedCollaterals} displayData={selectedGraphData} />
                 </article>
                 </div>
                 <div className="CLFTableContainer">

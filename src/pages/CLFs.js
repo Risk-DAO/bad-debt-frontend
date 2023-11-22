@@ -13,8 +13,6 @@ function CLFs() {
     const loading = mainStore.CLFs ? false : true;
     const [graphData, setGraphData] = useState(undefined);
     const [averageData, setAverageData] = useState(undefined)
-
-
     useEffect(() => {
         async function getGraphData(protocol) {
             const apiResponseGraph = await axios.get(`${API_URL}/getcurrentclfgraphdata?platform=${protocol}&latest=true`);
