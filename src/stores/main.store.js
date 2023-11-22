@@ -3,7 +3,7 @@ import axios from "axios";
 
 const {normalize} = require('../utils.js');
 
-const apiUrl = "https://api.dex-history.la-tribu.xyz/api";
+const apiUrl = "http://5.196.66.126:9899/api";
 
 const getToday = ()=> {
   const dateObj = new Date();
