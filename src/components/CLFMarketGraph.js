@@ -29,9 +29,9 @@ const CustomTooltip = ({ active, payload, label }) => {
             {collaterals.map(_ => <Box key={_} color={colors[_]} sx={{marginBottom:'10px'}}>
                 <Typography color={colors[_]}>{_}: {toDisplay[_][`${_}`].toFixed(2)}</Typography>
                 <Typography color={colors[_]}>{_} Liquidity: {toDisplay[_][`${_}-liquidity`].toFixed(2)}</Typography>
-                <Typography color={colors[_]}>{_} Volatility: {toDisplay[_][`${_}-volatility`].toFixed(2)}</Typography>
+                <Typography color={colors[_]}>{_} Volatility: {(toDisplay[_][`${_}-volatility`] * 100).toFixed(2)}%</Typography>
                 <Typography color={colors[_]}>Parameters:</Typography>
-                <Typography color={colors[_]}>{_} LTV: {toDisplay[_][`${_}-parameters`]['LTV']}</Typography>
+                <Typography color={colors[_]}>{_} LTV: {toDisplay[_][`${_}-parameters`]['LTV']}%</Typography>
                 <Typography color={colors[_]}>{_} Liquidation Bonus BPS: {toDisplay[_][`${_}-parameters`]['liquidationBonusBPS']}</Typography>
                 <Typography color={colors[_]}>{_} SupplyCap: {toDisplay[_][`${_}-parameters`]['supplyCap']}</Typography>
             </Box>)}
