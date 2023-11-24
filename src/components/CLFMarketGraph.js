@@ -27,6 +27,7 @@ const CustomTooltip = ({ active, payload, label }) => {
       return (
         <div className="card shadow">
             {collaterals.map(_ => <Box key={_} color={colors[_]} sx={{marginBottom:'10px'}}>
+                <Typography>Date: {payload[0].payload.date}</Typography>
                 <Typography color={colors[_]}>{_}: {toDisplay[_][`${_}`].toFixed(2)}</Typography>
                 <Typography color={colors[_]}>{_} Liquidity: {toDisplay[_][`${_}-liquidity`].toFixed(2)}</Typography>
                 <Typography color={colors[_]}>{_} Volatility: {toDisplay[_][`${_}-volatility`].toFixed(2)}</Typography>
