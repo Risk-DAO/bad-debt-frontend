@@ -44,6 +44,7 @@ function Row(props){
     "rikki": "Rikkei Finance",
     "apeswap": "ApeSwap",
     "inverse": "Inverse Finance - frontier (deprecated)",
+  "morpho-blue": "Morpho Blue Flagship Markets"
   }
   const displayName = nameMaps[row.platform]
   const name = !displayName ? row.platform.split("-").map(capitalizeFirstLetter).join(" ") : displayName
