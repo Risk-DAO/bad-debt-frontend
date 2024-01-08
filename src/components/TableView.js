@@ -61,8 +61,8 @@ function Row(props){
             </summary>
             </details>
         : 
-        <div>
-        <img alt="platform logo" style={{borderRadius: '50%', width: '24px', height: '24px', display: 'inline'}} src={`/images/platforms/${row.platform.toLowerCase()}.webp`}/>
+        <div style={{display: 'flex', alignItems:'center'}}>
+        <img alt="platform logo" style={{borderRadius: '50%', width: '28px', height: '28px', display: 'inline'}} src={`/images/platforms/${row.platform.toLowerCase()}.webp`}/>
         <span style={{marginLeft: '5px'}}>{name}</span>
         </div>
         }
