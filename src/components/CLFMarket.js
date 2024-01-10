@@ -64,10 +64,10 @@ useEffect(()=> {
                 <select style={{fontSize:"0.75rem", maxWidth:"50%"}} value={selectedLiquidity}  className="secondary outline" onChange={(e) => { setSelectedLiquidity(e.target.value) }} id="liquidity" required>
                     {spans.map(_ => <option key={_} value={_}>Avg. Liquidity Over {_}D</option>)}
                 </select>
-                {/* volatility picker */}
+                {/* volatility picker
                 <select style={{fontSize:"0.75rem", maxWidth:"50%"}} value={selectedVolatility}  className="secondary outline" onChange={(e) => { setSelectedVolatility(e.target.value) }} id="volatility" required>
                     {spans.map(_ => <option key={_} value={_}>Avg. Volatility Over {_}D</option>)}
-                </select>
+                </select> */}
             </div>
             </div>
             <div className="CLFMarketTabRow">

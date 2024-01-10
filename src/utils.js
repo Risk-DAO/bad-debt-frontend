@@ -19,6 +19,10 @@ export function normalize(amount, decimals) {
   }
 }
 
+export function removeSpaces(str) {
+  return str.toLowerCase().replace(/\s+/g, '');
+}
+
 export const API_URL = 'https://api.dex-history.la-tribu.xyz/api';
 
 export function xAxisTimestampFormatter(date) {
@@ -55,4 +59,8 @@ export function largeNumberFormatter(number) {
       return `${(Number((number / (1e3)).toFixed(2)))}K`
   }
   return `${(Number(number).toFixed(2))}`
+}
+
+export const storePlatformMapping = {
+  morpho:'morpho-blue'
 }

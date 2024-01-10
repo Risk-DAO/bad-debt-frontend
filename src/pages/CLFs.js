@@ -3,7 +3,7 @@ import mainStore from "../stores/main.store";
 import { observer } from "mobx-react";
 import CLFMarket from "../components/CLFMarket";
 import axios from "axios";
-import { API_URL } from "../utils";
+import { API_URL, removeSpaces } from "../utils";
 import CLFProtocolAverage from "../components/CLFProtocolAverage";
 
 function CLFs() {
@@ -17,13 +17,13 @@ function CLFs() {
 
     useEffect(() => {
         async function getGraphData(protocol) {
-            const apiResponseGraph = await axios.get(`${API_URL}/getcurrentclfgraphdata?platform=${protocol}&latest=true`);
-            const apiResponseAverages = await axios.get(`${API_URL}/getcurrentaverageclfs?platform=${protocol}&latest=true`);
+            const apiResponseGraph = await axios.get(`${API_URL}/clf/getcurrentclfgraphdata?latest=true&platform=${protocol}`);
+            const apiResponseAverages = await axios.get(`${API_URL}/clf/getcurrentaverageclfs?latest=true&platform=${protocol}`);
             setAverageData(apiResponseAverages.data);
             setGraphData(apiResponseGraph.data);
         }
-        getGraphData('compoundv3');
-    }, [])
+        getGraphData(removeSpaces(protocol));
+    }, [protocol])
     return (
         <div style={{ margin: "0 2vw 0 2vw" }}>
             <div className="clfTitle">
