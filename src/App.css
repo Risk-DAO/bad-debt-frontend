@@ -130,11 +130,15 @@
   padding: 10px;
 }
 
-
 .CLFMarketButtonsRow select,
 button {
   margin-bottom: 0 !important;
   margin: 2px;
+}
+
+.datePicker {
+  --icon-width:0rem !important;
+  background-image: none !important
 }
 
 
