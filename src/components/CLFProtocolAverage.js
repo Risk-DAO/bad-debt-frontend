@@ -3,12 +3,13 @@ import InfoIcon from '@mui/icons-material/Info';
 import { MathComponent } from "mathjax-react";
 import { useEffect, useState } from "react";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { CLFNumberFormatter } from "../utils";
+import { CLFNumberFormatter, nameMaps } from "../utils";
 import CircularProgress from '@mui/material/CircularProgress';
 import moment from "moment";
 
 export default function CLFProtocolAverage(props) {
     const protocol = props.protocol;
+    const displayName = nameMaps[protocol.toLowerCase()] ? nameMaps[protocol.toLowerCase()] : protocol
     const averageData = props.averageData;
     const [graphData, setGraphData] = useState(undefined);
 
@@ -44,7 +45,7 @@ export default function CLFProtocolAverage(props) {
                 <div className="RiskProtocolGraphContainer">
                     <div className="CLFMarketTabRow">
                         <article className="CLFProtocolNameTab">
-                            {protocol.charAt(0).toUpperCase() + protocol.slice(1)}
+                            {displayName.charAt(0).toUpperCase() + displayName.slice(1)}
                         </article>
                         <Divider orientation="vertical" />
                         <article className="CLFPoolNameTab">
