@@ -17,21 +17,21 @@ function Row(props) {
             {name}
         </td>
         <td>
-            {CLFs['7D_averageSpan'][props.selectedLiquidity] ? formatCLF(CLFs['7D_averageSpan'][props.selectedVolatility][props.selectedLiquidity]) : "N/A"}
+            {CLFs['7D_averageSpan'] && CLFs['7D_averageSpan'][props.selectedLiquidity] ? formatCLF(CLFs['7D_averageSpan'][props.selectedVolatility][props.selectedLiquidity]) : "N/A"}
         </td>
         <td>
-            {CLFs['30D_averageSpan'][props.selectedLiquidity] ? formatCLF(CLFs['30D_averageSpan'][props.selectedVolatility][props.selectedLiquidity]) : "N/A"}
+            {CLFs['30D_averageSpan'] && CLFs['30D_averageSpan'][props.selectedLiquidity] ? formatCLF(CLFs['30D_averageSpan'][props.selectedVolatility][props.selectedLiquidity]) : "N/A"}
         </td>
         <td>
-            {CLFs['180D_averageSpan'][props.selectedLiquidity] ? formatCLF(CLFs['180D_averageSpan'][props.selectedVolatility][props.selectedLiquidity]) : "N/A"}
+            {CLFs['180D_averageSpan'] && CLFs['180D_averageSpan'][props.selectedLiquidity] ? formatCLF(CLFs['180D_averageSpan'][props.selectedVolatility][props.selectedLiquidity]) : "N/A"}
         </td>
     </tr>
 }
 
 export default function CLFMarket(props) {
     const baseAsset = props.baseAsset;
-    const data = props.marketData.collateralsData;
-    const display = props.marketData.totalCollateral > 0 ? true : false;
+    const data = props.averageData;
+    const display = true;
     const protocol = props.protocol;
     const graphData = props.graphData;
     const averagesTableData = props.averageData;
@@ -40,10 +40,8 @@ export default function CLFMarket(props) {
     const [selectedLiquidity, setSelectedLiquidity] = useState(30);
     const [selectedGraphData, setSelectedGraphData] = useState(undefined);
     const collaterals = [];
-    for (const [k, v] of Object.entries(data)) {
-        if (v) {
+    for (const k of Object.keys(data)) {
             collaterals.push(k)
-        }
     };
 
 useEffect(()=> {

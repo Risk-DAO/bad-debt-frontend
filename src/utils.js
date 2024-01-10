@@ -64,3 +64,7 @@ export function largeNumberFormatter(number) {
 export const storePlatformMapping = {
   morpho:'morpho-blue'
 }
+
+export const storeReversePlatformMapping = {
+  'morpho-blue':'morpho'
+}

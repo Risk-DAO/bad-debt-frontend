@@ -3,13 +3,16 @@ import mainStore from "../stores/main.store";
 import { observer } from "mobx-react";
 import CLFMarket from "../components/CLFMarket";
 import axios from "axios";
-import { API_URL, removeSpaces } from "../utils";
+import { API_URL, removeSpaces, storeReversePlatformMapping } from "../utils";
 import CLFProtocolAverage from "../components/CLFProtocolAverage";
 
 function CLFs() {
     const urlParams = new URLSearchParams(window.location.search);
     const protocol = urlParams.get('protocol');
-    const CLFsValues = mainStore.CLFs ? mainStore.CLFs.filter((_ => _.protocol === protocol))[0] : undefined;
+    let formattedProtocol = removeSpaces(protocol.toLowerCase());
+    if(storeReversePlatformMapping[formattedProtocol]){
+        formattedProtocol = storeReversePlatformMapping[formattedProtocol]
+    }
     const loading = mainStore.CLFs ? false : true;
     const [graphData, setGraphData] = useState(undefined);
     const [averageData, setAverageData] = useState(undefined)
@@ -22,8 +25,8 @@ function CLFs() {
             setAverageData(apiResponseAverages.data);
             setGraphData(apiResponseGraph.data);
         }
-        getGraphData(removeSpaces(protocol));
-    }, [protocol])
+        getGraphData(formattedProtocol);
+    }, [formattedProtocol])
     return (
         <div style={{ margin: "0 2vw 0 2vw" }}>
             <div className="clfTitle">
@@ -46,7 +49,7 @@ function CLFs() {
             <hr style={{ marginBottom: "5%" }} />
 
             <div aria-busy={loading} className="clfBody">
-                {CLFsValues ? Object.entries(CLFsValues['results']).map(([k, v]) => <CLFMarket key={k} protocol={protocol} baseAsset={k} marketData={v} averageData={averageData[k]} graphData={graphData[k]} />) : loading ? `Loading ${protocol} data` : "No data to display."}
+                {graphData ? Object.entries(graphData).map(([k, v]) => <CLFMarket key={k} protocol={protocol} baseAsset={k} marketData={v} averageData={averageData[k]} graphData={graphData[k]} />) : loading ? `Loading ${protocol} data` : "No data to display."}
             </div>
 
         </div>
