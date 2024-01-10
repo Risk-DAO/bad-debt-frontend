@@ -201,7 +201,7 @@ class MainStore {
     this.clearCache()
     await this.badDebtFetcher()
     await this.getCLFs()
-    await this.getLiquidityData();
+    // await this.getLiquidityData();
     const subJobs = this.badDebtSubJobsCache
     const subJobSummeries = Object.entries(subJobs).map(this.summarizeSubJobs)
     const badDebt = this.badDebtCache
