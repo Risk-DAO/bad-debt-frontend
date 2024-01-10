@@ -4,7 +4,7 @@ import ChainIcon from "./ChainIcon";
 import PlatformDetails from "./PlatformDetails";
 import WhaleFriendly from "./WhaleFriendly";
 import Details from "./Details";
-import { capitalizeFirstLetter, removeSpaces } from "../utils";
+import { capitalizeFirstLetter, nameMaps, removeSpaces } from "../utils";
 import mainStore from "../stores/main.store";
 import moment from 'moment';
 import platformDetails from "../lending-platfroms-details/index";
@@ -40,13 +40,6 @@ function Row(props){
   let platform = removeSpaces(row.platform.toLowerCase());
   const canOpen = platformDetails[row.platform];
   const [open, setOpen] = useState(false);
-  const nameMaps = {
-    "rari-capital": "Rari (Tetranode pool)",
-    "rikki": "Rikkei Finance",
-    "apeswap": "ApeSwap",
-    "inverse": "Inverse Finance - frontier (deprecated)",
-  "morpho-blue": "Morpho Blue Flagship Markets"
-  }
   const displayName = nameMaps[row.platform]
   const name = !displayName ? row.platform.split("-").map(capitalizeFirstLetter).join(" ") : displayName
   if(row.platform === "compound v3"){

@@ -68,3 +68,11 @@ export const storePlatformMapping = {
 export const storeReversePlatformMapping = {
   'morpho-blue':'morpho'
 }
+
+export const nameMaps = {
+  "rari-capital": "Rari (Tetranode pool)",
+  "rikki": "Rikkei Finance",
+  "apeswap": "ApeSwap",
+  "inverse": "Inverse Finance - frontier (deprecated)",
+"morpho-blue": "Morpho Blue Flagship Markets"
+}

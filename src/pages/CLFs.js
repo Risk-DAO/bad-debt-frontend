@@ -3,7 +3,7 @@ import mainStore from "../stores/main.store";
 import { observer } from "mobx-react";
 import CLFMarket from "../components/CLFMarket";
 import axios from "axios";
-import { API_URL, removeSpaces, storeReversePlatformMapping } from "../utils";
+import { API_URL, nameMaps, removeSpaces, storeReversePlatformMapping } from "../utils";
 import CLFProtocolAverage from "../components/CLFProtocolAverage";
 
 function CLFs() {
@@ -49,7 +49,7 @@ function CLFs() {
             <hr style={{ marginBottom: "5%" }} />
 
             <div aria-busy={loading} className="clfBody">
-                {graphData ? Object.entries(graphData).map(([k, v]) => <CLFMarket key={k} protocol={protocol} baseAsset={k} marketData={v} averageData={averageData[k]} graphData={graphData[k]} />) : loading ? `Loading ${protocol} data` : "No data to display."}
+                {graphData ? Object.entries(graphData).map(([k, v]) => <CLFMarket key={k} protocol={protocol} baseAsset={k} marketData={v} averageData={averageData[k]} graphData={graphData[k]} />) : loading ? `Loading ${nameMaps[protocol] ?nameMaps[protocol] : protocol } data` : "No data to display."}
             </div>
 
         </div>
