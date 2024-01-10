@@ -4,7 +4,7 @@ import ChainIcon from "./ChainIcon";
 import PlatformDetails from "./PlatformDetails";
 import WhaleFriendly from "./WhaleFriendly";
 import Details from "./Details";
-import { capitalizeFirstLetter } from "../utils";
+import { capitalizeFirstLetter, removeSpaces } from "../utils";
 import mainStore from "../stores/main.store";
 import moment from 'moment';
 import platformDetails from "../lending-platfroms-details/index";
@@ -37,6 +37,7 @@ const summaryStyle = {
 }
 function Row(props){
   const row = props.data;
+  let platform = removeSpaces(row.platform.toLowerCase());
   const canOpen = platformDetails[row.platform];
   const [open, setOpen] = useState(false);
   const nameMaps = {
@@ -84,7 +85,7 @@ function Row(props){
         {moment(row.updated * 1000).fromNow()}
       </td>
       <td>
-        {row.clf && row.clf['weightedCLF'] ? <a href={`/risk-index?protocol=${row.platform}`}>{row.clf['weightedCLF']}</a> : '-'}
+        {mainStore.CLFs[platform] ? <a href={`/risk-index?protocol=${row.platform}`}>{mainStore.CLFs[platform]}</a> : '-'}
       </td>
       <td>
         <Details data={row} />

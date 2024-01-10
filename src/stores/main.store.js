@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import axios from "axios";
 
-const {normalize} = require('../utils.js');
+const {normalize, storePlatformMapping} = require('../utils.js');
 
 const apiUrl = "https://api.dex-history.la-tribu.xyz/api";
 
@@ -160,9 +160,13 @@ class MainStore {
 
   getCLFs = async () => {
     try{
-    const url = apiUrl + "/getallclfs?latest=true";
+    const url = apiUrl + "/clf/getaveragerisklevels";
     const CLFs = await axios.get(url);
-    this.CLFs = CLFs.data;
+    const remappedCLFs = {}
+    for(const [key, value] of Object.entries(CLFs.data)){
+      storePlatformMapping[key] ? remappedCLFs[storePlatformMapping[key]] = value : remappedCLFs[key] = value;
+    }
+    this.CLFs = remappedCLFs;
   }
   catch(err){
     console.log("Could not get CLFs");
@@ -247,14 +251,10 @@ class MainStore {
   }
 
   summarizeSubJobs = ([platform, markets]) => {
-    console.log(this.CLFs)
-    const platformLC = platform.toLowerCase();
-    console.log(platformLC)
     const chain = [...new Set(Object.keys(markets).map(market => market.split('_')[0]))].join(',')
     const tvl = Math.abs(Object.values(markets).reduce((acc, market) => acc + normalize(market.tvl, market.decimals), 0))
     const total = Math.abs(Object.values(markets).reduce((acc, market) => acc + normalize(market.total, market.decimals), 0))
     const updated = Object.values(markets).map(({updated})=> updated).sort((a, b)=> Number(a) - Number(b))[0]
-    const clf = this.CLFs ? (this.CLFs.filter(_ => _.protocol === platformLC))[0] : undefined;
     const users = [].concat(...Object.values(markets).map(({users}) => users))
 
     return {
@@ -265,7 +265,6 @@ class MainStore {
       ratio: 100 * (total/tvl),
       updated,
       users,
-      clf,
       markets
     }
   }
