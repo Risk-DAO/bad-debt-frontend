@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import CLFMarketGraph from "./CLFMarketGraph";
 import { Divider } from "@mui/material";
+import { nameMaps } from "../utils";
 
 
 function Row(props) {
@@ -33,6 +34,7 @@ export default function CLFMarket(props) {
     const data = props.averageData;
     const display = true;
     const protocol = props.protocol;
+    const displayName = nameMaps[protocol.toLowerCase()] ? nameMaps[protocol.toLowerCase()] : protocol
     const graphData = props.graphData;
     const averagesTableData = props.averageData;
     const spans = [7, 30, 180];
@@ -70,7 +72,7 @@ useEffect(()=> {
             </div>
             <div className="CLFMarketTabRow">
                     <article className="CLFProtocolNameTab">
-                    {protocol.charAt(0).toUpperCase() + protocol.slice(1)}
+                    {displayName.charAt(0).toUpperCase() + displayName.slice(1)}
                     </article>
                     <Divider orientation="vertical" />
                     <article className="CLFPoolNameTab">
