@@ -57,7 +57,7 @@ export default function CLFProtocolAverage(props) {
                         </article>
                     </div>
                     <article className="CLFProtocolAverage" style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                        <div className="RiskFormulaContainer" style={{maxWidth:'25vw'}}>
+                        <div className="RiskFormulaContainer" style={{marginBottom:'4vh'}}>
                             <div className="RiskFormula">
                                 <MathComponent tex={String.raw`r = \frac{\sigma \cdot \sqrt{d}}{\ln\frac{1}{(LTV + \beta)}\cdot\sqrt{l}}`} />
                             </div>
@@ -87,7 +87,7 @@ export default function CLFProtocolAverage(props) {
                                         margin={{
                                             top: 5,
                                             right: 0,
-                                            left: 10,
+                                            left: 0,
                                             bottom: 60,
                                         }}
                                     >
