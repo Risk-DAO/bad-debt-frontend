@@ -95,7 +95,6 @@
   max-width: 100vw;
   margin-top: 0%;
 }
-
 .CLFTableOffset {
   margin: 29%;
 }
@@ -265,6 +264,10 @@ article {
   .ReadMoreButton {
     height: 2%;
     width: 50%;
+  }
+
+  .CLFTableOffset {
+    margin: 0%;
   }
 
   .CLFProtocolAverageGraph {
