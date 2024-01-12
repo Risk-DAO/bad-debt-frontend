@@ -89,9 +89,9 @@
 }
 
 .CLFTable {
-  min-width: 400px;
+  min-width: 25vw;
   margin-left: 2%;
-  max-width: 10vw;
+  max-width: 100vw;
   margin-top: 0%;
 }
 
