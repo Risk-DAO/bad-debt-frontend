@@ -38,6 +38,7 @@
   max-width: 50vw;
   min-width: 50vw;
 }
+
 .RiskProtocolGraphContainer {
   display: flex;
   flex-direction: column;
@@ -62,16 +63,19 @@
   width: 100%;
   margin-top: 0 !important;
 }
+
 .CLFProtocolAverage {
   width: 100%;
   margin-top: 0 !important;
 }
+
 .CLFProtocolAverageGraph {
   min-height: 350px;
   width: 100%;
   max-width: 45vw;
   margin-top: 0 !important;
 }
+
 .card {
   background: white;
   border-radius: 10px;
@@ -90,7 +94,8 @@
   max-width: 10vw;
   margin-top: 0%;
 }
-.CLFTableOffset{
+
+.CLFTableOffset {
   margin: 29%;
 }
 
@@ -116,7 +121,7 @@
   display: flex;
   width: 100%;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: flex-start;
 }
 
@@ -128,6 +133,9 @@
 .CLFPoolNameTab {
   margin: 10px 0px 0px 10px;
   padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .CLFMarketButtonsRow select,
@@ -137,7 +145,7 @@ button {
 }
 
 .datePicker {
-  --icon-width:0rem !important;
+  --icon-width: 0rem !important;
   background-image: none !important
 }
 
@@ -257,12 +265,14 @@ article {
     height: 2%;
     width: 50%;
   }
+
   .CLFProtocolAverageGraph {
     min-height: 350px;
     width: 100%;
     max-width: 99vw;
     margin-top: 0 !important;
   }
+
   .CLFGraphContainer {
     display: flex;
     flex-direction: column;
@@ -272,6 +282,7 @@ article {
     max-width: 95vw;
     min-width: 95vw;
   }
+
   .RiskProtocolGraphContainer {
     display: flex;
     flex-direction: column;
@@ -281,6 +292,7 @@ article {
     max-width: 95vw;
     min-width: 95vw;
   }
+
   .CLFMarketButtonsContainer {
     display: flex;
     flex-direction: row;
