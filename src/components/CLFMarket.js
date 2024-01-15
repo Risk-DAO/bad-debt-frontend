@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import CLFMarketGraph from "./CLFMarketGraph";
-import { Divider } from "@mui/material";
+import { Divider, Tooltip } from "@mui/material";
 import { nameMaps } from "../utils";
 
 
@@ -15,7 +15,7 @@ function Row(props) {
     }
     return <tr>
         <td>
-            {name}
+            <Tooltip title={name.split('_')[1]}>{name.split('_')[0]}</Tooltip>
         </td>
         <td>
             {CLFs['7D_averageSpan'] && CLFs['7D_averageSpan'][props.selectedLiquidity] ? formatCLF(CLFs['7D_averageSpan'][props.selectedVolatility][props.selectedLiquidity]) : "N/A"}
@@ -43,7 +43,11 @@ export default function CLFMarket(props) {
     const [selectedGraphData, setSelectedGraphData] = useState(undefined);
     const collaterals = [];
     for (const k of Object.keys(data)) {
-            collaterals.push(k)
+        const collateral = {
+            name: k.split('_')[0],
+            id: k.split('_')[1]
+        }
+            collaterals.push(collateral)
     };
 
 useEffect(()=> {

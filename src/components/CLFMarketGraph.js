@@ -34,7 +34,7 @@ export default function CLFMarketGraph(props) {
                     <Tooltip formatter={CLFNumberFormatter} labelFormatter={timestampFormatter}
                         wrapperClassName="card shadow" />
                     <Legend verticalAlign='top' />
-                    {collaterals.map(_ => <Line dot={false} key={_} type="monotone" stroke={strokes[_]} dataKey={_} activeDot={{ r: 8 }} />)}
+                    {collaterals.map(_ => <Line dot={false} key={_.name} type="monotone" stroke={strokes[_.name]} dataKey={_.name} activeDot={{ r: 8 }} />)}
                 </LineChart> : <p>Failed to load data.</p>}
         </ResponsiveContainer>
     )
