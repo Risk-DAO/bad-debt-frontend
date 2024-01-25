@@ -76,3 +76,27 @@ export const nameMaps = {
   "inverse": "Inverse Finance - frontier (deprecated)",
 "morpho-blue": "Morpho Blue Flagship Markets"
 }
+
+export const morphoMarketsMap = {
+"0xb323495f7e4148be5643a4ea4a8221eef163e4bccfdedc2a6f4696baacbc86cc": {
+  loanToken: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+  collateralToken: '0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0',
+  lltv: '86%'
+},
+"0x3a85e619751152991742810df6ec69ce473daef99e28a64ab2340d7b7ccfee49": {
+  loanToken: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
+  collateralToken: '0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0',
+  lltv: '86%'
+},
+"0x7dde86a1e94561d9690ec678db673c1a6396365f7d1d65e129c5fff0990ff758": {
+  loanToken: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+  collateralToken: '0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0',
+  lltv: '86%'
+},
+"0xf9acc677910cc17f650416a22e2a14d5da7ccb9626db18f1bf94efe64f92b372": {
+  loanToken: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+  collateralToken: '0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0',
+  lltv: '91.5%'
+},
+
+}
