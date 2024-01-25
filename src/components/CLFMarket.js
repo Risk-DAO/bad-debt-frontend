@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CLFMarketGraph from "./CLFMarketGraph";
 import { Divider, Tooltip } from "@mui/material";
-import { nameMaps } from "../utils";
+import { morphoMarketsMap, nameMaps } from "../utils";
 
 
 function Row(props) {
@@ -38,14 +38,19 @@ export default function CLFMarket(props) {
     const graphData = props.graphData;
     const averagesTableData = props.averageData;
     const spans = [7, 30, 180];
-    const [selectedVolatility, setSelectedVolatility] = useState(30);
-    const [selectedLiquidity, setSelectedLiquidity] = useState(30);
+    const [selectedVolatility, setSelectedVolatility] = useState(7);
+    const [selectedLiquidity, setSelectedLiquidity] = useState(7);
     const [selectedGraphData, setSelectedGraphData] = useState(undefined);
     const collaterals = [];
     for (const k of Object.keys(data)) {
+        const marketCollateralName = k.split('_')[0];
+        const marketID = k.split('_')[1];
+        const lltv = morphoMarketsMap[marketID] ? morphoMarketsMap[marketID]['lltv'] : undefined
         const collateral = {
-            name: k.split('_')[0],
-            id: k.split('_')[1]
+            name: marketCollateralName,
+            id: marketID,
+            graphKey: k,
+            lltv: lltv
         }
             collaterals.push(collateral)
     };
