@@ -13,7 +13,6 @@ const strokes = {
 
 
 
-
 export default function CLFMarketGraph(props) {
     const { displayData, collaterals } = props;
     return (
@@ -34,7 +33,7 @@ export default function CLFMarketGraph(props) {
                     <Tooltip formatter={CLFNumberFormatter} labelFormatter={timestampFormatter}
                         wrapperClassName="card shadow" />
                     <Legend verticalAlign='top' />
-                    {collaterals.map(_ => <Line dot={false} key={_.name} type="monotone" stroke={strokes[_.name]} dataKey={_.name} activeDot={{ r: 8 }} />)}
+                    {collaterals.map((_, id) => <Line dot={false} name={_.lltv ? `${_.name} ${_.lltv}` : _.name} key={_.name} type="monotone" stroke={Object.values(strokes)[id]} dataKey={_.graphKey} activeDot={{ r: 8 }} />)}
                 </LineChart> : <p>Failed to load data.</p>}
         </ResponsiveContainer>
     )
