@@ -54,6 +54,19 @@ export default function CLFMarket(props) {
         }
             collaterals.push(collateral)
     };
+    if(collaterals.length > 1){
+        collaterals.sort((a,b) => {
+            const first = a.name.toLowerCase();
+            const second = b.name.toLowerCase();
+            if(first < second){
+                return -1;
+            }
+            if(first > second){
+                return 1
+            }
+            return 0
+        })
+    }
 
 useEffect(()=> {
     setSelectedGraphData(graphData[selectedVolatility][selectedLiquidity].toReversed());
